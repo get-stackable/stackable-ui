@@ -26,7 +26,7 @@ EntryUpdateForm = class EntryUpdateForm extends React.Component {
         let stateData = {};
         if (!_.isUndefined(props.contentType)) {
             props.contentType.items.map((schema) => {
-                stateData[schema.title] = props.entry.data[schema.title];
+                stateData[schema.name] = props.entry.data[schema.name];
             });
             this.setState(stateData);
         }
@@ -46,11 +46,11 @@ EntryUpdateForm = class EntryUpdateForm extends React.Component {
         return this.props.contentType.items.map((schema, index) => {
             return (
                 <div key={index}>
-                    <label>{schema.title}</label>
+                    <label>{schema.name}</label>
                     <input
                         type="text"
-                        value={this.state[schema.title]}
-                        onChange={this.onChange.bind(this, schema.title)}/>
+                        value={this.state[schema.name]}
+                        onChange={this.onChange.bind(this, schema.name)}/>
                 </div>
             )
         });

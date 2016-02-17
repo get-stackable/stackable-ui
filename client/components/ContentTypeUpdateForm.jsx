@@ -10,7 +10,7 @@ ContentTypeUpdateForm = class ContentTypeUpdateForm extends React.Component {
         this.state = {
             name: '',
             items: [{
-                title: '',
+                name: '',
                 type: 'text'
             }]
         };
@@ -40,11 +40,11 @@ ContentTypeUpdateForm = class ContentTypeUpdateForm extends React.Component {
         return this.state.items.map((field, index) => {
             return (
                 <div key={index}>
-                    <label>Title</label>
+                    <label>Name</label>
                     <input
                         type="text"
-                        value={field.title}
-                        onChange={this.onFieldChange.bind(this, 'title', index, field)}/>
+                        value={field.name}
+                        onChange={this.onFieldChange.bind(this, 'name', index, field)}/>
                     <label>Type</label>
                     <input
                         type="text"
@@ -59,7 +59,7 @@ ContentTypeUpdateForm = class ContentTypeUpdateForm extends React.Component {
         let {items} = this.state;
 
         items.push({
-            title: '',
+            name: '',
             type: 'text'
         });
 
