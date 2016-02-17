@@ -16,7 +16,7 @@ JsonRoutes.add("get", "/api/entries/:type/:id", function (req, res, next) {
             contentType: req.params.type,
             domainId: domain._id
         };
-        data = Entry.findOne(query, {fields: allowedFields});
+        data = Entries.findOne(query, {fields: allowedFields});
     }
 
     JsonRoutes.sendResult(res, {data});
@@ -31,7 +31,7 @@ JsonRoutes.add("get", "/api/entries/:type", function (req, res, next) {
             contentType: req.params.type,
             domainId: domain._id
         };
-        data = Entry.find(query, {fields: allowedFields}).fetch();
+        data = Entries.find(query, {fields: allowedFields}).fetch();
     }
 
     JsonRoutes.sendResult(res, {data});

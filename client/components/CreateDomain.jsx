@@ -8,6 +8,10 @@ CreateDomain = class CreateDomain extends React.Component {
     }
 
     handleSubmit = () => {
+        if (this.state.url.length === 0) {
+            return;
+        }
+
         Meteor.call('domain.create', this.state, (err) => {
             if (!err) {
                 this.setState({
