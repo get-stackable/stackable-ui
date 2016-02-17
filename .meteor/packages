@@ -34,7 +34,8 @@ meteorhacks:aggregate
 react-meteor-data
 cosmos:browserify
 meteorhacks:npm
-
 jagi:astronomy-slug-behavior
-
 npm-container
+simple:json-routes
+accounts-password
+accounts-ui
