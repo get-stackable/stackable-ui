@@ -3,14 +3,50 @@ ContentTypeCreate = class ContentTypeCreate extends React.Component {
         super(props);
         this.state = {
             name: '',
-            fields: []
+            items: [{
+              title: '',
+              type: 'text'
+            }]
         };
     }
 
-    handleSubmit() {
+    handleSubmit = () => {
         Meteor.call('contentType.create', this.state, (err, res) => {
             console.log(err, res);
         });
+    };
+
+    onFieldChange = (inputName, index, e) => {
+        let change = {};
+        change[inputName] = !_.isUndefined(e.target) ? e.target.value : e;
+
+        let {items} = this.state;
+        items[index] = change;
+        this.setState({items});
+    };
+
+    renderItems() {
+      return this.state.items.map((field, index) => {
+        return (
+          <div key={index}>
+            <label>Title</label>
+            <input type="text" onChange={this.onFieldChange.bind(this, 'title', index)} />
+            <label>Type</label>
+            <input type="text" />
+          </div>
+        )
+      });
+    }
+
+    addField = () => {
+      let {items} = this.state;
+
+      items.push({
+        title: '',
+        type: 'text'
+      });
+
+      this.setState({items});
     };
 
     render() {
@@ -21,7 +57,12 @@ ContentTypeCreate = class ContentTypeCreate extends React.Component {
                     <input type="text" onChange={(e) => this.setState({name: e.target.value})} />
                 </div>
                 <div>
-                    <button onClick={this.handleSubmit.bind(this)}>Create</button>
+                    <h4>Items</h4>
+                    {this.renderItems()}
+                    <button onClick={this.addField}>add field</button>
+                </div>
+                <div>
+                    <button onClick={this.handleSubmit}>Create</button>
                 </div>
             </div>
         )

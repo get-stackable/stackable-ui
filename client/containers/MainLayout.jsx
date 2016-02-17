@@ -2,7 +2,9 @@ MainLayout = class MainLayout extends React.Component {
     render() {
         return (
             <div>
-                <p>this is main layout</p>
+                <div>
+                  <a href={FlowRouter.path('home')}>Home</a>
+                </div>
                 {this.props.content}
             </div>
         )
