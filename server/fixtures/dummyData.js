@@ -21,10 +21,5 @@ Fixtures.users.push({
     slug: 'klair',
     profile: createProfile(user),
     isActive: true,
-    authKey: '123456',
-    domains: [{
-      name: 'appfuel',
-      url: 'http://www.appfuel.co.uk',
-      authKey: '123456'
-    }]
+    authKey: '123456'
 });

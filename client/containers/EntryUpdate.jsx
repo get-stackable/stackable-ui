@@ -10,7 +10,8 @@ EntryUpdate = class EntryUpdate extends React.Component {
 
     render() {
         return (
-            <EntryUpdateForm entry={this.data.entry} />
+            <EntryUpdateForm
+              entry={this.data.entry} />
         )
     }
 };

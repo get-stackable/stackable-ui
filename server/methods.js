@@ -2,7 +2,7 @@ Meteor.methods({
     'entry.create': function (doc) {
         if (_.isNull(this.userId)) {
             //if not logged in
-            //throw new Meteor.Error('not-logged-in', 'Please login to continue.');
+            throw new Meteor.Error('not-logged-in', 'Please login to continue.');
         }
 
         let contentType =  ContentType.findOne({slug: doc.type});
@@ -17,7 +17,8 @@ Meteor.methods({
           contentType: contentType.slug,
           contentTypeId: contentType._id,
           data: fieldsData,
-          dataSchema: contentType.items
+          dataSchema: contentType.items,
+          domainId: doc.domainId
         });
 
         entry.save();

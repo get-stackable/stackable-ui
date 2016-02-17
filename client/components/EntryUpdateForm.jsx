@@ -47,7 +47,7 @@ EntryUpdateForm = class EntryUpdateForm extends React.Component {
 
     handleSubmit = () => {
         Meteor.call('entry.update', this.props.entry._id, this.state, (err, res) => {
-            console.log(err, res);
+            //console.log(err, res);
         });
     };
 

@@ -6,7 +6,8 @@ ContentTypeCreate = class ContentTypeCreate extends React.Component {
             items: [{
               title: '',
               type: 'text'
-            }]
+            }],
+            domainId: props.domainId
         };
     }
 

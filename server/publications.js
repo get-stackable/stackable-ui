@@ -1,11 +1,23 @@
-Meteor.publish('contentType.all', function() {
-    return ContentType.find();
+Meteor.publish('domains.all', function() {
+    if (this.userId) {
+        let user = User.findOne(this.userId);
+        return Domain.find({'_id':{'$in': user.domains}});
+    } else {
+        this.ready();
+    }
 });
 
-Meteor.publish('entries.all', function() {
-    return Entry.find();
+Meteor.publish('contentType.all', function(domainId) {
+  //todo only domain owners can get
+    return ContentType.find({domainId: domainId});
+});
+
+Meteor.publish('entries.all', function(domainId) {
+  //todo only domain owners can get
+    return Entry.find({domainId: domainId});
 });
 
 Meteor.publish('entry.single', function(id) {
+  //todo only domain owners can get
     return Entry.find({_id: id});
 });
