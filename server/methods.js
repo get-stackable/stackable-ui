@@ -5,6 +5,12 @@ Meteor.methods({
             throw new Meteor.Error('not-logged-in', 'Please login to continue.');
         }
 
+        //check if current user own this domain
+        let domain = Domain.findOne({_id: doc.domainId, 'users': this.userId});
+        if (_.isUndefined(domain)) {
+          throw new Meteor.Error('not-allowed', 'You are not allowed to manage this domain.');
+        }
+
         let contentType =  ContentType.findOne({slug: doc.type});
 
         let fieldsData = {};

@@ -16,7 +16,7 @@ HomePage = class HomePage extends React.Component {
                   {this.data.domains.map((domain) => {
                     return (
                       <li key={domain._id}>
-                        <a href={FlowRouter.path('domainManage', {id: domain._id})}>{domain.name}</a>
+                        <a href={FlowRouter.path('domainManage', {id: domain._id})}>{domain.name}</a> - Key: {domain.authKey}
                       </li>
                     )
                   })}

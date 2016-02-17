@@ -1,28 +1,47 @@
 Meteor.publish('domains.all', function() {
     if (this.userId) {
-        let user = User.findOne(this.userId);
-        return Domain.find({'_id':{'$in': user.domains}});
+        return Domain.find({'users': this.userId});
     } else {
         this.ready();
     }
 });
 
 Meteor.publish('contentType.all', function(domainId) {
-  //todo only domain owners can get
-    return ContentType.find({domainId: domainId});
+    //check only domain owners can get data
+    let domain = Domain.findOne({_id: domainId, 'users': this.userId});
+    if (this.userId && domain) {
+      return ContentType.find({domainId: domainId});
+    } else {
+        this.ready();
+    }
 });
 
 Meteor.publish('contentType.single', function(id) {
-  //todo only domain owners can get
-    return ContentType.find({_id: id});
+    //check only domain owners can get data
+    let domain = Domain.findOne({_id: domainId, 'users': this.userId});
+    if (this.userId && domain) {
+      return ContentType.find({_id: id});
+    } else {
+        this.ready();
+    }
 });
 
 Meteor.publish('entries.all', function(domainId) {
-  //todo only domain owners can get
+  //check only domain owners can get data
+  let domain = Domain.findOne({_id: domainId, 'users': this.userId});
+  if (this.userId && domain) {
     return Entry.find({domainId: domainId});
+  } else {
+      this.ready();
+  }
 });
 
 Meteor.publish('entry.single', function(id) {
-  //todo only domain owners can get
+  ///check only domain owners can get data
+  let domain = Domain.findOne({_id: domainId, 'users': this.userId});
+  if (this.userId && domain) {
     return Entry.find({_id: id});
+  } else {
+      this.ready();
+  }
 });

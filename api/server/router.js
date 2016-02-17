@@ -4,10 +4,35 @@ JsonRoutes.setResponseHeaders({
   'Access-Control-Allow-Headers': 'Content-Type'
 });
 
-JsonRoutes.add("get", "/entries/:type", function (req, res, next) {
-  var type = req.params.type;
+let allowedFields = {'_id':1, 'data':1, 'contentType':1};
 
-  JsonRoutes.sendResult(res, {
-    data: Entry.find({contentType: type}, {fields: {'_id':1, 'data':1, 'contentType':1}}).fetch()
-  });
+JsonRoutes.add("get", "/entries/:type/:id", function (req, res, next) {
+  let data = {'success': false};
+  let domain = Domain.findOne({authKey: req.query.auth_key});
+
+  if (domain) {
+    let query = {
+      _id: req.params.id,
+      contentType: req.params.type,
+      domainId: domain._id
+    }
+    data = Entry.findOne(query, {fields: allowedFields});
+  }
+
+  JsonRoutes.sendResult(res, {data});
+});
+
+JsonRoutes.add("get", "/entries/:type", function (req, res, next) {
+  let data = [];
+  let domain = Domain.findOne({authKey: req.query.auth_key});
+
+  if (domain) {
+    let query = {
+      contentType: req.params.type,
+      domainId: domain._id
+    }
+    data = Entry.find(query, {fields: allowedFields}).fetch();
+  }
+
+  JsonRoutes.sendResult(res, {data});
 });
