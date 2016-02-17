@@ -1,7 +1,7 @@
 MainLayout = class MainLayout extends React.Component {
     render() {
         return (
-            <div>
+            <div className="ui container">
                 <div>
                   <a href={FlowRouter.path('home')}>Home</a>
                   <AccountsUIWrapper />

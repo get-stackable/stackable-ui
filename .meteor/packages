@@ -40,3 +40,4 @@ simple:json-routes
 accounts-password
 accounts-ui
 mediumeditor:mediumeditor
+semantic:ui-css
