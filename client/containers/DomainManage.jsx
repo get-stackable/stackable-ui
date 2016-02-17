@@ -17,7 +17,9 @@ DomainManage = class DomainManage extends React.Component {
                 <ul>
                   {this.data.contentTypes.map((type, index) => {
                     return (
-                      <li key={index}>{type.name}</li>
+                      <li key={index}>
+                        <a href={FlowRouter.path('contentTypeUpdate', {id: type._id})}>{type.name}</a>
+                      </li>
                     )
                   })}
                 </ul>

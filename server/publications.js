@@ -12,6 +12,11 @@ Meteor.publish('contentType.all', function(domainId) {
     return ContentType.find({domainId: domainId});
 });
 
+Meteor.publish('contentType.single', function(id) {
+  //todo only domain owners can get
+    return ContentType.find({_id: id});
+});
+
 Meteor.publish('entries.all', function(domainId) {
   //todo only domain owners can get
     return Entry.find({domainId: domainId});

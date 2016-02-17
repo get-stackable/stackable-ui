@@ -4,10 +4,10 @@ JsonRoutes.setResponseHeaders({
   'Access-Control-Allow-Headers': 'Content-Type'
 });
 
-JsonRoutes.add("get", "/entries/:id", function (req, res, next) {
-  var id = req.params.id;
+JsonRoutes.add("get", "/entries/:type", function (req, res, next) {
+  var type = req.params.type;
 
   JsonRoutes.sendResult(res, {
-    data: Entry.findOne({_id: id}, {fields: {'_id':1, 'data':1, 'contentType':1}})
+    data: Entry.find({contentType: type}, {fields: {'_id':1, 'data':1, 'contentType':1}}).fetch()
   });
 });

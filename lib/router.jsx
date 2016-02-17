@@ -25,6 +25,15 @@ FlowRouter.route('/content-type/create/:domainId', {
     }
 });
 
+FlowRouter.route('/content-type/update/:id', {
+    name: 'contentTypeUpdate',
+    action: function(params) {
+        ReactLayout.render(MainLayout, {
+            content: <ContentTypeUpdate id={params.id} />
+        });
+    }
+});
+
 FlowRouter.route('/entry/create/:type/:domainId', {
     name: 'entryCreate',
     action: function(params) {
@@ -32,9 +41,8 @@ FlowRouter.route('/entry/create/:type/:domainId', {
         Meteor.call('entry.create', data, (err, res) => {
           if (!err) {
             //console.log('result is:', res);
-            FlowRouter.go('entryUpdate', {
-              type: res.contentType,
-              id: res._id
+            ReactLayout.render(MainLayout, {
+                content: <EntryUpdate id={res._id} />
             });
           }
         });
