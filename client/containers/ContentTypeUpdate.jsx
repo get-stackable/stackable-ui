@@ -3,7 +3,7 @@ ContentTypeUpdate = class ContentTypeUpdate extends React.Component {
         let handle = Meteor.subscribe('contentType.single', this.props.id);
 
         return {
-            loading: ! handle.ready(),
+            loading: !handle.ready(),
             contentType: ContentType.findOne(this.props.id)
         };
     }
@@ -17,8 +17,8 @@ ContentTypeUpdate = class ContentTypeUpdate extends React.Component {
     render() {
         return (
             <ContentTypeUpdateForm
-              contentType={this.data.contentType}
-              handleSubmit={this.handleSubmit} />
+                contentType={this.data.contentType}
+                handleSubmit={this.handleSubmit}/>
         )
     }
 };

@@ -4,7 +4,7 @@ EntryUpdate = class EntryUpdate extends React.Component {
 
         let entry = Entry.findOne(this.props.id);
         let data = {
-            loading: ! handle.ready()
+            loading: !handle.ready()
         };
 
         if (handle.ready() && !_.isUndefined(entry)) {
@@ -22,8 +22,8 @@ EntryUpdate = class EntryUpdate extends React.Component {
 
         return (
             <EntryUpdateForm
-              entry={this.data.entry}
-              contentType={this.data.contentType} />
+                entry={this.data.entry}
+                contentType={this.data.contentType}/>
         )
     }
 };

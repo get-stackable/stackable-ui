@@ -35,7 +35,8 @@ DomainManage = class DomainManage extends React.Component {
                         return (
                             <li key={index}>
                                 <a href={FlowRouter.path('entryUpdate', {type: entry.contentType, id: entry._id})}>{entry.data[dataKeys[0]]}</a>
-                                - http://localhost:3000/api/entries/{entry.contentType}/{entry._id}?auth_key={this.data.domain.authKey}
+                                -
+                                http://localhost:3000/api/entries/{entry.contentType}/{entry._id}?auth_key={this.data.domain.authKey}
                             </li>
                         )
                     })}

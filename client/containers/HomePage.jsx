@@ -15,13 +15,14 @@ HomePage = class HomePage extends React.Component {
             <div>
                 <h2>Domains</h2>
                 <ul>
-                  {this.data.domains.map((domain) => {
-                    return (
-                      <li key={domain._id}>
-                        <a href={FlowRouter.path('domainManage', {id: domain._id})}>{domain.name}</a> - Key: {domain.authKey}
-                      </li>
-                    )
-                  })}
+                    {this.data.domains.map((domain) => {
+                        return (
+                            <li key={domain._id}>
+                                <a href={FlowRouter.path('domainManage', {id: domain._id})}>{domain.name}</a> -
+                                Key: {domain.authKey}
+                            </li>
+                        )
+                    })}
                 </ul>
                 <CreateDomain />
             </div>

@@ -9,7 +9,7 @@ ContentTypeCreate = class ContentTypeCreate extends React.Component {
     render() {
         return (
             <ContentTypeUpdateForm
-              handleSubmit={this.handleSubmit} />
+                handleSubmit={this.handleSubmit}/>
         )
     }
 };

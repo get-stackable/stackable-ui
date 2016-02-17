@@ -14,9 +14,14 @@ Fixtures.users = [];
 
 let user = Fake.user();
 Fixtures.users.push({
-    "emails" : [{"address" : "perminder.klair@gmail.com", "verified" : true}],
-    "services" : { "password" : { "bcrypt" : "$2a$10$CCzzYL/1ZRbhytUM3aiMeOCiGx9XXmRZ1kiUyfB0FvfPWbh2hLcmG" }},
-    "resume" : { "loginTokens" : [{"when" : 'ISODate("2015-02-26T15:28:51.272Z")', "hashedToken" : "JUjmXp4Q4gUMIJ/cXZ+3uVhWzADHp5NKzRG9ONV7zd8=" }]},
+    "emails": [{"address": "perminder.klair@gmail.com", "verified": true}],
+    "services": {"password": {"bcrypt": "$2a$10$CCzzYL/1ZRbhytUM3aiMeOCiGx9XXmRZ1kiUyfB0FvfPWbh2hLcmG"}},
+    "resume": {
+        "loginTokens": [{
+            "when": 'ISODate("2015-02-26T15:28:51.272Z")',
+            "hashedToken": "JUjmXp4Q4gUMIJ/cXZ+3uVhWzADHp5NKzRG9ONV7zd8="
+        }]
+    },
     username: 'klair',
     slug: 'klair',
     profile: createProfile(user),

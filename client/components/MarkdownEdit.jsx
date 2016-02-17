@@ -29,7 +29,7 @@ MarkdownEdit = class MarkdownEdit extends React.Component {
 
     componentWillReceiveProps(nextProps) {
         if (nextProps.text !== this.state.text && !this._updated) {
-            this.setState({ text: nextProps.text });
+            this.setState({text: nextProps.text});
         }
 
         if (this._updated) this._updated = false;
@@ -49,7 +49,7 @@ MarkdownEdit = class MarkdownEdit extends React.Component {
 
         assign(props, {
             contentEditable: true,
-            dangerouslySetInnerHTML: { __html: this.state.text }
+            dangerouslySetInnerHTML: {__html: this.state.text}
         });
 
         return React.createElement(tag, props);

@@ -3,8 +3,8 @@ MainLayout = class MainLayout extends React.Component {
         return (
             <div className="ui container">
                 <div>
-                  <a href={FlowRouter.path('home')}>Home</a>
-                  <AccountsUIWrapper />
+                    <a href={FlowRouter.path('home')}>Home</a>
+                    <AccountsUIWrapper />
                 </div>
                 {this.props.content}
             </div>
