@@ -4,7 +4,8 @@ EntryUpdateForm = class EntryUpdateForm extends React.Component {
     };
 
     static propTypes = {
-        entry: React.PropTypes.object.isRequired
+        entry: React.PropTypes.object.isRequired,
+        contentType: React.PropTypes.object.isRequired
     };
 
     constructor(props) {
@@ -13,15 +14,22 @@ EntryUpdateForm = class EntryUpdateForm extends React.Component {
         this.state = {};
     }
 
+    componentDidMount() {
+        this.initState(this.props);
+    }
+
     componentWillReceiveProps(nextProps) {
+        this.initState(nextProps);
+    }
+
+    initState(props) {
         let stateData = {};
-        if (!_.isUndefined(nextProps.entry.dataSchema)) {
-            nextProps.entry.dataSchema.map((schema) => {
-                stateData[schema.title] = nextProps.entry.data[schema.title];
+        if (!_.isUndefined(props.contentType)) {
+            props.contentType.items.map((schema) => {
+                stateData[schema.title] = props.entry.data[schema.title];
             });
             this.setState(stateData);
         }
-
     }
 
     onChange = (inputName, e) => {
@@ -31,11 +39,11 @@ EntryUpdateForm = class EntryUpdateForm extends React.Component {
     };
 
     loadFields() {
-        if (_.isUndefined(this.props.entry.dataSchema)) {
+        if (_.isUndefined(this.props.contentType.items)) {
             return;
         }
 
-        return this.props.entry.dataSchema.map((schema, index) => {
+        return this.props.contentType.items.map((schema, index) => {
             return (
                 <div key={index}>
                     <label>{schema.title}</label>
@@ -52,7 +60,7 @@ EntryUpdateForm = class EntryUpdateForm extends React.Component {
         Meteor.call('entry.update', this.props.entry._id, this.state, (err, res) => {
             //console.log(err, res);
             if (!err) {
-                alert('Entery updated!');
+                alert('Entry updated!');
             }
         });
     };

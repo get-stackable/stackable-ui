@@ -25,12 +25,11 @@ ContentTypeUpdateForm = class ContentTypeUpdateForm extends React.Component {
         }
     }
 
-    onFieldChange = (inputName, index, e) => {
-        let change = {};
-        change[inputName] = !_.isUndefined(e.target) ? e.target.value : e;
+    onFieldChange = (inputName, index, field, e) => {
+        field[inputName] = !_.isUndefined(e.target) ? e.target.value : e;
 
         let {items} = this.state;
-        items[index] = change;
+        items[index] = field;
         this.setState({items});
     };
 
@@ -45,9 +44,12 @@ ContentTypeUpdateForm = class ContentTypeUpdateForm extends React.Component {
                     <input
                         type="text"
                         value={field.title}
-                        onChange={this.onFieldChange.bind(this, 'title', index)}/>
+                        onChange={this.onFieldChange.bind(this, 'title', index, field)}/>
                     <label>Type</label>
-                    <input type="text"/>
+                    <input
+                        type="text"
+                        value={field.type}
+                        onChange={this.onFieldChange.bind(this, 'type', index, field)} />
                 </div>
             )
         });

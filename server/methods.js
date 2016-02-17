@@ -23,7 +23,6 @@ Meteor.methods({
           contentType: contentType.slug,
           contentTypeId: contentType._id,
           data: fieldsData,
-          dataSchema: contentType.items,
           domainId: doc.domainId
         });
 

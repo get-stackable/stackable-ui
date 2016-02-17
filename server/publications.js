@@ -1,4 +1,4 @@
-Meteor.publish('domains.all', function() {
+Meteor.publish('domains.all', function () {
     if (this.userId) {
         return Domain.find({'users': this.userId});
     } else {
@@ -6,42 +6,47 @@ Meteor.publish('domains.all', function() {
     }
 });
 
-Meteor.publish('contentType.all', function(domainId) {
+Meteor.publish('contentType.all', function (domainId) {
     //check only domain owners can get data
     let domain = Domain.findOne({_id: domainId, 'users': this.userId});
     if (this.userId && domain) {
-      return ContentType.find({domainId: domainId});
+        return ContentType.find({domainId: domainId});
     } else {
         this.ready();
     }
 });
 
-Meteor.publish('contentType.single', function(id) {
+Meteor.publish('contentType.single', function (id) {
     //todo check only domain owners can get data
     //let domain = Domain.findOne({_id: domainId, 'users': this.userId});
     if (this.userId) {
-      return ContentType.find({_id: id});
+        return ContentType.find({_id: id});
     } else {
         this.ready();
     }
 });
 
-Meteor.publish('entries.all', function(domainId) {
-  //check only domain owners can get data
-  let domain = Domain.findOne({_id: domainId, 'users': this.userId});
-  if (this.userId && domain) {
-    return Entry.find({domainId: domainId});
-  } else {
-      this.ready();
-  }
+Meteor.publish('entries.all', function (domainId) {
+    //check only domain owners can get data
+    let domain = Domain.findOne({_id: domainId, 'users': this.userId});
+    if (this.userId && domain) {
+        return Entry.find({domainId: domainId});
+    } else {
+        this.ready();
+    }
 });
 
-Meteor.publish('entry.single', function(id) {
-  //todo check only domain owners can get data
-  //let domain = Domain.findOne({_id: domainId, 'users': this.userId});
-  if (this.userId) {
-    return Entry.find({_id: id});
-  } else {
-      this.ready();
-  }
+Meteor.publish('entry.single', function (id) {
+    //todo check only domain owners can get data
+    //let domain = Domain.findOne({_id: domainId, 'users': this.userId});
+
+    let entry = Entry.findOne({_id: id});
+    if (this.userId) {
+        return [
+            ContentType.find({_id: entry.contentTypeId}),
+            Entry.find({_id: id})
+        ];
+    } else {
+        this.ready();
+    }
 });
