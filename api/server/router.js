@@ -6,7 +6,7 @@ JsonRoutes.setResponseHeaders({
 
 let allowedFields = {'_id':1, 'data':1, 'contentType':1};
 
-JsonRoutes.add("get", "/entries/:type/:id", function (req, res, next) {
+JsonRoutes.add("get", "/api/entries/:type/:id", function (req, res, next) {
   let data = {'success': false};
   let domain = Domain.findOne({authKey: req.query.auth_key});
 
@@ -22,7 +22,7 @@ JsonRoutes.add("get", "/entries/:type/:id", function (req, res, next) {
   JsonRoutes.sendResult(res, {data});
 });
 
-JsonRoutes.add("get", "/entries/:type", function (req, res, next) {
+JsonRoutes.add("get", "/api/entries/:type", function (req, res, next) {
   let data = [];
   let domain = Domain.findOne({authKey: req.query.auth_key});
 

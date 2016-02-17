@@ -1,14 +1,16 @@
 HomePage = class HomePage extends React.Component {
     getMeteorData() {
-        let handle = Meteor.subscribe('domains.all');
-
         return {
-            loading: ! handle.ready(),
-            domains: Domain.find().fetch()
+            domains: Domain.find().fetch(),
+            user: Meteor.user()
         };
     }
 
     render() {
+        if (_.isNull(this.data.user)) {
+            return <div></div>
+        }
+
         return (
             <div>
                 <h2>Domains</h2>

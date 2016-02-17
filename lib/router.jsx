@@ -1,3 +1,7 @@
+FlowRouter.subscriptions = function() {
+    this.register('domains.all', Meteor.subscribe('domains.all'));
+};
+
 FlowRouter.route('/', {
     name: 'home',
     action: function() {

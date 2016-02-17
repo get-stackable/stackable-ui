@@ -4,9 +4,10 @@ DomainManage = class DomainManage extends React.Component {
         let handle2 = Meteor.subscribe('entries.all', this.props.id);
 
         return {
-            loading: ! handle.ready(),
+            loading: !handle.ready(),
             contentTypes: ContentType.find().fetch(),
-            entries: Entry.find().fetch()
+            entries: Entry.find().fetch(),
+            domain: Domain.findOne(this.props.id)
         };
     }
 
@@ -15,34 +16,36 @@ DomainManage = class DomainManage extends React.Component {
             <div>
                 <h2>Content Types</h2>
                 <ul>
-                  {this.data.contentTypes.map((type, index) => {
-                    return (
-                      <li key={index}>
-                        <a href={FlowRouter.path('contentTypeUpdate', {id: type._id})}>{type.name}</a>
-                      </li>
-                    )
-                  })}
+                    {this.data.contentTypes.map((type, index) => {
+                        return (
+                            <li key={index}>
+                                <a href={FlowRouter.path('contentTypeUpdate', {id: type._id})}>{type.name}</a>
+                                - http://localhost:3000/api/entries/{type.slug}?auth_key={this.data.domain.authKey}
+                            </li>
+                        )
+                    })}
                 </ul>
                 <a href={FlowRouter.path('contentTypeCreate', {domainId: this.props.id})}>Create content type</a>
                 <hr />
 
                 <h2>Entries</h2>
                 <ul>
-                  {this.data.entries.map((entry, index) => {
-                    let dataKeys = _.keys(entry.data);
-                    return (
-                      <li key={index}>
-                        <a href={FlowRouter.path('entryUpdate', {type: entry.contentType, id: entry._id})}>{entry.data[dataKeys[0]]}</a>
-                      </li>
-                    )
-                  })}
+                    {this.data.entries.map((entry, index) => {
+                        let dataKeys = _.keys(entry.data);
+                        return (
+                            <li key={index}>
+                                <a href={FlowRouter.path('entryUpdate', {type: entry.contentType, id: entry._id})}>{entry.data[dataKeys[0]]}</a>
+                                - http://localhost:3000/api/entries/{entry.contentType}/{entry._id}?auth_key={this.data.domain.authKey}
+                            </li>
+                        )
+                    })}
                 </ul>
                 {this.data.contentTypes.map((type, index) => {
-                  return (
-                    <a
-                      href={FlowRouter.path('entryCreate', {type: type.slug, domainId: this.props.id})}
-                      key={index}>Create {type.name}</a>
-                  )
+                    return (
+                        <a
+                            href={FlowRouter.path('entryCreate', {type: type.slug, domainId: this.props.id})}
+                            key={index}>Create {type.name} - </a>
+                    )
                 })}
             </div>
         )

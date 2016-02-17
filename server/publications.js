@@ -17,9 +17,9 @@ Meteor.publish('contentType.all', function(domainId) {
 });
 
 Meteor.publish('contentType.single', function(id) {
-    //check only domain owners can get data
-    let domain = Domain.findOne({_id: domainId, 'users': this.userId});
-    if (this.userId && domain) {
+    //todo check only domain owners can get data
+    //let domain = Domain.findOne({_id: domainId, 'users': this.userId});
+    if (this.userId) {
       return ContentType.find({_id: id});
     } else {
         this.ready();
@@ -37,9 +37,9 @@ Meteor.publish('entries.all', function(domainId) {
 });
 
 Meteor.publish('entry.single', function(id) {
-  ///check only domain owners can get data
-  let domain = Domain.findOne({_id: domainId, 'users': this.userId});
-  if (this.userId && domain) {
+  //todo check only domain owners can get data
+  //let domain = Domain.findOne({_id: domainId, 'users': this.userId});
+  if (this.userId) {
     return Entry.find({_id: id});
   } else {
       this.ready();

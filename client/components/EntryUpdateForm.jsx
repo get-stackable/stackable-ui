@@ -14,11 +14,14 @@ EntryUpdateForm = class EntryUpdateForm extends React.Component {
     }
 
     componentWillReceiveProps(nextProps) {
-      let stateData = {};
-      nextProps.entry.dataSchema.map((schema) => {
-        stateData[schema.title] = nextProps.entry.data[schema.title];
-      });
-      this.setState(stateData);
+        let stateData = {};
+        if (!_.isUndefined(nextProps.entry.dataSchema)) {
+            nextProps.entry.dataSchema.map((schema) => {
+                stateData[schema.title] = nextProps.entry.data[schema.title];
+            });
+            this.setState(stateData);
+        }
+
     }
 
     onChange = (inputName, e) => {
@@ -28,26 +31,29 @@ EntryUpdateForm = class EntryUpdateForm extends React.Component {
     };
 
     loadFields() {
-      if (_.isUndefined(this.props.entry.dataSchema)) {
-        return;
-      }
+        if (_.isUndefined(this.props.entry.dataSchema)) {
+            return;
+        }
 
-      return this.props.entry.dataSchema.map((schema, index) => {
-        return (
-          <div key={index}>
-              <label>{schema.title}</label>
-              <input
-                type="text"
-                value={this.state[schema.title]}
-                onChange={this.onChange.bind(this, schema.title)} />
-          </div>
-        )
-      });
+        return this.props.entry.dataSchema.map((schema, index) => {
+            return (
+                <div key={index}>
+                    <label>{schema.title}</label>
+                    <input
+                        type="text"
+                        value={this.state[schema.title]}
+                        onChange={this.onChange.bind(this, schema.title)}/>
+                </div>
+            )
+        });
     }
 
     handleSubmit = () => {
         Meteor.call('entry.update', this.props.entry._id, this.state, (err, res) => {
             //console.log(err, res);
+            if (!err) {
+                alert('Entery updated!');
+            }
         });
     };
 
