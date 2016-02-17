@@ -47,10 +47,15 @@ EntryUpdateForm = class EntryUpdateForm extends React.Component {
             return (
                 <div key={index}>
                     <label>{schema.name}</label>
-                    <input
-                        type="text"
-                        value={this.state[schema.name]}
-                        onChange={this.onChange.bind(this, schema.name)}/>
+                    {schema.type === 'text' ?
+                        <input
+                            type="text"
+                            value={this.state[schema.name]}
+                            onChange={this.onChange.bind(this, schema.name)}/>: ''}
+                    {schema.type === 'textArea' ?
+                        <MarkdownEdit
+                            text={this.state[schema.name]}
+                            onChange={this.onChange.bind(this, schema.name)} />: ''}
                 </div>
             )
         });

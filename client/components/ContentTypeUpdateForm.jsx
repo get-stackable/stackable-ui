@@ -1,3 +1,11 @@
+var fieldTypes = [{
+    title: 'Text Field',
+    value: 'text'
+}, {
+    title: 'Text Editor',
+    value: 'textArea'
+}];
+
 ContentTypeUpdateForm = class ContentTypeUpdateForm extends React.Component {
     static propTypes = {
         handleSubmit: React.PropTypes.func.isRequired,
@@ -46,10 +54,15 @@ ContentTypeUpdateForm = class ContentTypeUpdateForm extends React.Component {
                         value={field.name}
                         onChange={this.onFieldChange.bind(this, 'name', index, field)}/>
                     <label>Type</label>
-                    <input
-                        type="text"
-                        value={field.type}
-                        onChange={this.onFieldChange.bind(this, 'type', index, field)} />
+                    <select
+                        onChange={this.onFieldChange.bind(this, 'type', index, field)}
+                        defaultValue={field.type}>
+                        {fieldTypes.map((item) => {
+                            return <option
+                                key={item.value}
+                                value={item.value}>{item.title}</option>
+                        })}
+                    </select>
                 </div>
             )
         });
