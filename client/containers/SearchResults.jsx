@@ -18,7 +18,7 @@ class SearchResultsInner extends React.Component {
     }
 
     renderItems() {
-        return this.props.users.map((item) => {
+        return this.props.items.map((item) => {
             return (
                 <li>test</li>
             )
@@ -26,6 +26,12 @@ class SearchResultsInner extends React.Component {
     }
 
     render () {
+        if (this.props.items.length === 0) {
+            return (
+                <div>No results found.</div>
+            )
+        }
+
         return (
             <div className="ui grid">
                 <ul>
@@ -46,6 +52,7 @@ SearchResults = class SearchResults extends React.Component {
     };
 
     constructor(props) {
+        console.log('1');
         super(props);
 
         this.state = {
@@ -54,6 +61,7 @@ SearchResults = class SearchResults extends React.Component {
     }
 
     getMeteorData() {
+        console.log('2');
         //let find = {};
         //
         //if (!_.isNull(this.props.query)) {
@@ -66,11 +74,13 @@ SearchResults = class SearchResults extends React.Component {
         //}
 
         return {
-            items: Item.find({}, this.state.currentCount)
+            //items: //Item.find(find, this.state.currentCount).fetch()
+            items: Item.find().fetch()
         }
     }
 
     render() {
+        console.log('3');
         return (
             <SearchResultsInner
                 query={this.props.query}

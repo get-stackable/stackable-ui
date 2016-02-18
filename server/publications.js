@@ -63,14 +63,14 @@ Meteor.publish('items.find', function (query, limit) {
     //find by query
     let find = {};
 
-    //if (!_.isNull(query)) {
-    //    let queryRegex = ".*" + query + ".*";
-    //    find = {
-    //        $or: [
-    //            {"data": {$regex: queryRegex, $options: 'i'}}
-    //        ]
-    //    };
-    //}
+    if (!_.isNull(query)) {
+        let queryRegex = ".*" + query + ".*";
+        find = {
+            $or: [
+                {"data": {$regex: queryRegex, $options: 'i'}}
+            ]
+        };
+    }
 
-    return Item.find(find, limit)
+    return Item.find(find)
 });
