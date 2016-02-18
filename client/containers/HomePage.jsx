@@ -6,6 +6,10 @@ HomePage = class HomePage extends React.Component {
         };
     }
 
+    componentDidMount() {
+        Session.set('active.app', '');
+    }
+
     deleteApp(appId) {
         Meteor.call('app.delete', appId, (err) => {
             if (!err) {
@@ -24,7 +28,7 @@ HomePage = class HomePage extends React.Component {
 
     render() {
         if (_.isNull(this.data.user)) {
-            return <div></div>
+            return <AccountsUIWrapper />
         }
 
         return (

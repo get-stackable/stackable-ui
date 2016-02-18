@@ -1,4 +1,12 @@
 Header = class Header extends React.Component {
+    getMeteorData() {
+        return {
+            apps: Application.find().fetch(),
+            user: Meteor.user(),
+            activeApp: Session.get('active.app')
+        };
+    }
+
     renderOld() {
         return (
             <div>
@@ -7,6 +15,22 @@ Header = class Header extends React.Component {
                 <SearchForm />
             </div>
         )
+    }
+
+    renderApps() {
+        if (this.data.apps.length === 0) {
+            return;
+        }
+
+        return this.data.apps.map((app) => {
+            return (
+                <a className="item"
+                   key={app._id}
+                   href={FlowRouter.path('appManage', {id: app._id})}>
+                    {app.name}
+                </a>
+            )
+        });
     }
 
     render() {
@@ -21,11 +45,22 @@ Header = class Header extends React.Component {
                     <div className="item">
                         <SearchForm />
                     </div>
-                    <div className="ui simple dropdown right item">
+                    <div className="item">
+                        <p className="active-site">
+                            {this.data.activeApp}
+                        </p>
+                    </div>
+                    <div className="right item">
+                        <a onClick={() => AccountsTemplates.logout()}>
+                            <i className="sign out icon"></i>
+                            logout
+                        </a>
+                    </div>
+                    <div className="ui simple dropdown right item" style={{'marginLeft': '30px !important'}}>
                         Switch Apps <i className="dropdown icon"></i>
                         <div className="menu">
-                            <a className="item" href="#">www.appfuel.co.uk</a>
-                            <a className="item" href="#">www.midtube.com</a>
+                            {this.renderApps()}
+                            <a className="item" href={FlowRouter.path('appCreate')}>create app</a>
                         </div>
                     </div>
                 </div>
@@ -33,3 +68,5 @@ Header = class Header extends React.Component {
         )
     }
 };
+
+reactMixin(Header.prototype, ReactMeteorData);

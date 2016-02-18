@@ -3,6 +3,11 @@
 
 body {
   font-family: $default-font;
+  background: $background-color;
+}
+
+#react-root {
+  height: 100%;
 }
 
 .ui {
@@ -18,4 +23,9 @@ body {
 
 .main.container {
   margin-top: 58px;
+  height: 100%;
+}
+
+.full-height {
+  height: 100%;
 }

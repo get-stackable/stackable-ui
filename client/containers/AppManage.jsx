@@ -11,6 +11,14 @@ AppManage = class AppManage extends React.Component {
         };
     }
 
+    componentDidMount() {
+        Session.set('active.app', this.data.app.name);
+    }
+
+    componentDidUpdate() {
+        Session.set('active.app', this.data.app.name);
+    }
+
     deleteContainer(containerId) {
         Meteor.call('container.delete', containerId, (err) => {
             if (!err) {

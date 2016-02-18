@@ -17,6 +17,10 @@ class SearchResultsInner extends React.Component {
         };
     }
 
+    componentDidMount() {
+        Session.set('active.app', '');
+    }
+
     renderItems() {
         return this.props.items.map((item) => {
             return (

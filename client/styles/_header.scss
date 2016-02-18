@@ -8,15 +8,15 @@
       }
       &.header {
         font-size: 2.6em;
-        border-left: 0;
-        color: $color-white;
+        border-left: 0 !important;
+        color: $color-white !important;
+        padding-left: 27px;
         img {
           width: 0.7em;
           margin-right: 30px;
         }
         .sub.header {
           font-size: 0.4em;
-          font-weight: $font-normal !important;
           margin-left: 18px;
         }
       }
@@ -28,6 +28,7 @@
           background-color: $dark-background;
           > .item {
             color: $font-grey !important;
+            text-align: center;
             &:hover {
               color: $font-grey !important;
               background-color: $color-grey;
@@ -45,6 +46,9 @@
             border-color: transparent;
           }
         }
+      }
+      .active-site {
+        margin-left: 20px;
       }
     }
   }
