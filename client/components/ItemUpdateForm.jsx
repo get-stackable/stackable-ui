@@ -64,6 +64,16 @@ ItemUpdateForm = class ItemUpdateForm extends React.Component {
                             name={schema.name}
                             value={this.state[schema.name]}
                             onChange={this.onChange.bind(this, schema.name)}/> : ''}
+                    {schema.type === 'json' ?
+                        <JsonInput
+                            name={schema.name}
+                            value={this.state[schema.name]}
+                            onChange={this.onChange.bind(this, schema.name)}/> : ''}
+                    {schema.type === 'enom' ?
+                        <EnomInput
+                            name={schema.name}
+                            value={this.state[schema.name]}
+                            onChange={this.onChange.bind(this, schema.name)}/> : ''}
                 </div>
             )
         });

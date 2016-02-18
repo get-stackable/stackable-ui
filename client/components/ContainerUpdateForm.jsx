@@ -10,6 +10,12 @@ var fieldTypes = [{
 }, {
     title: 'Boolean',
     value: 'boolean'
+}, {
+    title: 'Json',
+    value: 'json'
+}, {
+    title: 'Enom (Select)',
+    value: 'enom'
 }];
 
 ContainerUpdateForm = class ContainerUpdateForm extends React.Component {
@@ -25,7 +31,8 @@ ContainerUpdateForm = class ContainerUpdateForm extends React.Component {
             name: '',
             items: [{
                 name: 'Title',
-                type: 'text'
+                type: 'text',
+                validations: ''
             }]
         };
     }
@@ -34,7 +41,8 @@ ContainerUpdateForm = class ContainerUpdateForm extends React.Component {
         if (!_.isUndefined(nextProps.container)) {
             this.setState({
                 name: nextProps.container.name,
-                items: nextProps.container.items
+                items: nextProps.container.items,
+                validations: nextProps.container.validations
             });
         }
     }
@@ -46,6 +54,18 @@ ContainerUpdateForm = class ContainerUpdateForm extends React.Component {
         items[index] = field;
         this.setState({items});
     };
+
+    renderValidations(field, index) {
+        return (
+            <div>
+                <label>Validations</label>
+                    <textarea
+                        rows="4"
+                        value={field.validations}
+                        onChange={this.onFieldChange.bind(this, 'validations', index, field)}></textarea>
+            </div>
+        )
+    }
 
     renderItems() {
         if (_.isUndefined(this.state.items)) {
@@ -69,6 +89,9 @@ ContainerUpdateForm = class ContainerUpdateForm extends React.Component {
                                 value={item.value}>{item.title}</option>
                         })}
                     </select>
+                    <br />
+                    {this.renderValidations(field, index)}
+                    <hr />
                 </div>
             )
         });
