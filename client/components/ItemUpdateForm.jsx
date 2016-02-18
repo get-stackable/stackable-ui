@@ -1,11 +1,11 @@
-EntryUpdateForm = class EntryUpdateForm extends React.Component {
+ItemUpdateForm = class ItemUpdateForm extends React.Component {
     static defaultProps = {
-        entry: {}
+        item: {}
     };
 
     static propTypes = {
-        entry: React.PropTypes.object.isRequired,
-        contentType: React.PropTypes.object.isRequired
+        item: React.PropTypes.object.isRequired,
+        container: React.PropTypes.object.isRequired
     };
 
     constructor(props) {
@@ -24,9 +24,9 @@ EntryUpdateForm = class EntryUpdateForm extends React.Component {
 
     initState(props) {
         let stateData = {};
-        if (!_.isUndefined(props.contentType)) {
-            props.contentType.items.map((schema) => {
-                stateData[schema.name] = props.entry.data[schema.name];
+        if (!_.isUndefined(props.container)) {
+            props.container.items.map((schema) => {
+                stateData[schema.name] = props.item.data[schema.name];
             });
             this.setState(stateData);
         }
@@ -39,11 +39,11 @@ EntryUpdateForm = class EntryUpdateForm extends React.Component {
     };
 
     loadFields() {
-        if (_.isUndefined(this.props.contentType.items)) {
+        if (_.isUndefined(this.props.container.items)) {
             return;
         }
 
-        return this.props.contentType.items.map((schema, index) => {
+        return this.props.container.items.map((schema, index) => {
             return (
                 <div key={index}>
                     <label>{schema.name}</label>
@@ -70,11 +70,11 @@ EntryUpdateForm = class EntryUpdateForm extends React.Component {
     }
 
     handleSubmit = () => {
-        Meteor.call('entry.update', this.props.entry._id, this.state, (err, res) => {
+        Meteor.call('item.update', this.props.item._id, this.state, (err, res) => {
             //console.log(err, res);
             if (!err) {
-                FlashMessages.sendSuccess('Entry updated successfully!');
-                FlowRouter.go('domainManage', {id: this.props.entry.domainId});
+                FlashMessages.sendSuccess('Item updated successfully!');
+                FlowRouter.go('appManage', {id: this.props.item.appId});
             }
         });
     };

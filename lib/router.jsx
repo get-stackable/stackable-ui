@@ -1,5 +1,5 @@
 FlowRouter.subscriptions = function () {
-    this.register('domains.all', Meteor.subscribe('domains.all'));
+    this.register('apps.all', Meteor.subscribe('apps.all'));
 };
 
 FlowRouter.route('/', {
@@ -11,71 +11,71 @@ FlowRouter.route('/', {
     }
 });
 
-FlowRouter.route('/domain/manage/:id', {
-    name: 'domainManage',
+FlowRouter.route('/app/manage/:id', {
+    name: 'appManage',
     action: function (params) {
         ReactLayout.render(MainLayout, {
-            content: <DomainManage id={params.id}/>
+            content: <AppManage id={params.id}/>
         });
     }
 });
 
-FlowRouter.route('/domain/create', {
-    name: 'domainCreate',
+FlowRouter.route('/app/create', {
+    name: 'appCreate',
     action: function (params) {
         ReactLayout.render(MainLayout, {
-            content: <DomainCreate />
+            content: <AppCreate />
         });
     }
 });
 
-FlowRouter.route('/domain/update/:id', {
-    name: 'domainUpdate',
+FlowRouter.route('/app/update/:id', {
+    name: 'appUpdate',
     action: function (params) {
         ReactLayout.render(MainLayout, {
-            content: <DomainUpdate id={params.id}/>
+            content: <AppUpdate id={params.id}/>
         });
     }
 });
 
-FlowRouter.route('/content-type/create/:domainId', {
-    name: 'contentTypeCreate',
+FlowRouter.route('/container/create/:appId', {
+    name: 'containerCreate',
     action: function (params) {
         ReactLayout.render(MainLayout, {
-            content: <ContentTypeCreate domainId={params.domainId}/>
+            content: <ContainerCreate appId={params.appId}/>
         });
     }
 });
 
-FlowRouter.route('/content-type/update/:id', {
-    name: 'contentTypeUpdate',
+FlowRouter.route('/container/update/:id', {
+    name: 'containerUpdate',
     action: function (params) {
         ReactLayout.render(MainLayout, {
-            content: <ContentTypeUpdate id={params.id}/>
+            content: <ContainerUpdate id={params.id}/>
         });
     }
 });
 
-FlowRouter.route('/entry/create/:type/:domainId', {
-    name: 'entryCreate',
+FlowRouter.route('/item/create/:type/:appId', {
+    name: 'itemCreate',
     action: function (params) {
-        let data = {type: params.type, domainId: params.domainId};
-        Meteor.call('entry.create', data, (err, res) => {
+        let data = {type: params.type, appId: params.appId};
+        Meteor.call('item.create', data, (err, res) => {
             if (!err) {
                 //console.log('result is:', res);
                 ReactLayout.render(MainLayout, {
-                    content: <EntryUpdate id={res._id}/>
+                    content: <ItemUpdate id={res._id}/>
                 });
             }
         });
     }
 });
 
-FlowRouter.route('/entry/update/:type/:id', {
-    name: 'entryUpdate',
+FlowRouter.route('/item/update/:type/:id', {
+    name: 'itemUpdate',
     action: function (params) {
         ReactLayout.render(MainLayout, {
-            content: <EntryUpdate id={params.id}/>
+            content: <ItemUpdate id={params.id}/>
         });
     }
 });

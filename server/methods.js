@@ -1,33 +1,33 @@
 Meteor.methods({
-    'entry.create': function (doc) {
+    'item.create': function (doc) {
         if (_.isNull(this.userId)) {
             //if not logged in
             throw new Meteor.Error('not-logged-in', 'Please login to continue.');
         }
 
-        //check if current user own this domain
-        let domain = Domain.findOne({_id: doc.domainId, 'users': this.userId});
-        if (_.isUndefined(domain)) {
-            throw new Meteor.Error('not-allowed', 'You are not allowed to manage this domain.');
+        //check if current user own this app
+        let app = Application.findOne({_id: doc.appId, 'users': this.userId});
+        if (_.isUndefined(app)) {
+            throw new Meteor.Error('not-allowed', 'You are not allowed to manage this app.');
         }
 
-        let contentType = ContentType.findOne({slug: doc.type});
+        let container = Container.findOne({slug: doc.type});
 
         let fieldsData = {};
-        contentType.items.map((item) => {
+        container.items.map((item) => {
             fieldsData[item.title] = '';
         });
 
-        var entry = new Entry();
-        entry.set({
-            contentType: contentType.slug,
-            contentTypeId: contentType._id,
+        var item = new Item();
+        item.set({
+            container: container.slug,
+            containerId: container._id,
             data: fieldsData,
-            domainId: doc.domainId
+            appId: doc.appId
         });
 
-        entry.save();
-        return entry;
+        item.save();
+        return item;
 
         //contentType.validate();
         //
@@ -38,42 +38,42 @@ Meteor.methods({
         //    return contentType;
         //}
     },
-    'domain.delete': function (docId) {
-        let domain = Domain.findOne({_id: docId, 'users': this.userId});
+    'app.delete': function (docId) {
+        let app = Application.findOne({_id: docId, 'users': this.userId});
 
-        //check if current user own this domain
-        if (_.isUndefined(domain)) {
-            throw new Meteor.Error('not-allowed', 'You are not allowed to manage this domain.');
+        //check if current user own this app
+        if (_.isUndefined(app)) {
+            throw new Meteor.Error('not-allowed', 'You are not allowed to manage this app.');
         }
 
-        //remove all related contentype
-        ContentType.remove({domainId: domain._id});
+        //remove all related containers
+        Container.remove({appId: app._id});
 
-        //remove all related entries
-        Entry.remove({domainId: domain._id});
+        //remove all related items
+        Item.remove({appId: app._id});
 
-        return domain.remove();
+        return app.remove();
     },
-    'contentType.delete': function (docId) {
-        var contentType = ContentType.findOne({_id: docId});
+    'container.delete': function (docId) {
+        var container = Container.findOne({_id: docId});
 
-        //check if current user own this domain
-        let domain = Domain.findOne({_id: contentType.domainId, 'users': this.userId});
-        if (_.isUndefined(domain)) {
-            throw new Meteor.Error('not-allowed', 'You are not allowed to manage this domain.');
+        //check if current user own this app
+        let app = Application.findOne({_id: container.appId, 'users': this.userId});
+        if (_.isUndefined(app)) {
+            throw new Meteor.Error('not-allowed', 'You are not allowed to manage this app.');
         }
 
         //remove all related entries
-        Entry.remove({contentTypeId: contentType._id});
+        Item.remove({containerId: container._id});
 
-        return contentType.remove();
+        return container.remove();
     },
-    'domain.addUser': function (domainId, userEmail) {
-        let domain = Domain.findOne({_id: domainId, 'users': this.userId});
+    'app.addUser': function (appId, userEmail) {
+        let app = Application.findOne({_id: appId, 'users': this.userId});
 
-        //check if current user own this domain
-        if (_.isUndefined(domain)) {
-            throw new Meteor.Error('not-allowed', 'You are not allowed to manage this domain.');
+        //check if current user own this app
+        if (_.isUndefined(app)) {
+            throw new Meteor.Error('not-allowed', 'You are not allowed to manage this app.');
         }
 
         let user = User.findOne({"emails.address" : userEmail});
@@ -85,32 +85,32 @@ Meteor.methods({
         }
 
         //add domain to user
-        user.push('domains', domain._id);
+        user.push('apps', app._id);
         user.save();
 
-        //add user id to domain
-        domain.push('users', user._id);
-        domain.save();
+        //add user id to app
+        app.push('users', user._id);
+        app.save();
 
-        return domain;
+        return app;
     },
-    'domain.removeUser': function (domainId, userId) {
-        let domain = Domain.findOne({_id: domainId, 'users': this.userId});
+    'app.removeUser': function (appId, userId) {
+        let app = Application.findOne({_id: appId, 'users': this.userId});
         let user = User.findOne({_id: userId});
 
-        //check if current user own this domain
-        if (_.isUndefined(domain)) {
-            throw new Meteor.Error('not-allowed', 'You are not allowed to manage this domain.');
+        //check if current user own this app
+        if (_.isUndefined(app)) {
+            throw new Meteor.Error('not-allowed', 'You are not allowed to manage this app.');
         }
 
         //remove domain from user
-        user.pull('domains', domain._id);
+        user.pull('apps', app._id);
         user.save();
 
         //remove user id from domain
-        domain.pull('users', user._id);
-        domain.save();
+        app.pull('users', user._id);
+        app.save();
 
-        return domain;
+        return app;
     }
 });

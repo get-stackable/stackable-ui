@@ -12,10 +12,10 @@ var fieldTypes = [{
     value: 'boolean'
 }];
 
-ContentTypeUpdateForm = class ContentTypeUpdateForm extends React.Component {
+ContainerUpdateForm = class ContainerUpdateForm extends React.Component {
     static propTypes = {
         handleSubmit: React.PropTypes.func.isRequired,
-        contentType: React.PropTypes.object
+        container: React.PropTypes.object
     };
 
     constructor(props) {
@@ -31,10 +31,10 @@ ContentTypeUpdateForm = class ContentTypeUpdateForm extends React.Component {
     }
 
     componentWillReceiveProps(nextProps) {
-        if (!_.isUndefined(nextProps.contentType)) {
+        if (!_.isUndefined(nextProps.container)) {
             this.setState({
-                name: nextProps.contentType.name,
-                items: nextProps.contentType.items
+                name: nextProps.container.name,
+                items: nextProps.container.items
             });
         }
     }

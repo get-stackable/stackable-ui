@@ -18,7 +18,7 @@ if (typeof jQuery == 'undefined') {
                 var type = $(this).data('type');
                 var childrenHtml = $(this).children();
                 $(parent).html('');//empty the container
-                $.get('http://localhost:9000/entries/' + type, function (result) {
+                $.get('http://localhost:9000/items/' + type, function (result) {
                     console.log(result);
 
                     if (result.length !== 0) {

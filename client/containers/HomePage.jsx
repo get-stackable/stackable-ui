@@ -1,15 +1,15 @@
 HomePage = class HomePage extends React.Component {
     getMeteorData() {
         return {
-            domains: Domain.find().fetch(),
+            apps: Application.find().fetch(),
             user: Meteor.user()
         };
     }
 
-    deleteDomain(domainId) {
-        Meteor.call('domain.delete', domainId, (err) => {
+    deleteApp(appId) {
+        Meteor.call('app.delete', appId, (err) => {
             if (!err) {
-                FlashMessages.sendSuccess('Domain deleted successfully!');
+                FlashMessages.sendSuccess('App deleted successfully!');
             }
         });
     }
@@ -21,20 +21,20 @@ HomePage = class HomePage extends React.Component {
 
         return (
             <div>
-                <h2>Domains</h2>
+                <h2>Apps</h2>
                 <ul>
-                    {this.data.domains.map((domain) => {
+                    {this.data.apps.map((app) => {
                         return (
-                            <li key={domain._id}>
-                                <a href={FlowRouter.path('domainManage', {id: domain._id})}>{domain.name}</a>
-                                - Key: {domain.authKey}
-                                - <a href={FlowRouter.path('domainUpdate', {id: domain._id})}>edit</a>
-                                - <a onClick={() => this.deleteDomain(domain._id)}>delete</a>
+                            <li key={app._id}>
+                                <a href={FlowRouter.path('appManage', {id: app._id})}>{app.name}</a>
+                                - Key: {app.authKey}
+                                - <a href={FlowRouter.path('appUpdate', {id: app._id})}>edit</a>
+                                - <a onClick={() => this.deleteApp(app._id)}>delete</a>
                             </li>
                         )
                     })}
                 </ul>
-                <a href={FlowRouter.path('domainCreate')}>create domain</a>
+                <a href={FlowRouter.path('appCreate')}>create app</a>
             </div>
         )
     }

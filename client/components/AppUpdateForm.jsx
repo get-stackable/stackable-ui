@@ -1,7 +1,7 @@
-DomainUpdateForm = class DomainUpdateForm extends React.Component {
+AppUpdateForm = class AppUpdateForm extends React.Component {
     static propTypes = {
         handleSubmit: React.PropTypes.func.isRequired,
-        domain: React.PropTypes.object,
+        app: React.PropTypes.object,
         users: React.PropTypes.array
     };
 
@@ -9,21 +9,21 @@ DomainUpdateForm = class DomainUpdateForm extends React.Component {
         super(props);
 
         this.state = {
-            name: !_.isUndefined(props.domain) ?props.domain.name : '',
+            name: !_.isUndefined(props.app) ? props.app.name : '',
             userEmail: ''
         };
     }
 
     componentWillReceiveProps(nextProps) {
-        if (!_.isUndefined(nextProps.domain)) {
+        if (!_.isUndefined(nextProps.app)) {
             this.setState({
-                name: nextProps.domain.name
+                name: nextProps.app.name
             });
         }
     }
 
     addUser = () => {
-        Meteor.call('domain.addUser', this.props.domain._id, this.state.userEmail, (err) => {
+        Meteor.call('app.addUser', this.props.app._id, this.state.userEmail, (err) => {
             if (!err) {
                 FlashMessages.sendSuccess('User added successfully!');
             } else {
@@ -33,7 +33,7 @@ DomainUpdateForm = class DomainUpdateForm extends React.Component {
     };
 
     removeUser = (userId) => {
-        Meteor.call('domain.removeUser', this.props.domain._id, userId, (err) => {
+        Meteor.call('app.removeUser', this.props.app._id, userId, (err) => {
             if (!err) {
                 FlashMessages.sendSuccess('User removed successfully!');
             }
@@ -55,10 +55,6 @@ DomainUpdateForm = class DomainUpdateForm extends React.Component {
     }
 
     render() {
-        if (_.isUndefined(this.props.domain)) {
-            return <div>loading...</div>
-        }
-
         return (
             <div>
                 <div>

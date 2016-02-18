@@ -1,6 +1,6 @@
-Meteor.publish('domains.all', function () {
+Meteor.publish('apps.all', function () {
     if (this.userId) {
-        return Domain.find({'users': this.userId});
+        return Application.find({'users': this.userId});
     } else {
         this.ready();
     }
@@ -14,45 +14,45 @@ Meteor.publish('users.all', function (ids) {
     }
 });
 
-Meteor.publish('contentType.all', function (domainId) {
+Meteor.publish('containers.all', function (appId) {
     //check only domain owners can get data
-    let domain = Domain.findOne({_id: domainId, 'users': this.userId});
-    if (this.userId && domain) {
-        return ContentType.find({domainId: domainId});
+    let app = Application.findOne({_id: appId, 'users': this.userId});
+    if (this.userId && app) {
+        return Container.find({appId});
     } else {
         this.ready();
     }
 });
 
-Meteor.publish('contentType.single', function (id) {
+Meteor.publish('containers.single', function (id) {
     //todo check only domain owners can get data
-    //let domain = Domain.findOne({_id: domainId, 'users': this.userId});
+    //let app = Application.findOne({_id: appId, 'users': this.userId});
     if (this.userId) {
-        return ContentType.find({_id: id});
+        return Container.find({_id: id});
     } else {
         this.ready();
     }
 });
 
-Meteor.publish('entries.all', function (domainId) {
-    //check only domain owners can get data
-    let domain = Domain.findOne({_id: domainId, 'users': this.userId});
+Meteor.publish('items.all', function (appId) {
+    //check only app owners can get data
+    let domain = Application.findOne({_id: appId, 'users': this.userId});
     if (this.userId && domain) {
-        return Entry.find({domainId: domainId});
+        return Item.find({appId});
     } else {
         this.ready();
     }
 });
 
-Meteor.publish('entry.single', function (id) {
-    //todo check only domain owners can get data
-    //let domain = Domain.findOne({_id: domainId, 'users': this.userId});
+Meteor.publish('items.single', function (id) {
+    //todo check only app owners can get data
+    //let app = Application.findOne({_id: appId, 'users': this.userId});
 
-    let entry = Entry.findOne({_id: id});
+    let item = Item.findOne({_id: id});
     if (this.userId) {
         return [
-            ContentType.find({_id: entry.contentTypeId}),
-            Entry.find({_id: id})
+            Container.find({_id: item.containerId}),
+            Item.find({_id: id})
         ];
     } else {
         this.ready();
