@@ -14,6 +14,14 @@ HomePage = class HomePage extends React.Component {
         });
     }
 
+    generateAppKey(appId) {
+        Meteor.call('app.generateKey', appId, (err) => {
+            if (!err) {
+                FlashMessages.sendSuccess('App key re-generated successfully!');
+            }
+        });
+    }
+
     render() {
         if (_.isNull(this.data.user)) {
             return <div></div>
@@ -28,6 +36,7 @@ HomePage = class HomePage extends React.Component {
                             <li key={app._id}>
                                 <a href={FlowRouter.path('appManage', {id: app._id})}>{app.name}</a>
                                 - Key: {app.authKey}
+                                - <a onClick={() => this.generateAppKey(app._id)}>regenerate key</a>
                                 - <a href={FlowRouter.path('appUpdate', {id: app._id})}>edit</a>
                                 - <a onClick={() => this.deleteApp(app._id)}>delete</a>
                             </li>

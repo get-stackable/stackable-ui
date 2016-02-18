@@ -9,6 +9,8 @@ ContainerCreate = class ContainerCreate extends React.Component {
             if (!err) {
                 FlashMessages.sendSuccess('Container created successfully!');
                 FlowRouter.go('appManage', {id: this.props.appId});
+            } else {
+                FlashMessages.sendError(err.reason);
             }
         });
     };

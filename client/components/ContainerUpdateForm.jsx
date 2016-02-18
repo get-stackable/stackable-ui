@@ -48,6 +48,16 @@ ContainerUpdateForm = class ContainerUpdateForm extends React.Component {
     }
 
     onFieldChange = (inputName, index, field, e) => {
+        //console.log(inputName, e.target.value);
+        //make sure item name is unique
+        //if (inputName === 'name') {
+        //    let result = _.where(this.state.items, {name: e.target.value});
+        //    if (result.length !== 0) {
+        //        FlashMessages.sendWarning(`Field with name ${e.target.value} already exists!`);
+        //    }
+        //}
+
+
         field[inputName] = !_.isUndefined(e.target) ? e.target.value : e;
 
         let {items} = this.state;

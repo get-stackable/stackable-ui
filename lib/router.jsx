@@ -79,3 +79,16 @@ FlowRouter.route('/item/update/:type/:id', {
         });
     }
 });
+
+FlowRouter.route('/search/:query', {
+    name: 'search',
+    subscriptions: function(params, queryParams) {
+        var limit = parseInt(queryParams['limit']) || SiteSettings.limit;
+        this.register('items.find', Meteor.subscribe('items.find', params.query, limit));
+    },
+    action: function(params) {
+        ReactLayout.render(MainLayout, {
+            content: <SearchResults query={params.query} />
+        });
+    }
+});

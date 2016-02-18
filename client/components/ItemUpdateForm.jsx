@@ -43,9 +43,9 @@ ItemUpdateForm = class ItemUpdateForm extends React.Component {
             return;
         }
 
-        return this.props.container.items.map((schema, index) => {
+        return this.props.container.items.map((schema) => {
             return (
-                <div key={index}>
+                <div key={schema._id}>
                     <label>{schema.name}</label>
                     {schema.type === 'text' ?
                         <TextInput
