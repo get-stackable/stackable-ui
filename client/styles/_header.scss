@@ -1,0 +1,51 @@
+.menu {
+  &.top {
+    .item {
+      padding: 0.3em 0.4em;
+      color: $font-grey;
+      &:before {
+        background: transparent !important;
+      }
+      &.header {
+        font-size: 2.6em;
+        border-left: 0;
+        color: $color-white;
+        img {
+          width: 0.7em;
+          margin-right: 30px;
+        }
+        .sub.header {
+          font-size: 0.4em;
+          font-weight: $font-normal !important;
+          margin-left: 18px;
+        }
+      }
+      &.dropdown {
+        font-weight: $font-bold;
+        background-color: $dark-background;
+        padding: 0.3em 2.4em;
+        .menu {
+          background-color: $dark-background;
+          > .item {
+            color: $font-grey !important;
+            &:hover {
+              color: $font-grey !important;
+              background-color: $color-grey;
+            }
+          }
+        }
+      }
+      .search {
+        margin-left: 25px;
+        input {
+          background: $color-light-grey;
+          color: $color-white;
+          width: 350px;
+          &:focus {
+            border-color: transparent;
+          }
+        }
+      }
+    }
+  }
+}

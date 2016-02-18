@@ -1,9 +1,11 @@
 MainLayout = class MainLayout extends React.Component {
     render() {
         return (
-            <div className="ui container">
+            <div>
                 <Header />
-                {this.props.content}
+                <div className="main container">
+                    {this.props.content}
+                </div>
             </div>
         )
     }
