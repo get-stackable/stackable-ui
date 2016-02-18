@@ -6,6 +6,14 @@ Meteor.publish('domains.all', function () {
     }
 });
 
+Meteor.publish('users.all', function (ids) {
+    if (this.userId) {
+        return User.find({_id: { $in: ids}});
+    } else {
+        this.ready();
+    }
+});
+
 Meteor.publish('contentType.all', function (domainId) {
     //check only domain owners can get data
     let domain = Domain.findOne({_id: domainId, 'users': this.userId});

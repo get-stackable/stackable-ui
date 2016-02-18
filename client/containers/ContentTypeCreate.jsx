@@ -5,8 +5,11 @@ ContentTypeCreate = class ContentTypeCreate extends React.Component {
         }
 
         Meteor.call('contentType.create', _.extend(data, {domainId: this.props.domainId}), (err, res) => {
-            console.log(err, res);
-            FlowRouter.go('domainManage', {id: this.props.domainId});
+            //console.log(err, res);
+            if (!err) {
+                FlashMessages.sendSuccess('Content type created successfully!');
+                FlowRouter.go('domainManage', {id: this.props.domainId});
+            }
         });
     };
 

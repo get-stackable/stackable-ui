@@ -11,6 +11,22 @@ DomainManage = class DomainManage extends React.Component {
         };
     }
 
+    deleteContentType(typeId) {
+        Meteor.call('contentType.delete', typeId, (err) => {
+            if (!err) {
+                FlashMessages.sendSuccess('Content type deleted successfully!');
+            }
+        });
+    }
+
+    deleteEntry(entryId) {
+        Meteor.call('entry.delete', entryId, (err) => {
+            if (!err) {
+                FlashMessages.sendSuccess('Entry deleted successfully!');
+            }
+        });
+    }
+
     render() {
         return (
             <div>
@@ -21,6 +37,7 @@ DomainManage = class DomainManage extends React.Component {
                             <li key={index}>
                                 <a href={FlowRouter.path('contentTypeUpdate', {id: type._id})}>{type.name}</a>
                                 - http://localhost:3000/api/entries/{type.slug}?auth_key={this.data.domain.authKey}
+                                - <a onClick={() => this.deleteContentType(type._id)}>delete</a>
                             </li>
                         )
                     })}
@@ -35,8 +52,8 @@ DomainManage = class DomainManage extends React.Component {
                         return (
                             <li key={index}>
                                 <a href={FlowRouter.path('entryUpdate', {type: entry.contentType, id: entry._id})}>{entry.data[dataKeys[0]]}</a>
-                                -
-                                http://localhost:3000/api/entries/{entry.contentType}/{entry._id}?auth_key={this.data.domain.authKey}
+                                - http://localhost:3000/api/entries/{entry.contentType}/{entry._id}?auth_key={this.data.domain.authKey}
+                                - <a onClick={() => this.deleteEntry(entry._id)}>delete</a>
                             </li>
                         )
                     })}

@@ -1,4 +1,4 @@
-MarkdownEdit = class MarkdownEdit extends React.Component {
+MarkdownEditor = class MarkdownEditor extends React.Component {
     static defaultProps = {
         tag: 'div'
     };

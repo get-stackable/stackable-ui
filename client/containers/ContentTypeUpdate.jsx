@@ -10,7 +10,11 @@ ContentTypeUpdate = class ContentTypeUpdate extends React.Component {
 
     handleSubmit = (data) => {
         Meteor.call('contentType.update', this.props.id, data, (err, res) => {
-            console.log(err, res);
+            //console.log(err, res);
+            if (!err) {
+                FlashMessages.sendSuccess('Content type updated successfully!');
+                FlowRouter.go('domainManage', {id: this.data.contentType.domainId});
+            }
         });
     };
 

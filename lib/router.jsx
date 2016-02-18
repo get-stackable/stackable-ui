@@ -20,6 +20,24 @@ FlowRouter.route('/domain/manage/:id', {
     }
 });
 
+FlowRouter.route('/domain/create', {
+    name: 'domainCreate',
+    action: function (params) {
+        ReactLayout.render(MainLayout, {
+            content: <DomainCreate />
+        });
+    }
+});
+
+FlowRouter.route('/domain/update/:id', {
+    name: 'domainUpdate',
+    action: function (params) {
+        ReactLayout.render(MainLayout, {
+            content: <DomainUpdate id={params.id}/>
+        });
+    }
+});
+
 FlowRouter.route('/content-type/create/:domainId', {
     name: 'contentTypeCreate',
     action: function (params) {

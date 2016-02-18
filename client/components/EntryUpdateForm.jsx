@@ -48,13 +48,21 @@ EntryUpdateForm = class EntryUpdateForm extends React.Component {
                 <div key={index}>
                     <label>{schema.name}</label>
                     {schema.type === 'text' ?
-                        <input
-                            type="text"
+                        <TextInput
+                            value={this.state[schema.name]}
+                            onChange={this.onChange.bind(this, schema.name)}/> : ''}
+                    {schema.type === 'number' ?
+                        <NumberInput
                             value={this.state[schema.name]}
                             onChange={this.onChange.bind(this, schema.name)}/> : ''}
                     {schema.type === 'textArea' ?
-                        <MarkdownEdit
+                        <MarkdownEditor
                             text={this.state[schema.name]}
+                            onChange={this.onChange.bind(this, schema.name)}/> : ''}
+                    {schema.type === 'boolean' ?
+                        <BooleanInput
+                            name={schema.name}
+                            value={this.state[schema.name]}
                             onChange={this.onChange.bind(this, schema.name)}/> : ''}
                 </div>
             )
@@ -65,7 +73,8 @@ EntryUpdateForm = class EntryUpdateForm extends React.Component {
         Meteor.call('entry.update', this.props.entry._id, this.state, (err, res) => {
             //console.log(err, res);
             if (!err) {
-                alert('Entry updated!');
+                FlashMessages.sendSuccess('Entry updated successfully!');
+                FlowRouter.go('domainManage', {id: this.props.entry.domainId});
             }
         });
     };

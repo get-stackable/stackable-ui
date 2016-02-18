@@ -4,6 +4,12 @@ var fieldTypes = [{
 }, {
     title: 'Text Editor',
     value: 'textArea'
+}, {
+    title: 'Number',
+    value: 'number'
+}, {
+    title: 'Boolean',
+    value: 'boolean'
 }];
 
 ContentTypeUpdateForm = class ContentTypeUpdateForm extends React.Component {
@@ -18,7 +24,7 @@ ContentTypeUpdateForm = class ContentTypeUpdateForm extends React.Component {
         this.state = {
             name: '',
             items: [{
-                name: '',
+                name: 'Title',
                 type: 'text'
             }]
         };
