@@ -4,10 +4,15 @@
 body {
   font-family: $default-font;
   background: $background-color;
+  color: $default-font-color;
 }
 
 #react-root {
   height: 100%;
+}
+
+a {
+  color: $default-font-color;
 }
 
 .ui {
@@ -21,6 +26,20 @@ body {
   }
 }
 
+.ui.header, h1, h2, h3, h4, h5, .ui.button {
+  font-family: $default-font;
+}
+
+.ui.cards > .card > .content > .header, .ui.card > .content > .header {
+  font-family: $default-font;
+}
+
+.ui.cards > .card, .ui.card {
+  &:hover {
+    box-shadow: 0px 1px 3px 0px $default-font-color, 0px 0px 0px 1px $default-font-color;
+  }
+}
+
 .main.container {
   margin-top: 58px;
   height: 100%;
@@ -28,4 +47,25 @@ body {
 
 .full-height {
   height: 100%;
+}
+
+.main-right-container {
+  padding-left: 0 !important;
+}
+
+.ui.header.page.heading {
+  background-color: $color-white;
+  box-shadow: 0 0 4px 0 rgba(0, 0, 0, 0.25) !important;
+  padding: 22px 34px;
+  color: $default-font-color;
+  font-weight: $font-normal;
+  font-size: 1.514em;
+}
+
+.padding35 {
+  padding: 0 35px !important;
+}
+
+h3 {
+  font-weight: $font-normal;
 }

@@ -12,7 +12,7 @@ MainLayout = class MainLayout extends React.Component {
                         <div className="one wide column sidebar">
                             <Sidebar />
                         </div>
-                        <div className="fifteen wide column">
+                        <div className="fifteen wide column main-right-container">
                             {this.props.content}
                         </div>
                     </div>
