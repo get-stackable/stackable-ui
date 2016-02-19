@@ -3,7 +3,8 @@ Header = class Header extends React.Component {
         return {
             apps: Application.find().fetch(),
             user: Meteor.user(),
-            activeApp: Session.get('active.app')
+            activeApp: Session.get('active.app'),
+            currentRoute: FlowRouter.current().route.name
         };
     }
 
@@ -23,6 +24,14 @@ Header = class Header extends React.Component {
         });
     }
 
+    showRoute() {
+        if (this.data.currentRoute === 'containersList' || this.data.currentRoute === 'itemsList') {
+            return false;
+        }
+
+        return true;
+    }
+
     render() {
         return (
             <div className="ui fixed inverted top menu">
@@ -32,9 +41,10 @@ Header = class Header extends React.Component {
                         {Meteor.App.NAME}
                         <div className="sub header">{Meteor.App.DESCRIPTION}</div>
                     </a>
+                    {this.showRoute() ?
                     <div className="item">
                         <SearchForm />
-                    </div>
+                    </div>:''}
                     <div className="item">
                         <p className="active-site">
                             {!_.isUndefined(this.data.activeApp) ? this.data.activeApp.name : ''}

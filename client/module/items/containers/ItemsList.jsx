@@ -1,4 +1,3 @@
-//ItemsList
 ItemsList = class ItemsList extends React.Component {
     getMeteorData() {
         let handle = Meteor.subscribe('items.all', this.props.appId);
@@ -45,8 +44,11 @@ ItemsList = class ItemsList extends React.Component {
                 </div>
                 <div className="fourteen wide column" style={{'paddingLeft': '0'}}>
                     <div className="content-wrapper">
-                        <div className="ui grid padding35">
+                        <div className="ui grid">
                             <div className="sixteen wide column">
+                                <SearchItemsForm />
+                            </div>
+                            <div className="sixteen wide column padding35">
                                 <table className="ui celled table" style={{'marginTop': '15px'}}>
                                     <thead>
                                     <tr>

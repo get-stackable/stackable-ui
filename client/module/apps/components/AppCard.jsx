@@ -37,7 +37,8 @@ AppCard = class AppCard extends React.Component {
         } else if (goTo == 'items') {
             FlowRouter.go('itemsList', {appId: this.props.app._id});
         } else {
-            FlowRouter.go('appManage', {id: this.props.app._id});
+            //FlowRouter.go('appManage', {id: this.props.app._id});
+            FlowRouter.go('containersList', {appId: this.props.app._id});
         }
     };
 

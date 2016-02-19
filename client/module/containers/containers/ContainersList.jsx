@@ -42,8 +42,11 @@ ContainersList = class ContainersList extends React.Component {
                 </div>
                 <div className="fourteen wide column" style={{'paddingLeft': '0'}}>
                     <div className="content-wrapper">
-                        <div className="ui grid padding35">
+                        <div className="ui grid">
                             <div className="sixteen wide column">
+                                <SearchContainersForm />
+                            </div>
+                            <div className="sixteen wide column padding35">
                                 <table className="ui celled table" style={{'marginTop': '15px'}}>
                                     <thead>
                                     <tr>
