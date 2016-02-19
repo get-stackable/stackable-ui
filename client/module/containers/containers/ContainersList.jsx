@@ -46,7 +46,7 @@ ContainersList = class ContainersList extends React.Component {
                         )
                     })}
                 </ul>
-                <a href={FlowRouter.path('containerCreate', {appId: this.props.id})}>Create container</a>
+                <a href={FlowRouter.path('containerCreate', {appId: this.props.appId})}>Create container</a>
             </div>
         )
     }

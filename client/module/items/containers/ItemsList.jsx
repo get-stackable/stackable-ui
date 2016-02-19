@@ -2,7 +2,7 @@
 ItemsList = class ItemsList extends React.Component {
     getMeteorData() {
         let handle = Meteor.subscribe('items.all', this.props.appId);
-        let handle2 = Meteor.subscribe('containers.all', this.props.id);
+        let handle2 = Meteor.subscribe('containers.all', this.props.appId);
 
         return {
             loading: !handle.ready(),
@@ -53,7 +53,7 @@ ItemsList = class ItemsList extends React.Component {
                 {this.data.containers.map((type, index) => {
                     return (
                         <a
-                            href={FlowRouter.path('itemCreate', {type: type.slug, appId: this.props.id})}
+                            href={FlowRouter.path('itemCreate', {type: type.slug, appId: this.props.appId})}
                             key={index}>Create {type.name} - </a>
                     )
                 })}
