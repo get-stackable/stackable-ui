@@ -1,3 +1,12 @@
+FlowRouter.route('/items/:appId', {
+    name: 'itemsList',
+    action: function (params) {
+        ReactLayout.render(MainLayout, {
+            content: <ItemsList appId={params.appId}/>
+        });
+    }
+});
+
 FlowRouter.route('/item/create/:type/:appId', {
     name: 'itemCreate',
     action: function (params) {

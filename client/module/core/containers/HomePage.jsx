@@ -7,7 +7,7 @@ HomePage = class HomePage extends React.Component {
     }
 
     componentDidMount() {
-        Session.set('active.app', '');
+        Session.set('active.app', {});
     }
 
     render() {

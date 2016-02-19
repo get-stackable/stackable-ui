@@ -1,6 +1,6 @@
 MainLayout = class MainLayout extends React.Component {
     componentDidMount() {
-        Session.setDefault('active.app', '');
+        Session.setDefault('active.app', {});
     }
 
     render() {

@@ -1,8 +1,13 @@
 AppCard = class AppCard extends React.Component {
-    static propTypes = {
-        app: React.PropTypes.object.isRequired
+    static defaultProps = {
+        goTo: 'app'
     };
 
+    static propTypes = {
+        app: React.PropTypes.object.isRequired,
+        goTo: React.PropTypes.string,
+        closeModal: React.PropTypes.func
+    };
 
     deleteApp = () => {
         Meteor.call('app.delete', this.props.app._id, (err) => {
@@ -20,30 +25,19 @@ AppCard = class AppCard extends React.Component {
         });
     };
 
-    renderOld() {
-        return (
-            <div className="card">
-                <div className="content">
-                    <div className="header">
-                        {this.props.app.name}
-                    </div>
-                    <div className="meta">
-                        Key: {this.props.app.authKey}
-                    </div>
-                </div>
-                <div className="extra content">
-                    <div className="ui two buttons">
-                        <div
-                            className="ui basic green button"
-                            onClick={this.generateAppKey}>regenerate key</div>
-                        <div
-                            className="ui basic red button"
-                            onClick={this.deleteApp}>Delete</div>
-                    </div>
-                </div>
-            </div>
-        )
-    }
+    goTo = (appId) => {
+        if (!_.isUndefined(this.props.closeModal)) {
+            this.props.closeModal();
+        }
+
+        if (this.props.goTo == 'containers') {
+            FlowRouter.go('containersList', {appId: appId});
+        } else if (this.props.goTo == 'items') {
+            FlowRouter.go('itemsList', {appId: appId});
+        } else {
+            FlowRouter.go('appManage', {id: appId});
+        }
+    };
 
     render() {
         return (
@@ -64,13 +58,38 @@ AppCard = class AppCard extends React.Component {
                     </div>
                     <div className="thirteen wide column">
                         <div className="content">
-                            <a className="header" href={FlowRouter.path('appManage', {id: this.props.app._id})}>
+                            <a className="header" onClick={this.goTo.bind(this, this.props.app._id)}>
                                 {this.props.app.name}
                             </a>
                             <div className="meta">
                                 Key: {this.props.app.authKey}
                             </div>
                         </div>
+                    </div>
+                </div>
+            </div>
+        )
+    }
+
+    renderOld() {
+        return (
+            <div className="card">
+                <div className="content">
+                    <div className="header">
+                        {this.props.app.name}
+                    </div>
+                    <div className="meta">
+                        Key: {this.props.app.authKey}
+                    </div>
+                </div>
+                <div className="extra content">
+                    <div className="ui two buttons">
+                        <div
+                            className="ui basic green button"
+                            onClick={this.generateAppKey}>regenerate key</div>
+                        <div
+                            className="ui basic red button"
+                            onClick={this.deleteApp}>Delete</div>
                     </div>
                 </div>
             </div>

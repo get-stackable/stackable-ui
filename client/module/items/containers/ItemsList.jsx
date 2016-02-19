@@ -1,13 +1,14 @@
-AppManage = class AppManage extends React.Component {
+//ItemsList
+ItemsList = class ItemsList extends React.Component {
     getMeteorData() {
-        let handle = Meteor.subscribe('containers.all', this.props.id);
-        let handle2 = Meteor.subscribe('items.all', this.props.id);
+        let handle = Meteor.subscribe('items.all', this.props.appId);
+        let handle2 = Meteor.subscribe('containers.all', this.props.id);
 
         return {
             loading: !handle.ready(),
-            containers: Container.find().fetch(),
             items: Item.find().fetch(),
-            app: Application.findOne(this.props.id)
+            containers: Container.find().fetch(),
+            app: Application.findOne(this.props.appId)
         };
     }
 
@@ -25,14 +26,6 @@ AppManage = class AppManage extends React.Component {
         });
     }
 
-    deleteContainer(containerId) {
-        Meteor.call('container.delete', containerId, (err) => {
-            if (!err) {
-                FlashMessages.sendSuccess('Container deleted successfully!');
-            }
-        });
-    }
-
     deleteItem(itemId) {
         Meteor.call('item.delete', itemId, (err) => {
             if (!err) {
@@ -44,21 +37,6 @@ AppManage = class AppManage extends React.Component {
     render() {
         return (
             <div>
-                <h2>Containers</h2>
-                <ul>
-                    {this.data.containers.map((type, index) => {
-                        return (
-                            <li key={index}>
-                                <a href={FlowRouter.path('containerUpdate', {id: type._id})}>{type.name}</a>
-                                - http://localhost:3000/api/items/{type.slug}?auth_key={this.data.app.authKey}
-                                - <a onClick={() => this.deleteContainer(type._id)}>delete</a>
-                            </li>
-                        )
-                    })}
-                </ul>
-                <a href={FlowRouter.path('containerCreate', {appId: this.props.id})}>Create container</a>
-                <hr />
-
                 <h2>Items</h2>
                 <ul>
                     {this.data.items.map((entry, index) => {
@@ -84,4 +62,4 @@ AppManage = class AppManage extends React.Component {
     }
 };
 
-reactMixin(AppManage.prototype, ReactMeteorData);
+reactMixin(ItemsList.prototype, ReactMeteorData);

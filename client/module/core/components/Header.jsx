@@ -7,16 +7,6 @@ Header = class Header extends React.Component {
         };
     }
 
-    renderOld() {
-        return (
-            <div>
-                <a href={FlowRouter.path('home')}>Home</a>
-                <AccountsUIWrapper />
-                <SearchForm />
-            </div>
-        )
-    }
-
     renderApps() {
         if (this.data.apps.length === 0) {
             return;
@@ -47,7 +37,7 @@ Header = class Header extends React.Component {
                     </div>
                     <div className="item">
                         <p className="active-site">
-                            {this.data.activeApp}
+                            {!_.isUndefined(this.data.activeApp) ? this.data.activeApp.name : ''}
                         </p>
                     </div>
                     <div className="right item">
