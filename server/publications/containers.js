@@ -17,3 +17,19 @@ Meteor.publish('containers.single', function (id) {
         this.ready();
     }
 });
+
+Meteor.publish('containers.find', function (query, limit) {
+    //find by query
+    let find = {};
+
+    if (!_.isNull(query)) {
+        let queryRegex = ".*" + query + ".*";
+        find = {
+            $or: [
+                {"name": {$regex: queryRegex, $options: 'i'}}
+            ]
+        };
+    }
+
+    return Container.find(find)
+});

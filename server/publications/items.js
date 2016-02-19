@@ -31,10 +31,11 @@ Meteor.publish('items.find', function (query, limit) {
         let queryRegex = ".*" + query + ".*";
         find = {
             $or: [
-                {"data": {$regex: queryRegex, $options: 'i'}}
+                {"tags": {$regex: queryRegex, $options: 'i'}}
             ]
         };
     }
 
-    return Item.find(find)
+    //todo set limit
+    return Item.find(find);
 });

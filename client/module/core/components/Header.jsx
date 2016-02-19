@@ -17,14 +17,14 @@ Header = class Header extends React.Component {
             return (
                 <a className="item"
                    key={app._id}
-                   href={FlowRouter.path('appManage', {id: app._id})}>
+                   href={FlowRouter.path('containersList', {appId: app._id})}>
                     <i className="caret right icon"></i> {app.name}
                 </a>
             )
         });
     }
 
-    showRoute() {
+    showSearch() {
         if (this.data.currentRoute === 'containersList' || this.data.currentRoute === 'itemsList') {
             return false;
         }
@@ -41,7 +41,7 @@ Header = class Header extends React.Component {
                         {Meteor.App.NAME}
                         <div className="sub header">{Meteor.App.DESCRIPTION}</div>
                     </a>
-                    {this.showRoute() ?
+                    {this.showSearch() ?
                     <div className="item">
                         <SearchForm />
                     </div>:''}
