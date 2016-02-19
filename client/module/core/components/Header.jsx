@@ -57,10 +57,10 @@ Header = class Header extends React.Component {
                         </a>
                     </div>
                     <div className="ui simple dropdown right item" style={{'marginLeft': '30px !important'}}>
-                        Switch Apps <i className="dropdown icon"></i>
+                        Switch Stacks <i className="dropdown icon"></i>
                         <div className="menu">
                             {this.renderApps()}
-                            <a className="item" href={FlowRouter.path('appCreate')}>create app</a>
+                            <a className="item" href={FlowRouter.path('appCreate')}>create stack</a>
                         </div>
                     </div>
                 </div>

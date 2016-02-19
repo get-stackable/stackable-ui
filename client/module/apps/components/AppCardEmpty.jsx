@@ -12,7 +12,7 @@ AppCardEmpty = class AppCardEmpty extends React.Component {
                         className="meta"
                         href={FlowRouter.path('appCreate')}
                         style={{textDecoration: 'underline'}}>
-                        + create new app
+                        + create new stack
                     </a>
                 </div>
             </div>

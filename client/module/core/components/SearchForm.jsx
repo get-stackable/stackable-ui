@@ -29,7 +29,7 @@ SearchForm = class SearchForm extends React.Component {
                     <input
                         type="text"
                         name="query"
-                        placeholder="Search..."
+                        placeholder="Search in all stacks..."
                         value={this.state.query}
                         onChange={this.onChange.bind(this, 'query')}
                         onKeyUp={this.doSearch} />
