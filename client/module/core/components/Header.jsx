@@ -39,8 +39,8 @@ Header = class Header extends React.Component {
                 <div className="ui fluid container">
                     <a href={FlowRouter.path('home')} className="header item">
                         <img className="logo" src="/images/logo.png" />
-                        stackable
-                        <div className="sub header">API DRIVEN CONTENT</div>
+                        {Meteor.App.NAME}
+                        <div className="sub header">{Meteor.App.DESCRIPTION}</div>
                     </a>
                     <div className="item">
                         <SearchForm />

@@ -12,7 +12,7 @@ HomePage = class HomePage extends React.Component {
 
     render() {
         if (_.isNull(this.data.user)) {
-            return <AccountsUIWrapper />
+            return <Loading active={true} />
         }
 
         return (

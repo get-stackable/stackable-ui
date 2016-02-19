@@ -3,6 +3,6 @@ if (Meteor.App) {
 }
 
 Meteor.App = {
-    NAME: 'Kato CMS',
-    DESCRIPTION: 'Kato CMS'
+    NAME: 'stackable',
+    DESCRIPTION: 'API DRIVEN CONTENT'
 };
