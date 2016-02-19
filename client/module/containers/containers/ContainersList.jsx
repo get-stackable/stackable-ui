@@ -33,20 +33,51 @@ ContainersList = class ContainersList extends React.Component {
 
     render() {
         return (
-            <div>
-                <h2>Containers</h2>
-                <ul>
-                    {this.data.containers.map((type, index) => {
-                        return (
-                            <li key={index}>
-                                <a href={FlowRouter.path('containerUpdate', {id: type._id})}>{type.name}</a>
-                                - http://localhost:3000/api/items/{type.slug}?auth_key={this.data.app.authKey}
-                                - <a onClick={() => this.deleteContainer(type._id)}>delete</a>
-                            </li>
-                        )
-                    })}
-                </ul>
-                <a href={FlowRouter.path('containerCreate', {appId: this.props.appId})}>Create container</a>
+            <div className="ui grid full-height" style={{'marginLeft': '0'}}>
+                <div className="two wide column side-sub-menu">
+                    <SideSubMenu
+                        heading="Containers"
+                        buttonText="+ create container"
+                        buttonLink={FlowRouter.path('containerCreate', {appId: this.props.appId})} />
+                </div>
+                <div className="fourteen wide column" style={{'paddingLeft': '0'}}>
+                    <div className="content-wrapper">
+                        <div className="ui grid padding35">
+                            <div className="sixteen wide column">
+                                <table className="ui celled table" style={{'marginTop': '15px'}}>
+                                    <thead>
+                                    <tr>
+                                        <th>Container Name</th>
+                                        <th>Description</th>
+                                        <th>Actions</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    {this.data.containers.map((type) => {
+                                        return (
+                                            <tr key={type._id}>
+                                                <td>
+                                                    <a href={FlowRouter.path('containerUpdate', {id: type._id})}>{type.name}</a>
+                                                </td>
+                                                <td>
+                                                    http://localhost:3000/api/items/{type.slug}?auth_key={this.data.app.authKey}
+                                                </td>
+                                                <td>
+                                                    <a
+                                                        className="mini negative ui button"
+                                                        onClick={() => this.deleteContainer(type._id)}>
+                                                        delete
+                                                    </a>
+                                                </td>
+                                            </tr>
+                                        )
+                                    })}
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         )
     }

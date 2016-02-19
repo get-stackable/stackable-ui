@@ -1,8 +1,15 @@
 NotFound = class NotFound extends React.Component {
     render() {
         return (
-            <div className="ui grid page main">
-                <h2 className="ui header">Page you are looking for is not found.</h2>
+            <div>
+                <PageHeading>
+                    Not Found
+                </PageHeading>
+                <div className="ui grid padding35">
+                    <div className="sixteen wide column">
+                        <p>Page you are looking for is not found.</p>
+                    </div>
+                </div>
             </div>
         )
     }

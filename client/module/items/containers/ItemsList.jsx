@@ -36,27 +36,62 @@ ItemsList = class ItemsList extends React.Component {
 
     render() {
         return (
-            <div>
-                <h2>Items</h2>
-                <ul>
-                    {this.data.items.map((entry, index) => {
-                        let dataKeys = _.keys(entry.data);
-                        return (
-                            <li key={index}>
-                                <a href={FlowRouter.path('itemUpdate', {type: entry.container, id: entry._id})}>{entry.data[dataKeys[0]]}</a>
-                                - http://localhost:3000/api/items/{entry.container}/{entry._id}?auth_key={this.data.app.authKey}
-                                - <a onClick={() => this.deleteItem(entry._id)}>delete</a>
-                            </li>
-                        )
-                    })}
-                </ul>
-                {this.data.containers.map((type, index) => {
-                    return (
-                        <a
-                            href={FlowRouter.path('itemCreate', {type: type.slug, appId: this.props.appId})}
-                            key={index}>Create {type.name} - </a>
-                    )
-                })}
+            <div className="ui grid full-height" style={{'marginLeft': '0'}}>
+                <div className="two wide column side-sub-menu">
+                    <SideSubMenu
+                        heading="Items"
+                        buttonText="+ create item"
+                        buttonLink="#" />
+                </div>
+                <div className="fourteen wide column" style={{'paddingLeft': '0'}}>
+                    <div className="content-wrapper">
+                        <div className="ui grid padding35">
+                            <div className="sixteen wide column">
+                                <table className="ui celled table" style={{'marginTop': '15px'}}>
+                                    <thead>
+                                    <tr>
+                                        <th>Item Name</th>
+                                        <th>Description</th>
+                                        <th>Actions</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    {this.data.items.map((item) => {
+                                        let dataKeys = _.keys(item.data);
+                                        return (
+                                            <tr key={item._id}>
+                                                <td>
+                                                    <a href={FlowRouter.path('itemUpdate', {type: item.container, id: item._id})}>
+                                                        {item.data[dataKeys[0]]}
+                                                    </a>
+                                                </td>
+                                                <td>
+                                                    http://localhost:3000/api/items/{item.container}/{item._id}?auth_key={this.data.app.authKey}
+                                                </td>
+                                                <td>
+                                                    <a
+                                                        className="mini negative ui button"
+                                                        onClick={() => this.deleteItem(item._id)}>
+                                                        delete
+                                                    </a>
+                                                </td>
+                                            </tr>
+                                        )
+                                    })}
+                                    </tbody>
+                                </table>
+                                <hr />
+                                {this.data.containers.map((type, index) => {
+                                    return (
+                                        <a
+                                            href={FlowRouter.path('itemCreate', {type: type.slug, appId: this.props.appId})}
+                                            key={index}>Create {type.name} - </a>
+                                    )
+                                })}
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         )
     }
