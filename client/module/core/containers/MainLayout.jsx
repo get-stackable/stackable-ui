@@ -1,6 +1,7 @@
 MainLayout = class MainLayout extends React.Component {
     componentDidMount() {
         Session.setDefault('active.app', {});
+        Session.setDefault('app.modal', false);
     }
 
     render() {

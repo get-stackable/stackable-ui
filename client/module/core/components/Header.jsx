@@ -17,7 +17,7 @@ Header = class Header extends React.Component {
                 <a className="item"
                    key={app._id}
                    href={FlowRouter.path('appManage', {id: app._id})}>
-                    {app.name}
+                    <i className="caret right icon"></i> {app.name}
                 </a>
             )
         });
@@ -50,7 +50,9 @@ Header = class Header extends React.Component {
                         Switch Stacks <i className="dropdown icon"></i>
                         <div className="menu">
                             {this.renderApps()}
-                            <a className="item" href={FlowRouter.path('appCreate')}>create stack</a>
+                            <a className="item" href={FlowRouter.path('appCreate')}>
+                                <i className="plus icon"></i> new stack
+                            </a>
                         </div>
                     </div>
                 </div>

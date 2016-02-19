@@ -5,8 +5,7 @@ AppCard = class AppCard extends React.Component {
 
     static propTypes = {
         app: React.PropTypes.object.isRequired,
-        goTo: React.PropTypes.string,
-        closeModal: React.PropTypes.func
+        goTo: React.PropTypes.string
     };
 
     deleteApp = () => {
@@ -25,17 +24,20 @@ AppCard = class AppCard extends React.Component {
         });
     };
 
-    goTo = (appId) => {
-        if (!_.isUndefined(this.props.closeModal)) {
-            this.props.closeModal();
+    goTo = (to) => {
+        Session.set('app.modal', false);
+
+        let goTo = this.props.goTo;
+        if (_.isString(to)) {
+            goTo = to;
         }
 
-        if (this.props.goTo == 'containers') {
-            FlowRouter.go('containersList', {appId: appId});
-        } else if (this.props.goTo == 'items') {
-            FlowRouter.go('itemsList', {appId: appId});
+        if (goTo == 'containers') {
+            FlowRouter.go('containersList', {appId: this.props.app._id});
+        } else if (goTo == 'items') {
+            FlowRouter.go('itemsList', {appId: this.props.app._id});
         } else {
-            FlowRouter.go('appManage', {id: appId});
+            FlowRouter.go('appManage', {id: this.props.app._id});
         }
     };
 
@@ -45,24 +47,27 @@ AppCard = class AppCard extends React.Component {
                 <div className="ui grid">
                     <div className="three wide column">
                         <div className="ui list">
-                            <div className="item">
+                            <a className="item" onClick={this.goTo.bind(this, 'app')}>
                                 <img src="/images/logo.png" style={{'width': '30px', 'height': 'auto'}} />
-                            </div>
-                            <div className="item">
+                            </a>
+                            <a className="item" onClick={this.goTo.bind(this, 'items')}>
                                 <img src="/images/grey-item.png" />
-                            </div>
-                            <div className="item">
+                            </a>
+                            <a className="item" onClick={this.goTo.bind(this, 'containers')}>
                                 <img src="/images/grey-container.png" />
-                            </div>
+                            </a>
                         </div>
                     </div>
                     <div className="thirteen wide column">
                         <div className="content">
-                            <a className="header" onClick={this.goTo.bind(this, this.props.app._id)}>
+                            <a className="header" onClick={this.goTo}>
                                 {this.props.app.name}
                             </a>
                             <div className="meta">
                                 Key: {this.props.app.authKey}
+                                <a onClick={this.generateAppKey}>
+                                    <i className="refresh icon"></i>
+                                </a>
                             </div>
                         </div>
                     </div>

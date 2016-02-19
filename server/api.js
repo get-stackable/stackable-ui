@@ -8,7 +8,7 @@ let allowedFields = {'_id': 1, 'data': 1, 'contentType': 1};
 
 JsonRoutes.add("get", "/api/items/:type/:id", function (req, res, next) {
     let data = {'success': false};
-    let app = App.findOne({authKey: req.query.auth_key});
+    let app = Application.findOne({authKey: req.query.auth_key});
 
     if (app) {
         let query = {
@@ -24,7 +24,7 @@ JsonRoutes.add("get", "/api/items/:type/:id", function (req, res, next) {
 
 JsonRoutes.add("get", "/api/items/:type", function (req, res, next) {
     let data = [];
-    let domain = App.findOne({authKey: req.query.auth_key});
+    let domain = Application.findOne({authKey: req.query.auth_key});
 
     if (domain) {
         let query = {

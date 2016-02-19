@@ -3,7 +3,6 @@ Sidebar = class Sidebar extends React.Component {
         super(props);
 
         this.state = {
-            showModal: false,
             goTo: 'app'
         };
     }
@@ -18,8 +17,8 @@ Sidebar = class Sidebar extends React.Component {
         if (!_.isUndefined(this.data.activeApp.id)) {
             FlowRouter.go('containersList', {appId: this.data.activeApp.id});
         } else {
+            Session.set('app.modal', true);
             this.setState({
-                showModal: true,
                 goTo: 'containers'
             });
         }
@@ -29,32 +28,23 @@ Sidebar = class Sidebar extends React.Component {
         if (!_.isUndefined(this.data.activeApp.id)) {
             FlowRouter.go('itemsList', {appId: this.data.activeApp.id});
         } else {
+            Session.set('app.modal', true);
             this.setState({
-                showModal: true,
                 goTo: 'items'
             });
         }
     };
 
-    hideModalBox = () => {
-        this.setState({
-            showModal: false
-        });
-    };
-
     renderModal() {
         return (
-            <AppsModal
-                showModal={this.state.showModal}
-                hideModal={this.hideModalBox}
-                goTo={this.state.goTo} />
+            <AppsModal goTo={this.state.goTo} />
         )
     }
 
     render() {
         return (
             <div className="ui left vertical labeled icon menu">
-                <a className="item" href={FlowRouter.path('home')}>
+                <a className="item" href={FlowRouter.path('home')} style={{'paddingTop': '3em'}}>
                     <img src="/images/icon-dashboard.png" className="icon" style={{'width': '30px', 'height': '30px'}} />
                     Dashboard
                 </a>

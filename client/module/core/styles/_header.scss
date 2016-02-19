@@ -23,7 +23,7 @@
       &.dropdown {
         font-weight: $font-bold;
         background-color: $dark-background;
-        padding: 0.3em 2.4em;
+        padding: 0.3em 3.6em;
         .menu {
           background-color: $dark-background;
           > .item {
@@ -32,15 +32,26 @@
             &:hover {
               color: $font-grey !important;
               background-color: $color-grey;
+              text-decoration: underline;
+              .icon {
+                text-decoration: none !important;
+              }
+            }
+            .icon {
+              float: left !important;
             }
           }
         }
       }
       .search {
         margin-left: 25px;
+        .search.icon {
+          color: $search-icon-color;
+          font-size: 1.4em;
+        }
         input {
           background: $color-light-grey;
-          color: $color-white;
+          color: $font-grey;
           width: 350px;
           &:focus {
             border-color: transparent;

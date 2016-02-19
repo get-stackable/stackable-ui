@@ -1,7 +1,5 @@
 AppsModal = class AppsModal extends React.Component {
     static propTypes = {
-        showModal: React.PropTypes.bool.isRequired,
-        hideModal: React.PropTypes.func.isRequired,
         goTo: React.PropTypes.string.isRequired
     };
 
@@ -22,12 +20,8 @@ AppsModal = class AppsModal extends React.Component {
     componentDidUpdate() {
         $('#app-modal')
             .modal({detachable: false})
-            .modal(this.props.showModal ? 'show' : 'hide');
+            .modal(Session.get('app.modal') ? 'show' : 'hide');
     }
-
-    hideModal = () => {
-        this.props.hideModal();
-    };
 
     render() {
         return (
@@ -43,8 +37,7 @@ AppsModal = class AppsModal extends React.Component {
                                 <AppCard
                                     key={app._id}
                                     app={app}
-                                    goTo={this.props.goTo}
-                                    closeModal={this.props.hideModal} />
+                                    goTo={this.props.goTo} />
                             )
                         })}
                     </div>
