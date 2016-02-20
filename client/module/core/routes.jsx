@@ -6,7 +6,7 @@ loggedInOnly = function(context, redirect) {
 
 guestsOnly = function(context, redirect) {
     if (!_.isNull(Meteor.user())) {
-        redirect('/home');
+        redirect('/');
     }
 };
 
