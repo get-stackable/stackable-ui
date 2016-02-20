@@ -39,6 +39,10 @@ a {
   font-family: $default-font;
 }
 
+.ui.form input:not([type]), .ui.form input[type="date"], .ui.form input[type="datetime-local"], .ui.form input[type="email"], .ui.form input[type="number"], .ui.form input[type="password"], .ui.form input[type="search"], .ui.form input[type="tel"], .ui.form input[type="time"], .ui.form input[type="text"], .ui.form input[type="url"] {
+  font-family: $default-font;
+}
+
 .ui.cards > .card, .ui.card {
   &:hover {
     box-shadow: 0px 1px 3px 0px $default-font-color, 0px 0px 0px 1px $default-font-color;
@@ -87,4 +91,11 @@ h3 {
 .content-wrapper {
   background-color: $color-white;
   padding-bottom: 8em;
+}
+
+.blank-layout {
+  height: 100vh;
+  .column {
+    max-width: 600px;
+  }
 }

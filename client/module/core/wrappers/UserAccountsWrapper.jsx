@@ -1,7 +1,7 @@
 UserAccountsWrapper = React.createClass({
     componentDidMount() {
         // Use Meteor Blaze to render login buttons
-        this.view = Blaze.render(Template.atForm,
+        this.view = Blaze.render(Template.atFormCustom,
             ReactDOM.findDOMNode(this.refs.container));
     },
     componentWillUnmount() {

@@ -1,0 +1,33 @@
+<template name="atPwdFormCustom">
+    <div class="at-pwd-form">
+        <div class="ui large header">
+            <img className="logo" src="/images/logo.png" />
+            stackable
+            <div class="sub header">
+                API DRIVEN CONTENT
+            </div>
+        </div>
+        <form id="at-pwd-form" action="#" method="POST" novalidate class="ui large form">
+            <div class="ui segment">
+                {{#each fields}}
+                {{> atInput}}
+                {{/each}}
+                {{#if showReCaptcha}}
+                {{> atReCaptcha}}
+                {{/if}}
+                <div class="ui grid">
+                    <div class="four column row">
+                        <div class="left floated column">
+                            {{#if showForgotPasswordLink}}
+                            {{> atPwdLink}}
+                            {{/if}}
+                        </div>
+                        <div class="right floated column">
+                            {{> atPwdFormBtnCustom}}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</template>

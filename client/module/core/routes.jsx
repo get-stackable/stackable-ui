@@ -44,7 +44,7 @@ FlowRouter.route('/', {
 FlowRouter.route('/restricted', {
     name: 'restricted',
     action: function() {
-        ReactLayout.render(MainLayout, {
+        ReactLayout.render(BlankLayout, {
             content: <Restricted />
         });
     }
@@ -53,7 +53,7 @@ FlowRouter.route('/restricted', {
 FlowRouter.route('/not-found', {
     name: 'notFound',
     action: function() {
-        ReactLayout.render(MainLayout, {
+        ReactLayout.render(BlankLayout, {
             content: <NotFound />
         });
     }
@@ -62,7 +62,7 @@ FlowRouter.route('/not-found', {
 FlowRouter.route('/login', {
     name: 'login',
     action: function() {
-        ReactLayout.render(MainLayout, {
+        ReactLayout.render(BlankLayout, {
             content: <Login />
         });
     }

@@ -32,6 +32,11 @@ Header = class Header extends React.Component {
         return true;
     }
 
+    logout = () => {
+        AccountsTemplates.logout();
+        FlowRouter.go('login');
+    };
+
     render() {
         return (
             <div className="ui fixed inverted top menu">
@@ -51,7 +56,7 @@ Header = class Header extends React.Component {
                         </p>
                     </div>
                     <div className="right item">
-                        <a onClick={() => AccountsTemplates.logout()}>
+                        <a onClick={this.logout}>
                             <i className="sign out icon"></i>
                             logout
                         </a>
