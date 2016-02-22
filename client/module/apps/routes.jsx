@@ -7,15 +7,6 @@ FlowRouter.route('/app/manage/:id', {
     }
 });
 
-FlowRouter.route('/app/create', {
-    name: 'appCreate',
-    action: function () {
-        ReactLayout.render(MainLayout, {
-            content: <AppCreate />
-        });
-    }
-});
-
 FlowRouter.route('/app/update/:id', {
     name: 'appUpdate',
     action: function (params) {

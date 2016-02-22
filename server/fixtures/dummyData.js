@@ -1,6 +1,9 @@
 // The "||" notation doesn't work yet
 Fixtures = typeof Fixtures !== "undefined" ? Fixtures : {};
 
+Fixtures.users = [];
+Fixtures.applicationLibrary = [];
+
 var createProfile = function (user) {
     return {
         first_name: user.name,
@@ -9,8 +12,6 @@ var createProfile = function (user) {
         about: Fake.sentence(20)
     };
 };
-
-Fixtures.users = [];
 
 let user = Fake.user();
 Fixtures.users.push({
@@ -27,4 +28,42 @@ Fixtures.users.push({
     profile: createProfile(user),
     isActive: true,
     authKey: '123456'
+});
+
+Fixtures.applicationLibrary.push({
+    name: 'Blog',
+    description: 'This library creates standard blog.',
+    containers: [{
+        name: 'Blog',
+        items: [{
+            name: 'Title',
+            type: 'text',
+            required: true
+        }, {
+            name: 'Description',
+            type: 'textArea'
+        }]
+    }]
+});
+
+Fixtures.applicationLibrary.push({
+    name: 'Product Catalog',
+    description: 'This library creates product catalog quickly.',
+    containers: [{
+        name: 'Products',
+        items: [{
+            name: 'Title',
+            type: 'text',
+            required: true
+        }, {
+            name: 'Description',
+            type: 'textArea'
+        }, {
+            name: 'Cost',
+            type: 'text'
+        }, {
+            name: 'Is Active',
+            type: 'boolean'
+        }]
+    }]
 });

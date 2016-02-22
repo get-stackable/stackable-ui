@@ -1,4 +1,8 @@
 AppCardEmpty = class AppCardEmpty extends React.Component {
+    showCreateModal = () => {
+        Session.set('app.create.modal', ! Session.get('app.create.modal'));
+    };
+
     render() {
         return (
             <div className="card">
@@ -10,7 +14,7 @@ AppCardEmpty = class AppCardEmpty extends React.Component {
                     </div>
                     <a
                         className="meta"
-                        href={FlowRouter.path('appCreate')}
+                        onClick={this.showCreateModal}
                         style={{textDecoration: 'underline'}}>
                         + create new stack
                     </a>

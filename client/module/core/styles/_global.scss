@@ -99,3 +99,32 @@ h3 {
     max-width: 600px;
   }
 }
+
+.ui.modal {
+  border: 2px solid $color-grey;
+  border-radius: 0;
+  > .header:not(.ui) {
+    background-color: $color-grey;
+    color: $color-white;
+    text-align: center;
+    border-radius: 0;
+    font-weight: $font-normal;
+    font-size: 2.2rem;
+    font-family: $default-font;
+    img {
+      width: 30px;
+      height: auto;
+      float: left;
+    }
+    i {
+      float: right;
+    }
+  }
+}
+
+.ui.button {
+  font-weight: $font-normal;
+  &.secondary {
+    background-color: $color-grey;
+  }
+}

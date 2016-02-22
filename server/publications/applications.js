@@ -5,3 +5,7 @@ Meteor.publish('apps.all', function () {
         this.ready();
     }
 });
+
+Meteor.publish('apps.libraries.all', function () {
+    return ApplicationLibrary.find();
+});
