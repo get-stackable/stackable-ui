@@ -49,7 +49,7 @@ AppCard = class AppCard extends React.Component {
                                 {this.props.app.name}
                             </a>
                             <div className="meta">
-                                Key: {this.props.app.authKey}
+                                Public Key: {this.props.app.publicKey}
                                 <a href={FlowRouter.path('appUpdate', {id: this.props.app._id})}>
                                     <i className="setting icon"></i>
                                 </a>

@@ -41,19 +41,21 @@ AppUpdate = class AppUpdate extends React.Component {
                         <a className="ui orange button item">
                             Stack Tools
                         </a>
-                        <a className="ui button item" onClick={() => this.setState({cloneModalVisible: !this.state.cloneModalVisible})}>
+                        <a className="ui button item" onClick={() => this.setState({cloneModalVisible: true})}>
                             Clone Stack
                         </a>
-                        <a className="ui button item" onClick={() => this.setState({deleteModalVisible: !this.state.deleteModalVisible})}>
+                        <a className="ui button item" onClick={() => this.setState({deleteModalVisible: true})}>
                             Delete Stack
                         </a>
-                        <div className="item"></div>
+                        <div className="item">
+                            <small>With great power comes with great responsibility</small>
+                        </div>
                     </div>
                 </div>
                 <div className="fourteen wide column" style={{'paddingLeft': '0'}}>
                     <div className="content-wrapper" style={{'padding': '25px 35px !important'}}>
 
-                        <div className="ui tabular menu" id="app-update-tabs">
+                        <div className="ui pointing secondary menu" id="app-update-tabs">
                             <div className="item active" data-tab="app-info">
                                 Stack Information
                             </div>
@@ -89,11 +91,11 @@ AppUpdate = class AppUpdate extends React.Component {
                         <AppCloneModal
                             app={this.data.app}
                             visible={this.state.cloneModalVisible}
-                            toggleModal={() => this.setState({cloneModalVisible: !this.state.cloneModalVisible})}/>
+                            toggleModal={() => this.setState({cloneModalVisible: false})}/>
                         <AppDeleteModal
                             app={this.data.app}
                             visible={this.state.deleteModalVisible}
-                            toggleModal={() => this.setState({deleteModalVisible: !this.state.deleteModalVisible})} />
+                            toggleModal={() => this.setState({deleteModalVisible: false})} />
                     </div>
                 </div>
             </div>

@@ -27,7 +27,7 @@ AppUpdateForm = class AppUpdateForm extends React.Component {
             description: this.state.description
         };
 
-        Meteor.call('app.update', this.props.id, data, (err, res) => {
+        Meteor.call('app.update', this.props.app._id, data, (err, res) => {
             //console.log(err, res);
             if (!err) {
                 FlashMessages.sendSuccess('App updated successfully!');
@@ -52,7 +52,7 @@ AppUpdateForm = class AppUpdateForm extends React.Component {
                         value={this.state.description}
                         onChange={(e) => this.setState({description: e.target.value})}/>
                 </div>
-                <button className="ui button" type="submit"  onClick={this.handleSubmit}>Update</button>
+                <button className="positive ui button" type="submit" onClick={this.handleSubmit}>Update</button>
             </div>
         )
     }

@@ -20,7 +20,7 @@ AppCloneModal = class AppCloneModal extends React.Component {
             .modal({
                 detachable: false,
                 onHidden: function(){
-                    self.toggleModal()
+                    self.props.toggleModal()
                 }
             })
             .modal(this.props.visible ? 'show' : 'hide');

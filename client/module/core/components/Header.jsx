@@ -37,6 +37,10 @@ Header = class Header extends React.Component {
         FlowRouter.go('login');
     };
 
+    showCreateModal = () => {
+        Session.set('app.create.modal', ! Session.get('app.create.modal'));
+    };
+
     render() {
         return (
             <div className="ui fixed inverted top menu">
@@ -65,7 +69,7 @@ Header = class Header extends React.Component {
                         Switch Stacks <i className="dropdown icon"></i>
                         <div className="menu">
                             {this.renderApps()}
-                            <a className="item" href={FlowRouter.path('appCreate')}>
+                            <a className="item" onClick={this.showCreateModal}>
                                 <i className="plus icon"></i> new stack
                             </a>
                         </div>
