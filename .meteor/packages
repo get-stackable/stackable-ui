@@ -33,7 +33,7 @@ underscorestring:underscore.string
 tomwasd:flow-router-seo
 meteorhacks:aggregate
 react-meteor-data
-cosmos:browserify
+cosmos:browserify@=0.9.3
 meteorhacks:npm
 jagi:astronomy-slug-behavior
 npm-container
