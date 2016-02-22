@@ -77,7 +77,7 @@ CreateAppModal = class CreateAppModal extends React.Component {
                     <div className="column">
                         Empty stack
                     </div>
-                    <div className="column">
+                    <div className="bottom aligned column">
                         <button className="ui secondary button pull-right" onClick={this.goToStepTwo}>
                             CREATE EMPTY STACK
                         </button>
@@ -90,8 +90,8 @@ CreateAppModal = class CreateAppModal extends React.Component {
                         Sometimes you just want to get going quickly check out our templates
                     </div>
                 </h4>
-                <div className="ui two column grid">
-                    <div className="column">
+                <div className="ui grid">
+                    <div className="thirteen wide column">
                         <div className="ui four cards">
                             {this.data.apps.map((app) => {
                                 return (
@@ -115,15 +115,25 @@ CreateAppModal = class CreateAppModal extends React.Component {
                             })}
                         </div>
                     </div>
-                    <div className="column" style={{'textAlign': 'right'}}>
+                    <div className="bottom aligned three wide column" style={{'textAlign': 'right'}}>
                         {!_.isNull(this.state.library) ?
-                            <div class="ui list">
-                                <div class="item"><strong>{this.state.library.name}</strong></div>
-                                <div class="item">{this.state.library.description}</div>
+                            <div className="ui list">
+                                <div className="item" style={{'marginBottom': '20px'}}>
+                                    <i className="arrow right icon"></i>
+                                    <div className="content">
+                                        <strong>{this.state.library.name}</strong>
+                                    </div>
+                                </div>
+                                <div className="item" style={{'marginBottom': '20px'}}>
+                                    <i className="cube icon"></i>
+                                    <div className="content">
+                                        {this.state.library.description}
+                                    </div>
+                                </div>
                             </div>
                             : ''}
                         <button
-                            className="ui secondary button pull-right"
+                            className="fluid ui secondary button"
                             onClick={this.goToStepTwo}>
                             USE STACK
                         </button>
@@ -188,7 +198,7 @@ CreateAppModal = class CreateAppModal extends React.Component {
                 <div className="header">
                     <img src="/images/logo.png" />
                     Create new stack
-                    <i className="close icon"></i>
+                    <i className="close icon" onClick={() => Session.set('app.create.modal', false)}></i>
                 </div>
                 <div className="content">
                     <Loading active={this.state.isLoading} />

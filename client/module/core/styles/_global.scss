@@ -115,6 +115,7 @@ h3 {
       width: 30px;
       height: auto;
       float: left;
+      margin-top: 10px;
     }
     i {
       float: right;
@@ -124,7 +125,12 @@ h3 {
 
 .ui.button {
   font-weight: $font-normal;
+  border-radius: 0;
   &.secondary {
     background-color: $color-grey;
   }
+}
+
+.dimmed.dimmable > .ui.animating.dimmer, .dimmed.dimmable > .ui.visible.dimmer, .ui.active.dimmer {
+  opacity: 0.75;
 }
