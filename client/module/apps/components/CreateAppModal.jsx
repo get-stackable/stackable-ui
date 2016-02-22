@@ -115,7 +115,7 @@ CreateAppModal = class CreateAppModal extends React.Component {
                             })}
                         </div>
                     </div>
-                    <div className="bottom aligned three wide column" style={{'textAlign': 'right'}}>
+                    <div className="bottom aligned three wide column">
                         {!_.isNull(this.state.library) ?
                             <div className="ui list">
                                 <div className="item" style={{'marginBottom': '20px'}}>

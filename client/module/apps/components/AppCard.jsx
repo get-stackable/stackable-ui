@@ -8,22 +8,6 @@ AppCard = class AppCard extends React.Component {
         goTo: React.PropTypes.string
     };
 
-    deleteApp = () => {
-        Meteor.call('app.delete', this.props.app._id, (err) => {
-            if (!err) {
-                FlashMessages.sendSuccess('App deleted successfully!');
-            }
-        });
-    };
-
-    generateAppKey = () => {
-        Meteor.call('app.generateKey', this.props.app._id, (err) => {
-            if (!err) {
-                FlashMessages.sendSuccess('App key re-generated successfully!');
-            }
-        });
-    };
-
     goTo = (to) => {
         Session.set('app.modal', false);
 
@@ -66,36 +50,11 @@ AppCard = class AppCard extends React.Component {
                             </a>
                             <div className="meta">
                                 Key: {this.props.app.authKey}
-                                <a onClick={this.generateAppKey}>
-                                    <i className="refresh icon"></i>
+                                <a href={FlowRouter.path('appUpdate', {id: this.props.app._id})}>
+                                    <i className="setting icon"></i>
                                 </a>
                             </div>
                         </div>
-                    </div>
-                </div>
-            </div>
-        )
-    }
-
-    renderOld() {
-        return (
-            <div className="card">
-                <div className="content">
-                    <div className="header">
-                        {this.props.app.name}
-                    </div>
-                    <div className="meta">
-                        Key: {this.props.app.authKey}
-                    </div>
-                </div>
-                <div className="extra content">
-                    <div className="ui two buttons">
-                        <div
-                            className="ui basic green button"
-                            onClick={this.generateAppKey}>regenerate key</div>
-                        <div
-                            className="ui basic red button"
-                            onClick={this.deleteApp}>Delete</div>
                     </div>
                 </div>
             </div>

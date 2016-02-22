@@ -37,10 +37,15 @@ ItemsList = class ItemsList extends React.Component {
         return (
             <div className="ui grid full-height" style={{'marginLeft': '0'}}>
                 <div className="two wide column side-sub-menu">
-                    <SideSubMenu
-                        heading="Items"
-                        buttonText="+ create item"
-                        buttonLink="#" />
+                    <div className="ui left vertical menu">
+                        <h3 className="ui header item">
+                            Items
+                        </h3>
+                        <a className="ui orange button item" href="+">
+                            + create item
+                        </a>
+                        <div className="item"></div>
+                    </div>
                 </div>
                 <div className="fourteen wide column" style={{'paddingLeft': '0'}}>
                     <div className="content-wrapper">

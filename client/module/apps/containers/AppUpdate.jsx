@@ -1,4 +1,17 @@
 AppUpdate = class AppUpdate extends React.Component {
+    constructor(props) {
+        super(props);
+
+        this.state = {
+            cloneModalVisible: false,
+            deleteModalVisible: false
+        };
+    }
+
+    componentDidMount() {
+        $('#app-update-tabs .item').tab();
+    }
+
     getMeteorData() {
         let app = Application.findOne(this.props.id);
         let data = {app};
@@ -13,22 +26,77 @@ AppUpdate = class AppUpdate extends React.Component {
         return data;
     }
 
-    handleSubmit = (data) => {
-        Meteor.call('app.update', this.props.id, data, (err, res) => {
-            //console.log(err, res);
-            if (!err) {
-                FlashMessages.sendSuccess('App updated successfully!');
-                FlowRouter.go('appManage', {id: this.props.id});
-            }
-        });
-    };
-
     render() {
+        if (_.isUndefined(this.data.app)) {
+            return <Loading active={true} />
+        }
+
         return (
-            <AppUpdateForm
-                app={this.data.app}
-                users={this.data.users}
-                handleSubmit={this.handleSubmit}/>
+            <div className="ui grid full-height" style={{'marginLeft': '0'}}>
+                <div className="two wide column side-sub-menu">
+                    <div className="ui left vertical menu">
+                        <h3 className="ui header item">
+                            Edit Stack
+                        </h3>
+                        <a className="ui orange button item">
+                            Stack Tools
+                        </a>
+                        <a className="ui button item" onClick={() => this.setState({cloneModalVisible: !this.state.cloneModalVisible})}>
+                            Clone Stack
+                        </a>
+                        <a className="ui button item" onClick={() => this.setState({deleteModalVisible: !this.state.deleteModalVisible})}>
+                            Delete Stack
+                        </a>
+                        <div className="item"></div>
+                    </div>
+                </div>
+                <div className="fourteen wide column" style={{'paddingLeft': '0'}}>
+                    <div className="content-wrapper" style={{'padding': '25px 35px !important'}}>
+
+                        <div className="ui tabular menu" id="app-update-tabs">
+                            <div className="item active" data-tab="app-info">
+                                Stack Information
+                            </div>
+                            <div className="item" data-tab="app-users">
+                                Manage Users
+                            </div>
+                            <div className="item" data-tab="app-keys">
+                                Manage Keys
+                            </div>
+                            <div className="item" data-tab="app-backup">
+                                Backup
+                            </div>
+                        </div>
+                        <div className="ui tab active" data-tab="app-info">
+                            <AppUpdateForm
+                                app={this.data.app} />
+                        </div>
+                        <div className="ui tab" data-tab="app-users">
+                            <AppUpdateUsers
+                                app={this.data.app}
+                                users={this.data.users} />
+                        </div>
+                        <div className="ui tab" data-tab="app-keys">
+                            <AppManageKeys
+                                app={this.data.app}/>
+                        </div>
+                        <div className="ui tab" data-tab="app-backup">
+                            <div className="ui segment">
+                                <p>Comming soon!</p>
+                            </div>
+                        </div>
+
+                        <AppCloneModal
+                            app={this.data.app}
+                            visible={this.state.cloneModalVisible}
+                            toggleModal={() => this.setState({cloneModalVisible: !this.state.cloneModalVisible})}/>
+                        <AppDeleteModal
+                            app={this.data.app}
+                            visible={this.state.deleteModalVisible}
+                            toggleModal={() => this.setState({deleteModalVisible: !this.state.deleteModalVisible})} />
+                    </div>
+                </div>
+            </div>
         )
     }
 };

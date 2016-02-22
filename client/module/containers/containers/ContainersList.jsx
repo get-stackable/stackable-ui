@@ -35,10 +35,15 @@ ContainersList = class ContainersList extends React.Component {
         return (
             <div className="ui grid full-height" style={{'marginLeft': '0'}}>
                 <div className="two wide column side-sub-menu">
-                    <SideSubMenu
-                        heading="Containers"
-                        buttonText="+ create container"
-                        buttonLink={FlowRouter.path('containerCreate', {appId: this.props.appId})} />
+                    <div className="ui left vertical menu">
+                        <h3 className="ui header item">
+                            Containers
+                        </h3>
+                        <a className="ui orange button item" href={FlowRouter.path('containerCreate', {appId: this.props.appId})}>
+                            + create container
+                        </a>
+                        <div className="item"></div>
+                    </div>
                 </div>
                 <div className="fourteen wide column" style={{'paddingLeft': '0'}}>
                     <div className="content-wrapper">
