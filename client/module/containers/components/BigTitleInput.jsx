@@ -11,7 +11,7 @@ BigTitleInput = class BigTitleInput extends React.Component {
                     <input
                         {...this.props}
                         type="text"
-                        label={this.props.label}
+                        placeholder={this.props.label}
                         onChange={this.props.onChange}
                         style={{'width': '70%', 'fontSize': '2.5em', 'padding': '0em', 'border': '0'}}
                     />
