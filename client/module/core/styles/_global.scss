@@ -13,6 +13,11 @@ body {
 
 a {
   color: $default-font-color;
+  cursor: pointer !important;
+  &.underline {
+    text-decoration: underline;
+    color: $color-blue;
+  }
 }
 
 .ui {
