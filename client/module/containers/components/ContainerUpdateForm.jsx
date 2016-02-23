@@ -93,16 +93,16 @@ ContainerUpdateForm = class ContainerUpdateForm extends React.Component {
           <div className="content-wrapper" style={{
             'padding': '25px 35px !important'
           }}>
-            <div className="ui two column grid">
-              <div className="column">
+            <div className="ui four column grid">
+              <div className="left floated column">
                 <div className="ui form">
                   <div className="field">
                     <label className="hidden">Type container name here</label>
-                    <input type="text" name="name" placeholder="Type container name here"/>
+                    <input type="text" name="name" placeholder="Type container name here" value={this.state.name} onChange={(e) => this.setState({name: e.target.value})}/>
                   </div>
                 </div>
               </div>
-              <div className="column">
+              <div className="right floated right aligned column">
                 <button className="ui right labeled icon button" onClick={this.props.handleSubmit.bind(this, this.state)}>
                   <i className="save icon"></i>
                   Save
