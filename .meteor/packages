@@ -24,6 +24,7 @@ kadira:react-layout
 jagi:astronomy-timestamp-behavior
 momentjs:moment
 underscore
+stevezhu:lodash
 anti:fake
 random
 tmeasday:publish-counts
