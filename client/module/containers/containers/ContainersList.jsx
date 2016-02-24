@@ -23,14 +23,6 @@ ContainersList = class ContainersList extends React.Component {
         });
     }
 
-    deleteContainer(containerId) {
-        Meteor.call('container.delete', containerId, (err) => {
-            if (!err) {
-                FlashMessages.sendSuccess('Container deleted successfully!');
-            }
-        });
-    }
-
     render() {
         if (this.data.loading) {
             return <Loading active={true} />
@@ -79,11 +71,6 @@ ContainersList = class ContainersList extends React.Component {
                                                         className="mini secondary ui button"
                                                         href={FlowRouter.path('containerUpdate', {id: type._id})}>
                                                         modify
-                                                    </a>
-                                                    <a
-                                                        className="mini negative ui button"
-                                                        onClick={() => this.deleteContainer(type._id)}>
-                                                        delete
                                                     </a>
                                                 </td>
                                             </tr>

@@ -48,6 +48,9 @@ AppDeleteModal = class AppDeleteModal extends React.Component {
                     Delete stack
                 </div>
                 <div className="content">
+                    <div className="ui segment">
+                        <p>Deleting the stack will also delete its all related containers and items!</p>
+                    </div>
                     <div className="ui form">
                         <div className="field">
                             <label>Confirm stack name</label>

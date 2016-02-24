@@ -47,7 +47,7 @@ AppUpdate = class AppUpdate extends React.Component {
                         <a className="ui button item" onClick={() => this.setState({deleteModalVisible: true})}>
                             Delete Stack
                         </a>
-                        <div className="item">
+                        <div className="item" style={{'textAlign': 'center'}}>
                             <small>With great power comes with great responsibility</small>
                         </div>
                     </div>

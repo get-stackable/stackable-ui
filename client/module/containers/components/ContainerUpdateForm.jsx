@@ -29,13 +29,9 @@ ContainerUpdateForm = class ContainerUpdateForm extends React.Component {
     constructor(props) {
         super(props);
 
-        if (_.isUndefined(props.container)) {
-            props['container'] = {};
-        }
-
         this.state = {
-            name: props.container.name || '',
-            items: props.container.items || [],
+            name: !_.isUndefined(props.container) ? props.container.name : '',
+            items: !_.isUndefined(props.container) ? props.container.items : [],
             itemModalVisible: false,
             activeItemInModal: {},
             activeModalTab: 'info'
@@ -75,6 +71,15 @@ ContainerUpdateForm = class ContainerUpdateForm extends React.Component {
         this.setState({items});
     };
 
+    deleteContainer() {
+        Meteor.call('container.delete', this.props.container._id, (err) => {
+            if (!err) {
+                FlashMessages.sendSuccess('Container deleted successfully!');
+                FlowRouter.go('containersList', {appId: this.props.container.appId});
+            }
+        });
+    }
+
     render() {
         return (
             <div className="ui grid full-height" style={{'marginLeft': '0'}}>
@@ -92,7 +97,14 @@ ContainerUpdateForm = class ContainerUpdateForm extends React.Component {
                         <a className="ui button item">
                             View Containers
                         </a>
-                        <div className="item">
+                        <ConfirmModal
+                            buttonText="Delete Containers"
+                            buttonClass="ui button item"
+                            modalTitle="Do you want to delete this container?"
+                            modalDescription="All related items will be also deleted!"
+                            accepted={() => this.deleteContainer()}/>
+
+                        <div className="item" style={{'textAlign': 'center'}}>
                             <small>With great power comes with great responsibility</small>
                         </div>
                     </div>
