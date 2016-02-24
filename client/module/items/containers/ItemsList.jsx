@@ -39,12 +39,12 @@ ItemsList = class ItemsList extends React.Component {
         });
     }
 
-    componentDidUpdate() {
-        Session.set('active.app', {
-            id: this.data.app._id,
-            name: this.data.app.name
-        });
-    }
+    //componentDidUpdate() {
+    //    Session.set('active.app', {
+    //        id: this.data.app._id,
+    //        name: this.data.app.name
+    //    });
+    //}
 
     deleteItem(itemId) {
         Meteor.call('item.delete', itemId, (err) => {
@@ -66,9 +66,21 @@ ItemsList = class ItemsList extends React.Component {
                         <h3 className="ui header item">
                             Items
                         </h3>
-                        <a className="ui orange button item" href="+">
-                            + create item
-                        </a>
+
+                        <h4 className="ui header item">
+                            Create Item:
+                        </h4>
+                        {this.data.containers.map((container) => {
+                            return (
+                                <a
+                                    key={container._id}
+                                    className="ui button item"
+                                    href={FlowRouter.path('itemCreate', {containerId: container._id})}>
+                                    + create {container.name}
+                                </a>
+                            )
+                        })}
+
                         <div className="item"></div>
                     </div>
                 </div>
@@ -100,7 +112,7 @@ ItemsList = class ItemsList extends React.Component {
                                             return (
                                                 <tr key={item._id}>
                                                     <td>
-                                                        <a href={FlowRouter.path('itemUpdate', {type: item.container, id: item._id})}>
+                                                        <a href={FlowRouter.path('itemUpdate', {id: item._id})}>
                                                             {item.data[dataKeys[0]]}
                                                         </a>
                                                     </td>
@@ -120,14 +132,6 @@ ItemsList = class ItemsList extends React.Component {
                                         </tbody>
                                     </table>
                                 }
-                                <hr />
-                                {this.data.containers.map((type, index) => {
-                                    return (
-                                        <a
-                                            href={FlowRouter.path('itemCreate', {type: type.slug, appId: this.props.appId})}
-                                            key={index}>Create {type.name} - </a>
-                                    )
-                                })}
                             </div>
                         </div>
                     </div>

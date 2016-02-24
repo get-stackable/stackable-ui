@@ -15,6 +15,15 @@ ItemUpdate = class ItemUpdate extends React.Component {
         return data;
     }
 
+    handleSubmit = (data) => {
+        Meteor.call('item.update', this.data.item._id, data, (err, res) => {
+            //console.log(err, res);
+            if (!err) {
+                FlashMessages.sendSuccess('Item updated successfully!');
+            }
+        });
+    };
+
     render() {
         if (this.data.loading) {
             return <Loading active={true} />
@@ -23,7 +32,8 @@ ItemUpdate = class ItemUpdate extends React.Component {
         return (
             <ItemUpdateForm
                 item={this.data.item}
-                container={this.data.container}/>
+                container={this.data.container}
+                handleSubmit={this.handleSubmit} />
         )
     }
 };

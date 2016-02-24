@@ -1,35 +1,45 @@
 ItemUpdateForm = class ItemUpdateForm extends React.Component {
     static defaultProps = {
-        item: {}
+        container: {}
     };
 
     static propTypes = {
-        item: React.PropTypes.object.isRequired,
-        container: React.PropTypes.object.isRequired
+        handleSubmit: React.PropTypes.func.isRequired,
+        container: React.PropTypes.object.isRequired,
+        item: React.PropTypes.object
     };
 
     constructor(props) {
         super(props);
 
-        this.state = {};
+        this.state = this.initState(props);
     }
 
     componentDidMount() {
-        this.initState(this.props);
+        //this.initState(this.props);
     }
 
     componentWillReceiveProps(nextProps) {
-        this.initState(nextProps);
+        this.setState(this.initState(nextProps));
     }
 
     initState(props) {
         let stateData = {};
         if (!_.isUndefined(props.container)) {
-            props.container.items.map((schema) => {
-                stateData[schema.name] = props.item.data[schema.name];
-            });
-            this.setState(stateData);
+            if (_.isUndefined(props.item)) {
+                //is create
+                props.container.items.map((schema) => {
+                    stateData[schema.name] = '';
+                });
+            } else {
+                //is update
+                props.container.items.map((schema) => {
+                    stateData[schema.name] = props.item.data[schema.name];
+                });
+            }
         }
+
+        return stateData;
     }
 
     onChange = (inputName, e) => {
@@ -79,21 +89,12 @@ ItemUpdateForm = class ItemUpdateForm extends React.Component {
         });
     }
 
-    handleSubmit = () => {
-        Meteor.call('item.update', this.props.item._id, this.state, (err, res) => {
-            //console.log(err, res);
-            if (!err) {
-                FlashMessages.sendSuccess('Item updated successfully!');
-            }
-        });
-    };
-
     render() {
         return (
             <div>
                 {this.loadFields()}
                 <div>
-                    <button onClick={this.handleSubmit}>Submit</button>
+                    <button onClick={() => this.props.handleSubmit(this.state)}>Submit</button>
                 </div>
             </div>
         )
