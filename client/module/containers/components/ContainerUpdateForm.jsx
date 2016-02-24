@@ -91,28 +91,31 @@ ContainerUpdateForm = class ContainerUpdateForm extends React.Component {
                         <a className="ui orange button item">
                             Containers Tools
                         </a>
-                        <a className="ui button item">
+                        {!_.isUndefined(this.props.container) ?
+                        <a className="ui button item" href={FlowRouter.path('containerCreate', {appId: this.props.container.appId})}>
                             Create Containers
-                        </a>
-                        <a className="ui button item">
+                        </a>:''}
+                        {!_.isUndefined(this.props.container) ?
+                        <a className="ui button item" href={FlowRouter.path('containersList', {appId: this.props.container.appId})}>
                             View Containers
-                        </a>
+                        </a>:''}
+                        {!_.isUndefined(this.props.container) ?
                         <ConfirmModal
-                            buttonText="Delete Containers"
+                            buttonText="Delete Container"
                             buttonClass="ui button item"
                             modalTitle="Do you want to delete this container?"
-                            modalDescription="All related items will be also deleted!"
-                            accepted={() => this.deleteContainer()}/>
+                            modalDescription={`All related ${this.state.items.length} items will be also deleted!`}
+                            accepted={() => this.deleteContainer()}/>:''}
 
                         <div className="item" style={{'textAlign': 'center'}}>
-                            <small>With great power comes with great responsibility</small>
+                            <small>With great power comes great responsibility</small>
                         </div>
                     </div>
                 </div>
                 <div className="fourteen wide column" style={{'paddingLeft': '0'}}>
                     <div className="content-wrapper" style={{'padding': '25px 35px !important'}}>
-                        <div className="ui two column grid">
-                            <div className="left floated column">
+                        <div className="ui grid">
+                            <div className="ten wide column">
                                 <div className="ui form">
                                     <BigTitleInput
                                         label="type container name here"
@@ -121,7 +124,7 @@ ContainerUpdateForm = class ContainerUpdateForm extends React.Component {
                                         onChange={(e) => this.setState({name: e.target.value})}/>
                                 </div>
                             </div>
-                            <div className="right floated right aligned column">
+                            <div className="six wide right aligned column">
                                 <button className="ui right labeled icon green button"
                                         onClick={this.props.handleSubmit.bind(this, this.state)}>
                                     <i className="save icon"></i>

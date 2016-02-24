@@ -1,4 +1,4 @@
-# Kato CMS
+# Stackable
 
 ## Start App
 

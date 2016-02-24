@@ -34,7 +34,9 @@ Header = class Header extends React.Component {
 
     logout = () => {
         AccountsTemplates.logout();
-        FlowRouter.go('login');
+        Meteor.setTimeout(() => {
+            FlowRouter.go('login');
+        }, 500);
     };
 
     showCreateModal = () => {

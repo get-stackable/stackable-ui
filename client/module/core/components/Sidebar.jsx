@@ -35,12 +35,6 @@ Sidebar = class Sidebar extends React.Component {
         }
     };
 
-    renderModal() {
-        return (
-            <AppsModal goTo={this.state.goTo} />
-        )
-    }
-
     render() {
         return (
             <div className="ui left vertical labeled icon menu">
@@ -56,11 +50,11 @@ Sidebar = class Sidebar extends React.Component {
                     <img src="/images/icon-items.png" className="icon" style={{'width': '30px', 'height': '32px'}} />
                     Items
                 </a>
-                <a className="item">
+                <a className="item" href={FlowRouter.path('settings')}>
                     <img src="/images/icon-settings.png" className="icon" style={{'width': '30px', 'height': '32px'}} />
                     Settings
                 </a>
-                {this.renderModal()}
+                <AppsModal goTo={this.state.goTo} />
             </div>
         )
     }

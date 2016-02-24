@@ -48,7 +48,7 @@ AppUpdate = class AppUpdate extends React.Component {
                             Delete Stack
                         </a>
                         <div className="item" style={{'textAlign': 'center'}}>
-                            <small>With great power comes with great responsibility</small>
+                            <small>With great power comes great responsibility</small>
                         </div>
                     </div>
                 </div>

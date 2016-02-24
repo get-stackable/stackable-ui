@@ -12,7 +12,7 @@ guestsOnly = function(context, redirect) {
 
 FlowRouter.triggers.enter([loggedInOnly], {
     only: ['home', 'appUpdate', 'containersList', 'containerCreate', 'containerUpdate', 'itemsList', 'itemCreate',
-        'itemUpdate', 'search']
+        'itemUpdate', 'search', 'settings']
 });
 
 FlowRouter.triggers.enter([guestsOnly], {
@@ -64,6 +64,15 @@ FlowRouter.route('/login', {
     action: function() {
         ReactLayout.render(BlankLayout, {
             content: <Login />
+        });
+    }
+});
+
+FlowRouter.route('/settings', {
+    name: 'settings',
+    action: function () {
+        ReactLayout.render(MainLayout, {
+            content: <Settings />
         });
     }
 });

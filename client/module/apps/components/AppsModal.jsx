@@ -19,7 +19,12 @@ AppsModal = class AppsModal extends React.Component {
 
     componentDidUpdate() {
         $('#app-modal')
-            .modal({detachable: false})
+            .modal({
+                detachable: false,
+                onHidden: function(){
+                    Session.set('app.modal', false);
+                }
+            })
             .modal(Session.get('app.modal') ? 'show' : 'hide');
     }
 
