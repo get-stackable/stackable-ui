@@ -1,7 +1,7 @@
 {
   "servers": [
     {
-      "host": "5.101.101.205",
+      "host": "188.226.179.18",
       "username": "root",
       "pem": "~/.ssh/id_rsa"
     }
@@ -14,11 +14,11 @@
 
   "enableUploadProgressBar": true,
 
-  "appName": "kato",
+  "appName": "ui.stackable.space",
   "app": "../../",
 
   "env": {
-    "ROOT_URL": "http://www.getkato.com",
+    "ROOT_URL": "http://ui.stackable.space",
     "PORT": "1991",
     "MONGO_URL": "mongodb://katocms:katocms@cockney.2.mongolayer.com:10231,cockney.3.mongolayer.com:10231/katocms?replicaSet=set-55e6c9795556ddd3af0005ab"
   },
