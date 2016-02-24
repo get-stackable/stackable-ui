@@ -1,10 +1,28 @@
 ContainersList = class ContainersList extends React.Component {
+    constructor(props) {
+        super(props);
+
+        this.state = {
+            query: null
+        };
+    }
+
     getMeteorData() {
         let handle = Meteor.subscribe('containers.all', this.props.appId);
 
+        let find = {};
+        if (!_.isNull(this.state.query)) {
+            let queryRegex = ".*" + this.state.query + ".*";
+            find = {
+                $or: [
+                    {"name": {$regex: queryRegex, $options: 'i'}}
+                ]
+            };
+        }
+
         return {
             loading: !handle.ready(),
-            containers: Container.find().fetch(),
+            containers: Container.find(find).fetch(),
             app: Application.findOne(this.props.appId)
         };
     }
@@ -45,39 +63,51 @@ ContainersList = class ContainersList extends React.Component {
                     <div className="content-wrapper">
                         <div className="ui grid">
                             <div className="sixteen wide column">
-                                <SearchContainersForm />
+                                <SearchContainersForm
+                                    doSearch={(query) => this.setState({query})}/>
                             </div>
                             <div className="sixteen wide column padding35">
-                                <table className="ui celled table" style={{'marginTop': '15px'}}>
-                                    <thead>
-                                    <tr>
-                                        <th>Container Name</th>
-                                        <th>Description</th>
-                                        <th>Actions</th>
-                                    </tr>
-                                    </thead>
-                                    <tbody>
-                                    {this.data.containers.map((type) => {
-                                        return (
-                                            <tr key={type._id}>
-                                                <td>
-                                                    <a href={FlowRouter.path('containerUpdate', {id: type._id})}>{type.name}</a>
-                                                </td>
-                                                <td>
-                                                    http://localhost:3000/api/items/{type.slug}?auth_key={this.data.app.authKey}
-                                                </td>
-                                                <td>
-                                                    <a
-                                                        className="mini secondary ui button"
-                                                        href={FlowRouter.path('containerUpdate', {id: type._id})}>
-                                                        modify
-                                                    </a>
-                                                </td>
-                                            </tr>
-                                        )
-                                    })}
-                                    </tbody>
-                                </table>
+                                {this.data.containers.length === 0 ?
+                                    <div className="ui segment">
+                                        <p>No containers found.</p>
+                                    </div>
+                                :
+                                    <table className="ui celled table" style={{'marginTop': '15px'}}>
+                                        <thead>
+                                        <tr>
+                                            <th>Container Name</th>
+                                            <th>Description</th>
+                                            <th>Actions</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        {this.data.containers.map((container) => {
+                                            return (
+                                                <tr key={container._id}>
+                                                    <td>
+                                                        <a href={FlowRouter.path('containerUpdate', {id: container._id})}>{container.name}</a>
+                                                    </td>
+                                                    <td>
+                                                        http://localhost:3000/api/items/{container.slug}?auth_key={this.data.app.authKey}
+                                                    </td>
+                                                    <td>
+                                                        <a
+                                                            className="mini ui button"
+                                                            href={FlowRouter.path('itemsList', {appId: this.props.appId}, {containerId: container._id})}>
+                                                            items
+                                                        </a>
+                                                        <a
+                                                            className="mini secondary ui button"
+                                                            href={FlowRouter.path('containerUpdate', {id: container._id})}>
+                                                            modify
+                                                        </a>
+                                                    </td>
+                                                </tr>
+                                            )
+                                        })}
+                                        </tbody>
+                                    </table>
+                                }
                             </div>
                         </div>
                     </div>

@@ -1,14 +1,25 @@
 SearchItemsForm = class SearchItemsForm extends React.Component {
+    static propTypes = {
+        containers: React.PropTypes.array.isRequired,
+        doSearch: React.PropTypes.func.isRequired
+    };
+
     constructor(props) {
         super(props);
 
         this.state = {
-            query: ''
+            query: null
         };
     }
 
     componentDidMount() {
-        $('.ui.dropdown.refine').dropdown();
+        $('.ui.dropdown.refine')
+            .dropdown('set text', FlowRouter.getQueryParam('containerId'))
+            .dropdown({
+                onChange: function(text) {
+                    FlowRouter.setQueryParams({containerId: text});
+                }
+            });
     }
 
     onChange(inputName, e) {
@@ -20,9 +31,8 @@ SearchItemsForm = class SearchItemsForm extends React.Component {
     doSearch = (e) => {
         let ENTER = 13;
 
-        //only search if search term is more then 2 chars
-        if (this.state.query.length > 2 && e.keyCode == ENTER) {
-            console.log('do search', this.state.query);
+        if (e.keyCode == ENTER) {
+            this.props.doSearch(this.state.query.length > 0 ? this.state.query : null);
         }
     };
 
@@ -33,7 +43,7 @@ SearchItemsForm = class SearchItemsForm extends React.Component {
                     <input
                         type="text"
                         name="query"
-                        placeholder="Search all items..."
+                        placeholder="Search items..."
                         value={this.state.query}
                         onChange={this.onChange.bind(this, 'query')}
                         onKeyUp={this.doSearch} />
@@ -44,9 +54,11 @@ SearchItemsForm = class SearchItemsForm extends React.Component {
                     <div className="text">refine results</div>
                     <i className="dropdown icon"></i>
                     <div className="menu">
-                        <div className="item">container 1</div>
-                        <div className="item">container 2</div>
-                        <div className="item">container 3</div>
+                        {this.props.containers.map((container) => {
+                            return (
+                                <div key={container._id} className="item" data-value={container._id}>{container.name}</div>
+                            )
+                        })}
                     </div>
                 </div>
             </div>

@@ -1,14 +1,18 @@
 SearchContainersForm = class SearchContainersForm extends React.Component {
+    static propTypes = {
+        doSearch: React.PropTypes.func.isRequired
+    };
+
     constructor(props) {
         super(props);
 
         this.state = {
-            query: ''
+            query: null
         };
     }
 
     componentDidMount() {
-        $('.ui.dropdown.refine').dropdown();
+        //$('.ui.dropdown.refine').dropdown();
     }
 
     onChange(inputName, e) {
@@ -20,9 +24,8 @@ SearchContainersForm = class SearchContainersForm extends React.Component {
     doSearch = (e) => {
         let ENTER = 13;
 
-        //only search if search term is more then 2 chars
-        if (this.state.query.length > 2 && e.keyCode == ENTER) {
-            console.log('do search', this.state.query);
+        if (e.keyCode == ENTER) {
+            this.props.doSearch(this.state.query.length > 0 ? this.state.query : null);
         }
     };
 
@@ -33,14 +36,14 @@ SearchContainersForm = class SearchContainersForm extends React.Component {
                     <input
                         type="text"
                         name="query"
-                        placeholder="Search all containers..."
+                        placeholder="Search containers..."
                         value={this.state.query}
                         onChange={this.onChange.bind(this, 'query')}
                         onKeyUp={this.doSearch} />
                     <i className="search icon"></i>
                 </div>
                 <div className="results"></div>
-                <div className="ui dropdown refine">
+                {/*<div className="ui dropdown refine">
                     <div className="text">refine results</div>
                     <i className="dropdown icon"></i>
                     <div className="menu">
@@ -48,7 +51,7 @@ SearchContainersForm = class SearchContainersForm extends React.Component {
                         <div className="item">container 2</div>
                         <div className="item">container 3</div>
                     </div>
-                </div>
+                </div>*/}
             </div>
         )
     }

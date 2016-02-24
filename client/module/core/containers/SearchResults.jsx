@@ -35,44 +35,55 @@ SearchResults = class SearchResults extends React.Component {
 
     render() {
         return (
-            <div className="ui grid full-height" style={{'marginLeft': '0'}}>
-                <div className="sixteen wide column" style={{'paddingLeft': '0'}}>
-                    <div className="content-wrapper">
-                        <div className="ui grid">
-                            <div className="sixteen wide column padding35">
-                                <table className="ui celled table" style={{'marginTop': '35px'}}>
-                                    <thead>
-                                    <tr>
-                                        <th>Item Name</th>
-                                        <th>Description</th>
-                                        <th>Actions</th>
-                                    </tr>
-                                    </thead>
-                                    <tbody>
-                                    {this.data.items.map((item) => {
-                                        let dataKeys = _.keys(item.data);
-                                        return (
-                                            <tr key={item._id}>
-                                                <td>
-                                                    <a href={FlowRouter.path('itemUpdate', {type: item.container, id: item._id})}>
-                                                        {item.data[dataKeys[0]]}
-                                                    </a>
-                                                </td>
-                                                <td>
-
-                                                </td>
-                                                <td>
-                                                    <a
-                                                        className="mini negative ui button"
-                                                        onClick={() => this.deleteItem(item._id)}>
-                                                        delete
-                                                    </a>
-                                                </td>
+            <div>
+                <PageHeading>
+                    Search Results for {this.props.query}
+                </PageHeading>
+                <div className="ui grid full-height" style={{'marginLeft': '0'}}>
+                    <div className="sixteen wide column" style={{'paddingLeft': '0'}}>
+                        <div className="content-wrapper">
+                            <div className="ui grid">
+                                <div className="sixteen wide column padding35">
+                                    {this.data.items.length === 0 ?
+                                        <div className="ui segment">
+                                            <p>No items found.</p>
+                                        </div>
+                                    :
+                                        <table className="ui celled table" style={{'marginTop': '35px'}}>
+                                            <thead>
+                                            <tr>
+                                                <th>Item Name</th>
+                                                <th>Description</th>
+                                                <th>Actions</th>
                                             </tr>
-                                        )
-                                    })}
-                                    </tbody>
-                                </table>
+                                            </thead>
+                                            <tbody>
+                                            {this.data.items.map((item) => {
+                                                let dataKeys = _.keys(item.data);
+                                                return (
+                                                    <tr key={item._id}>
+                                                        <td>
+                                                            <a href={FlowRouter.path('itemUpdate', {type: item.container, id: item._id})}>
+                                                                {item.data[dataKeys[0]]}
+                                                            </a>
+                                                        </td>
+                                                        <td>
+
+                                                        </td>
+                                                        <td>
+                                                            <a
+                                                                className="mini negative ui button"
+                                                                onClick={() => this.deleteItem(item._id)}>
+                                                                delete
+                                                            </a>
+                                                        </td>
+                                                    </tr>
+                                                )
+                                            })}
+                                            </tbody>
+                                        </table>
+                                    }
+                                </div>
                             </div>
                         </div>
                     </div>

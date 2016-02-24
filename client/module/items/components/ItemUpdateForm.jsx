@@ -84,7 +84,6 @@ ItemUpdateForm = class ItemUpdateForm extends React.Component {
             //console.log(err, res);
             if (!err) {
                 FlashMessages.sendSuccess('Item updated successfully!');
-                FlowRouter.go('appManage', {id: this.props.item.appId});
             }
         });
     };
