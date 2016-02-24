@@ -29,9 +29,13 @@ ContainerUpdateForm = class ContainerUpdateForm extends React.Component {
     constructor(props) {
         super(props);
 
+        if (_.isUndefined(props.container)) {
+            props['container'] = {};
+        }
+
         this.state = {
-            name: '',
-            items: [],
+            name: props.container.name || '',
+            items: props.container.items || [],
             itemModalVisible: false,
             activeItemInModal: {},
             activeModalTab: 'info'
@@ -40,7 +44,10 @@ ContainerUpdateForm = class ContainerUpdateForm extends React.Component {
 
     componentWillReceiveProps(nextProps) {
         if (!_.isUndefined(nextProps.container)) {
-            this.setState({name: nextProps.container.name, items: nextProps.container.items});
+            this.setState({
+                name: nextProps.container.name,
+                items: nextProps.container.items
+            });
         }
     }
 

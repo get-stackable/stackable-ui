@@ -32,6 +32,10 @@ ContainersList = class ContainersList extends React.Component {
     }
 
     render() {
+        if (this.data.loading) {
+            return <Loading active={true} />
+        }
+
         return (
             <div className="ui grid full-height" style={{'marginLeft': '0'}}>
                 <div className="two wide column side-sub-menu">
@@ -71,6 +75,11 @@ ContainersList = class ContainersList extends React.Component {
                                                     http://localhost:3000/api/items/{type.slug}?auth_key={this.data.app.authKey}
                                                 </td>
                                                 <td>
+                                                    <a
+                                                        className="mini secondary ui button"
+                                                        href={FlowRouter.path('containerUpdate', {id: type._id})}>
+                                                        modify
+                                                    </a>
                                                     <a
                                                         className="mini negative ui button"
                                                         onClick={() => this.deleteContainer(type._id)}>

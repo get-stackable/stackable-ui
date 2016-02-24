@@ -8,7 +8,7 @@ Meteor.publish('user.data', function() {
 
 Meteor.publish('users.all', function (ids) {
     if (this.userId) {
-        return User.find({_id: { $in: ids}});
+        return User.find({_id: {$in: ids}});
     } else {
         this.ready();
     }

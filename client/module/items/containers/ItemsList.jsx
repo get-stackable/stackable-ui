@@ -4,7 +4,7 @@ ItemsList = class ItemsList extends React.Component {
         let handle2 = Meteor.subscribe('containers.all', this.props.appId);
 
         return {
-            loading: !handle.ready(),
+            loading: !handle.ready() || !handle2.ready(),
             items: Item.find().fetch(),
             containers: Container.find().fetch(),
             app: Application.findOne(this.props.appId)
@@ -34,6 +34,10 @@ ItemsList = class ItemsList extends React.Component {
     }
 
     render() {
+        if (this.data.loading) {
+            return <Loading active={true} />
+        }
+
         return (
             <div className="ui grid full-height" style={{'marginLeft': '0'}}>
                 <div className="two wide column side-sub-menu">

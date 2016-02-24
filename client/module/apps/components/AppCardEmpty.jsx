@@ -1,6 +1,6 @@
 AppCardEmpty = class AppCardEmpty extends React.Component {
     showCreateModal = () => {
-        Session.set('app.create.modal', ! Session.get('app.create.modal'));
+        Session.set('app.create.modal', true);
     };
 
     render() {

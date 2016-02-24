@@ -17,7 +17,7 @@ ItemUpdate = class ItemUpdate extends React.Component {
 
     render() {
         if (this.data.loading) {
-            return <div>loading...</div>
+            return <Loading active={true} />
         }
 
         return (

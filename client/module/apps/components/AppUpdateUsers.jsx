@@ -50,11 +50,12 @@ AppUpdateUsers = class AppUpdateUsers extends React.Component {
                         {user.emails[0].address}
                     </td>
                     <td>
+                        {user._id !== this.props.app.createdBy ?
                         <a
                             onClick={this.removeUser.bind(this, user._id)}
                             className="mini negative ui button">
                             remove
-                        </a>
+                        </a>:''}
                     </td>
                 </tr>
             )

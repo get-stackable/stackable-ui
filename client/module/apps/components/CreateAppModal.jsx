@@ -14,7 +14,7 @@ CreateAppModalTrigger = class CreateAppModalTrigger extends React.Component {
             .modal({
                 detachable: false,
                 onHidden: function(){
-                    Session.set('app.create.modal', ! Session.get('app.create.modal'));
+                    Session.set('app.create.modal', false);
                 }
             })
             .modal(props.modalVisible ? 'show' : 'hide');

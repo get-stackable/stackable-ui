@@ -1,22 +1,26 @@
 Meteor.publish('items.all', function (appId) {
+    check(appId, String);
+
     //check only app owners can get data
-    let domain = Application.findOne({_id: appId, 'users': this.userId});
-    if (this.userId && domain) {
-        return Item.find({appId});
+    let app = Application.findOne({_id: appId, 'users': this.userId});
+    if (this.userId && app) {
+        return Item.find({appId: app._id});
     } else {
         this.ready();
     }
 });
 
 Meteor.publish('items.single', function (id) {
-    //todo check only app owners can get data
-    //let app = Application.findOne({_id: appId, 'users': this.userId});
+    check(id, String);
 
     let item = Item.findOne({_id: id});
-    if (this.userId) {
+    let app = Application.findOne({_id: item.appId, 'users': this.userId});
+
+    //check only app owners can get data
+    if (this.userId && app) {
         return [
             Container.find({_id: item.containerId}),
-            Item.find({_id: id})
+            Item.find({_id: item._id})
         ];
     } else {
         this.ready();
@@ -24,6 +28,7 @@ Meteor.publish('items.single', function (id) {
 });
 
 Meteor.publish('items.find', function (query, limit) {
+    //todo optimise and secure it
     //find by query
     let find = {};
 

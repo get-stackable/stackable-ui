@@ -8,7 +8,7 @@ ContainerCreate = class ContainerCreate extends React.Component {
       appId: this.props.appId,
       name: data.name,
       items: data.items
-    }
+    };
 
     Meteor.call('container.create', formData, (err, res) => {
       //console.log(err, res);

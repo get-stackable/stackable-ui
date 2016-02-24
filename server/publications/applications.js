@@ -7,5 +7,5 @@ Meteor.publish('apps.all', function () {
 });
 
 Meteor.publish('apps.libraries.all', function () {
-    return ApplicationLibrary.find();
+    return ApplicationLibrary.find({'isActive': true});
 });

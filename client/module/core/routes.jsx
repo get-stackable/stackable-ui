@@ -11,7 +11,7 @@ guestsOnly = function(context, redirect) {
 };
 
 FlowRouter.triggers.enter([loggedInOnly], {
-    only: ['home', 'appManage', 'appCreate', 'appUpdate', 'containerCreate', 'containerUpdate', 'itemCreate',
+    only: ['home', 'appUpdate', 'containersList', 'containerCreate', 'containerUpdate', 'itemsList', 'itemCreate',
         'itemUpdate', 'search']
 });
 

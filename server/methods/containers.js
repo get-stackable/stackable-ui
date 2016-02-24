@@ -1,5 +1,7 @@
 Meteor.methods({
     'container.delete': function (docId) {
+        check(docId, String);
+
         var container = Container.findOne({_id: docId});
 
         //check if current user own this app
