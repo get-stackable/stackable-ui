@@ -11,14 +11,14 @@
     <div class="ui divider"></div>
     {{/if}}
     {{/if}}
-    {{#if showOauthServices}}
-    {{> atOauth}}
-    {{/if}}
-    {{#if showServicesSeparator}}
-    {{> atSep}}
-    {{/if}}
     {{#if showPwdForm}}
     {{> atPwdFormCustom}}
+    {{/if}}
+    {{#if showServicesSeparator}}
+        {{> atSep}}
+    {{/if}}
+    {{#if showOauthServices}}
+        {{> atOauth}}
     {{/if}}
     {{#if showError}}
     {{> atError}}
