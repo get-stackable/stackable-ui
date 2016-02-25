@@ -48,7 +48,7 @@ ItemUpdateForm = class ItemUpdateForm extends React.Component {
         return this.props.container.items.map((schema) => {
             return (
                 <div className="field" key={schema._id}>
-                    <label>{schema.name}</label>
+                    <label style={{'color':'#34383c','fontWeight':'400'}}>{schema.name}</label>
                     {schema.type === 'text' ?
                         <TextInput
                             value={this.state[schema.name]}
@@ -60,7 +60,8 @@ ItemUpdateForm = class ItemUpdateForm extends React.Component {
                     {schema.type === 'textArea' ?
                         <MarkdownEditor
                             text={this.state[schema.name]}
-                            onChange={this.onChange.bind(this, schema.name)}/> : ''}
+                            onChange={this.onChange.bind(this, schema.name)}
+                            className="mardown-editor-container" /> : ''}
                     {schema.type === 'boolean' ?
                         <BooleanInput
                             name={schema.name}

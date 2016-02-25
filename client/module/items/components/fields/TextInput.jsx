@@ -7,6 +7,7 @@ TextInput = class TextInput extends React.Component {
         return (
             <input
                 {...this.props}
+                className="item-field"
                 type="text"
                 onChange={this.props.onChange}
             />

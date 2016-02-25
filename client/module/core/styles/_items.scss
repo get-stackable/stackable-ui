@@ -1,0 +1,13 @@
+.mardown-editor-container {
+  border: 2px solid $sidebar-bg;
+  padding: 5px;
+  min-height: 111px;
+  &:focus {
+    outline: 0;
+  }
+}
+
+.item-field {
+  border: 2px solid $sidebar-bg !important;
+  border-radius: 0 !important;
+}
