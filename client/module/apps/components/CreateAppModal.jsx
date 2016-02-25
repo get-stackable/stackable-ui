@@ -62,6 +62,34 @@ CreateAppModal = class CreateAppModal extends React.Component {
         });
     };
 
+    handleSubmit = () => {
+        if (this.state.appName.length === 0) {
+            return;
+        }
+
+        let data = {
+            name: this.state.appName,
+            description: this.state.appDescription,
+            libraryId: this.state.libraryId
+        };
+
+        Meteor.call('app.create', data, (err, res) => {
+            //console.log(err, res);
+            if (!err) {
+                this.setState({
+                    step: 1,
+                    library: null,
+                    libraryId: null,
+                    appName: '',
+                    appDescription: ''
+                });
+                Session.set('app.create.modal', false);
+                FlashMessages.sendSuccess('Stack created successfully!');
+                FlowRouter.go('containersList', {appId: res._id});
+            }
+        });
+    };
+
     renderStepOne() {
         return (
             <div>
@@ -170,27 +198,6 @@ CreateAppModal = class CreateAppModal extends React.Component {
             </div>
         )
     }
-
-    handleSubmit = () => {
-        if (this.state.appName.length === 0) {
-            return;
-        }
-
-        let data = {
-            name: this.state.appName,
-            description: this.state.appDescription,
-            libraryId: this.state.libraryId
-        };
-
-        Meteor.call('app.create', data, (err, res) => {
-            //console.log(err, res);
-            if (!err) {
-                Session.set('app.create.modal', false);
-                FlashMessages.sendSuccess('Stack created successfully!');
-                FlowRouter.go('containersList', {appId: res._id});
-            }
-        });
-    };
 
     render() {
         return (

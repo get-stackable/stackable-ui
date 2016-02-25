@@ -1,5 +1,14 @@
 Accounts.onCreateUser(function(options, user) {
     user.apps = [];
+    user.profile = {};
+
+    if (!_.isUndefined(user.services) && !_.isUndefined(user.services.google)) {
+        user.emails = [{
+            address: [user.services.google.email]
+        }];
+        user.profile.first_name = user.services.google.given_name;
+        user.profile.last_name = user.services.google.family_name;
+    }
 
     return user;
 });

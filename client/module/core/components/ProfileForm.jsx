@@ -11,7 +11,7 @@ ProfileForm = class ProfileForm extends React.Component {
         super(props);
 
         this.state = {
-            email: !_.isUndefined(props.user) ? props.user.emails[0].address : '',
+            email: !_.isUndefined(props.user) && !_.isNull(props.user.emails) ? props.user.emails[0].address : '',
             first_name: !_.isUndefined(props.user) ? props.user.profile.first_name : '',
             last_name: !_.isUndefined(props.user) ? props.user.profile.last_name : '',
             location: !_.isUndefined(props.user) ? props.user.profile.location : '',

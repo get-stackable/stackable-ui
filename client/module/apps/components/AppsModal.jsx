@@ -45,6 +45,9 @@ AppsModal = class AppsModal extends React.Component {
                                     goTo={this.props.goTo} />
                             )
                         })}
+                        {this.data.apps.length === 0 ?
+                            <AppCardEmpty />
+                            :''}
                     </div>
                 </div>
             </div>
