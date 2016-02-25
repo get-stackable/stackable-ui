@@ -22,7 +22,7 @@ ContainersList = class ContainersList extends React.Component {
 
         return {
             loading: !handle.ready(),
-            containers: Container.find(find).fetch(),
+            containers: Container.find(find, {sort: {createdAt: -1}}).fetch(),
             app: Application.findOne(this.props.appId)
         };
     }
@@ -85,10 +85,10 @@ ContainersList = class ContainersList extends React.Component {
                                             return (
                                                 <tr key={container._id}>
                                                     <td>
-                                                        <a href={FlowRouter.path('containerUpdate', {id: container._id})}>{container.name}</a>
+                                                        <a href={FlowRouter.path('itemsList', {appId: this.props.appId}, {containerId: container._id})}>{container.name}</a>
                                                     </td>
                                                     <td>
-                                                        http://localhost:3000/api/items/{container.slug}?auth_key={this.data.app.authKey}
+                                                        -
                                                     </td>
                                                     <td>
                                                         <a

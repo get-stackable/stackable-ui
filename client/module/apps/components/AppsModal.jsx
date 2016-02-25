@@ -13,7 +13,7 @@ AppsModal = class AppsModal extends React.Component {
 
     getMeteorData() {
         return {
-            apps: Application.find().fetch()
+            apps: Application.find({}, {sort: {createdAt: -1}}).fetch()
         };
     }
 

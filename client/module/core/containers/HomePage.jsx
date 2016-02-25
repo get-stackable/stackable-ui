@@ -1,7 +1,7 @@
 HomePage = class HomePage extends React.Component {
     getMeteorData() {
         return {
-            apps: Application.find().fetch(),
+            apps: Application.find({}, {sort: {createdAt: -1}}).fetch(),
             user: Meteor.user()
         };
     }

@@ -61,7 +61,8 @@ ItemUpdateForm = class ItemUpdateForm extends React.Component {
                         <MarkdownEditor
                             text={this.state[schema.name]}
                             onChange={this.onChange.bind(this, schema.name)}
-                            className="mardown-editor-container" /> : ''}
+                            className="mardown-editor-container"
+                            options={{toolbar: {diffTop: -55}}}/> : ''}
                     {schema.type === 'boolean' ?
                         <BooleanInput
                             name={schema.name}

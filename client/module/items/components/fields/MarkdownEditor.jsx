@@ -1,3 +1,4 @@
+//https://github.com/yabwe/medium-editor
 MarkdownEditor = class MarkdownEditor extends React.Component {
     static defaultProps = {
         tag: 'div'
@@ -7,7 +8,7 @@ MarkdownEditor = class MarkdownEditor extends React.Component {
         super(props);
 
         this.state = {
-            text: ''
+            text: props.text
         };
     }
 

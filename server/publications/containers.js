@@ -8,7 +8,7 @@ Meteor.publish('containers.all', function (appId) {
     });
 
     if (this.userId && app) {
-        return Container.find({appId: app._id});
+        return Container.find({appId: app._id}, {sort: {createdAt: -1}});
     } else {
         this.ready();
     }
@@ -46,5 +46,5 @@ Meteor.publish('containers.find', function (query, limit) {
         };
     }
 
-    return Container.find(find)
+    return Container.find(find, {sort: {createdAt: -1}})
 });

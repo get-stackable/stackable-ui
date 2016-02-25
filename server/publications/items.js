@@ -4,7 +4,7 @@ Meteor.publish('items.all', function (appId) {
     //check only app owners can get data
     let app = Application.findOne({_id: appId, 'users': this.userId});
     if (this.userId && app) {
-        return Item.find({appId: app._id});
+        return Item.find({appId: app._id}, {sort: {createdAt: -1}});
     } else {
         this.ready();
     }
@@ -42,5 +42,5 @@ Meteor.publish('items.find', function (query, limit) {
     }
 
     //todo set limit
-    return Item.find(find);
+    return Item.find(find, {sort: {createdAt: -1}});
 });

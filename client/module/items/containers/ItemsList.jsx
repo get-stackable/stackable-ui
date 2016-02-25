@@ -26,8 +26,8 @@ ItemsList = class ItemsList extends React.Component {
 
         return {
             loading: !handle.ready() || !handle2.ready(),
-            items: Item.find(find).fetch(),
-            containers: Container.find().fetch(),
+            items: Item.find(find, {sort: {createdAt: -1}}).fetch(),
+            containers: Container.find({}, {sort: {createdAt: -1}}).fetch(),
             app: Application.findOne(this.props.appId)
         };
     }
@@ -117,7 +117,7 @@ ItemsList = class ItemsList extends React.Component {
                                                         </a>
                                                     </td>
                                                     <td>
-                                                        http://localhost:3000/api/items/{item.container}/{item._id}?auth_key={this.data.app.authKey}
+                                                        -
                                                     </td>
                                                     <td>
                                                         <a
