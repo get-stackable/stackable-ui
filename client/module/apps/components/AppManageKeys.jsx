@@ -43,10 +43,12 @@ AppManageKeys = class AppManageKeys extends React.Component {
                     <label>Private Key</label>
                     <input type="text" value={this.props.app.privateKey} readOnly />
                 </div>
-                <button className="ui button" type="submit" onClick={this.generateAppKey}>
-                    <i className="refresh icon"></i>
-                    Reset Keys
-                </button>
+                <ConfirmModal
+                    buttonText="Reset Keys"
+                    buttonClass="ui button"
+                    modalTitle="Do you want to reset keys?"
+                    modalDescription="Once you reset keys for stack, you need to update all your client applications with new keys"
+                    accepted={() => this.generateAppKey()}/>
                 <div className="ui divider"></div>
                 <div className="field">
                     <label>Allowed Urls</label>

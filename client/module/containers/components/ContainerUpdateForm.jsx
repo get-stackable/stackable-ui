@@ -80,6 +80,46 @@ ContainerUpdateForm = class ContainerUpdateForm extends React.Component {
         });
     }
 
+    loadPreviewFields() {
+        return this.state.items.map((schema) => {
+            console.log(schema);
+            return (
+                <div className="field" key={schema._id}>
+                    <label style={{'color':'#34383c','fontWeight':'400'}}>{schema.name}</label>
+                    {schema.type === 'text' ?
+                        <TextInput
+                            value=""
+                            onChange={() => console.log('on change...')}/> : ''}
+                    {schema.type === 'number' ?
+                        <NumberInput
+                            value=""
+                            onChange={() => console.log('on change...')}/> : ''}
+                    {schema.type === 'textArea' ?
+                        <MarkdownEditor
+                            text=""
+                            onChange={() => console.log('on change...')}
+                            className="mardown-editor-container"
+                            options={{toolbar: {diffTop: -55}}}/> : ''}
+                    {schema.type === 'boolean' ?
+                        <BooleanInput
+                            name="test-boolean"
+                            value=""
+                            onChange={() => console.log('on change...')}/> : ''}
+                    {schema.type === 'json' ?
+                        <JsonInput
+                            name="test-json"
+                            value=""
+                            onChange={() => console.log('on change...')}/> : ''}
+                    {schema.type === 'enom' ?
+                        <EnomInput
+                            name="test-enom"
+                            value=""
+                            onChange={() => console.log('on change...')}/> : ''}
+                </div>
+            )
+        });
+    }
+
     render() {
         return (
             <div className="ui grid full-height" style={{'marginLeft': '0'}}>
@@ -140,28 +180,47 @@ ContainerUpdateForm = class ContainerUpdateForm extends React.Component {
                             })}
                         </div>
                         <div className="ui divider"></div>
-                        <table className="ui basic celled table">
-                            <tbody>
-                            {this.state.items.map((item, index) => {
-                                return (
-                                    <tr key={index}>
-                                        <td width="50%">
-                                            {item.name}
+                        <div className="ui grid">
+                            <div className="eight wide column">
+                                <table className="ui basic celled table" style={{'marginTop': '50px'}}>
+                                    <tbody>
+                                    {this.state.items.map((item, index) => {
+                                        return (
+                                            <tr key={index}>
+                                                <td width="50%">
+                                                    {item.name}
                                             <span style={{'float': 'right', 'color': 'rgba(0,0,0,.4)'}}>
                                                 {titleize(item.type)}
                                             </span>
-                                        </td>
-                                        <td width="25%" style={{'textAlign': 'center'}}>
-                                            <a className="underline" onClick={this.openItemModal.bind(this, item, 'validation')}>validations</a>
-                                        </td>
-                                        <td width="25%" style={{'textAlign': 'center'}}>
-                                            <a className="underline" onClick={this.openItemModal.bind(this, item, 'info')}>configure</a>
-                                        </td>
-                                    </tr>
-                                )
-                            })}
-                            </tbody>
-                        </table>
+                                                </td>
+                                                <td width="25%" style={{'textAlign': 'center'}}>
+                                                    <a className="underline" onClick={this.openItemModal.bind(this, item, 'validation')}>validations</a>
+                                                </td>
+                                                <td width="25%" style={{'textAlign': 'center'}}>
+                                                    <a className="underline" onClick={this.openItemModal.bind(this, item, 'info')}>configure</a>
+                                                </td>
+                                            </tr>
+                                        )
+                                    })}
+                                    </tbody>
+                                </table>
+                                <div className="ui basic segment" style={{'marginTop':'100px'}}>
+                                    <p>
+                                        Container discribe your data. <span style={{'color':'#51BCA8'}}>select a field type and get ready to rock!</span>
+                                    </p>
+                                </div>
+                            </div>
+                            <div className="eight wide column">
+                                <div className="items-preview">
+                                    <div className="ui medium header">
+                                        Container Preview
+                                    </div>
+                                    <div className="ui form">
+                                        {this.loadPreviewFields()}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
                 <ContainerItemModal

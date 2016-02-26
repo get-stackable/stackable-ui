@@ -11,3 +11,16 @@
   border: 2px solid $sidebar-bg !important;
   border-radius: 0 !important;
 }
+
+.items-preview {
+  border: 3px dashed #DFDEDE;
+  .ui.header {
+    background-color: $color-grey;
+    text-align: center;
+    color: $color-white;
+    padding: 14px 0;
+  }
+  .ui.form {
+    padding: 20px;
+  }
+}
