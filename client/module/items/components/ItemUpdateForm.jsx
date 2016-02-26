@@ -21,15 +21,17 @@ ItemUpdateForm = class ItemUpdateForm extends React.Component {
 
     initState(props) {
         let stateData = {};
+        let containerItems = _.sortBy(props.container.items, 'listing_order');
+
         if (!_.isUndefined(props.container)) {
             if (_.isUndefined(props.item)) {
                 //is create
-                props.container.items.map((schema) => {
+                containerItems.map((schema) => {
                     stateData[schema.name] = '';
                 });
             } else {
                 //is update
-                props.container.items.map((schema) => {
+                containerItems.map((schema) => {
                     stateData[schema.name] = props.item.data[schema.name];
                 });
             }
@@ -45,7 +47,9 @@ ItemUpdateForm = class ItemUpdateForm extends React.Component {
     };
 
     loadFields() {
-        return this.props.container.items.map((schema) => {
+        let containerItems = _.sortBy(this.props.container.items, 'listing_order');
+
+        return containerItems.map((schema) => {
             return (
                 <div className="field" key={schema._id}>
                     <label style={{'color':'#34383c','fontWeight':'400'}}>{schema.name}</label>
