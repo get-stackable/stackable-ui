@@ -73,6 +73,8 @@ ContainerUpdateForm = class ContainerUpdateForm extends React.Component {
 
             self.setState({items});
         });
+
+        Meteor.setTimeout(() => this.props.handleSubmit(this.state), 1500);
     }
 
     openItemModal = (item, activeTab) => {
@@ -97,6 +99,9 @@ ContainerUpdateForm = class ContainerUpdateForm extends React.Component {
         }
 
         this.setState({items});
+
+        //submit with bit delay
+        Meteor.setTimeout(() => this.props.handleSubmit(this.state), 500);
     };
 
     deleteContainer() {
@@ -106,6 +111,17 @@ ContainerUpdateForm = class ContainerUpdateForm extends React.Component {
                 FlowRouter.go('containersList', {appId: this.props.container.appId});
             }
         });
+    }
+
+    removeItem(item, index) {
+        let items = this.state.items;
+
+        items.splice(index, 1);
+
+        this.setState({items});
+
+        //submit with bit delay
+        Meteor.setTimeout(() => this.props.handleSubmit(this.state), 500);
     }
 
     render() {
@@ -149,7 +165,8 @@ ContainerUpdateForm = class ContainerUpdateForm extends React.Component {
                                         label="type container name here"
                                         name="name"
                                         value={this.state.name}
-                                        onChange={(e) => this.setState({name: e.target.value})}/>
+                                        onChange={(e) => this.setState({name: e.target.value})}
+                                        onBlur={this.props.handleSubmit.bind(this, this.state)}/>
                                 </div>
                             </div>
                             <div className="six wide right aligned column">
@@ -175,7 +192,10 @@ ContainerUpdateForm = class ContainerUpdateForm extends React.Component {
                                     {this.state.items.map((item, index) => {
                                         return (
                                             <tr key={item._id} data-id={item._id}>
-                                                <td width="50%">
+                                                <td width="4%">
+                                                    <i className="minus icon" onClick={() => this.removeItem(item, index)}></i>
+                                                </td>
+                                                <td width="46%">
                                                     {item.name}
                                                     <span style={{'float': 'right', 'color': 'rgba(0,0,0,.4)'}}>
                                                         {titleize(item.type)}

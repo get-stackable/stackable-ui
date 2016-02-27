@@ -85,7 +85,7 @@ ContainersList = class ContainersList extends React.Component {
                                             return (
                                                 <tr key={container._id}>
                                                     <td>
-                                                        <a href={FlowRouter.path('itemsList', {appId: this.props.appId}, {containerId: container._id})}>{container.name}</a>
+                                                        <a href={FlowRouter.path('containerUpdate', {id: container._id})}>{container.name}</a>
                                                     </td>
                                                     <td>
                                                         -

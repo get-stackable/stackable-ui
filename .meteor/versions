@@ -114,7 +114,7 @@ tomwasd:flow-router-seo@0.0.3
 tracker@1.0.9
 ui@1.0.8
 underscore@1.0.4
-underscorestring:underscore.string@3.2.3
+underscorestring:underscore.string@3.3.4
 url@1.0.5
 useraccounts:core@1.13.1
 useraccounts:semantic-ui@1.13.1
