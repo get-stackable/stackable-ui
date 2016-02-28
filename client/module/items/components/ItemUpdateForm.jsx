@@ -46,6 +46,14 @@ ItemUpdateForm = class ItemUpdateForm extends React.Component {
         this.setState(change);
     };
 
+    onFileUpload (err, res, inputName) {
+        if (!err) {
+            let change = {};
+            change[inputName] = res;
+            this.setState(change);
+        }
+    }
+
     loadFields() {
         let containerItems = _.sortBy(this.props.container.items, 'listing_order');
 
@@ -85,7 +93,9 @@ ItemUpdateForm = class ItemUpdateForm extends React.Component {
                             value={this.state[schema.name]}
                             onChange={this.onChange.bind(this, schema.name)}/> : ''}
                     {schema.type === 'image' ?
-                        <FileInput /> : ''}
+                        <FileInput
+                            file={this.state[schema.name].url}
+                            onUpload={(err, res) => this.onFileUpload(err, res, schema.name)}/> : ''}
                 </div>
             )
         });

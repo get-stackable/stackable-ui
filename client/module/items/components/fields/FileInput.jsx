@@ -1,11 +1,20 @@
 FileInput = class FileInput extends React.Component {
+    static defaultProps = {
+        file: null
+    };
+
+    static propTypes = {
+        onUpload: React.PropTypes.func,
+        file: React.PropTypes.string
+    };
+
     constructor(props) {
         super(props);
 
         this.state = {
             progress: 0,
             isLoading: false,
-            file: null
+            file: props.file
         };
     }
 
@@ -36,27 +45,35 @@ FileInput = class FileInput extends React.Component {
                             callback(error, false);
                         } else {
                             //console.log(downloadUrl);
-
-                            callback(error, {size: file.size, type: file.type, pathOriginal: downloadUrl});
+                            //callback(error, {size: file.size, type: file.type, pathOriginal: downloadUrl});
+                            callback(error, downloadUrl);
                         }
                     });
                 }
             ],
             (err, results) => {
+                //console.log(err, results);
+                this.props.onUpload(err, {
+                    url: results[0],
+                    size: file.size,
+                    type: file.type
+                });
                 computation.stop(); // Stop the computation in order to save memory.
 
-                console.log(err, results);
                 this.setState({
                     isLoading: false,
-                    file: results[0].pathOriginal,
+                    file: results[0],
                     progress: 0
                 });
             });
     };
 
     renderProgressBar() {
-        var progressStyle = {transitionDuration: '300ms', width: this.state.progress + '%'};
-        var progressClass = classNames({
+        let progressStyle = {
+            transitionDuration: '300ms',
+            width: this.state.progress + '%'
+        };
+        let progressClass = classNames({
             'ui': true,
             'active': this.state.progress > 0,
             'progress': true,
@@ -64,12 +81,14 @@ FileInput = class FileInput extends React.Component {
             'hidden': this.state.progress === 0
         });
 
-        return <div className={progressClass} data-percent={this.state.progress}>
-            <div className="bar" style={progressStyle}>
-                <div className="progress">{this.state.progress}</div>
+        return (
+            <div className={progressClass} data-percent={this.state.progress}>
+                <div className="bar" style={progressStyle}>
+                    <div className="progress">{this.state.progress}</div>
+                </div>
+                <div className="label">Uploading Files</div>
             </div>
-            <div className="label">Uploading Files</div>
-        </div>
+        )
     }
 
     triggerInput() {
@@ -77,21 +96,26 @@ FileInput = class FileInput extends React.Component {
     }
 
     render() {
-        return <div>
-            <Loading active={this.state.isLoading} />
-            {!_.isNull(this.state.file) ? <img src={this.state.file}/>:''}
-            {this.state.progress !== 0 ? this.renderProgressBar() : ''}
-
-            <button className="ui primary button" onClick={this.triggerInput}  style={{'margin': '10px 0'}}>
-                <i className="upload icon"></i> Upload Image
-            </button>
-            <input
-                ref="file"
-                type="file"
-                name="file"
-                id="fileInput"
-                onChange={this.uploadFile}
-                style={{'display': 'none'}} />
-        </div>
+        return (
+            <div>
+                <Loading active={this.state.isLoading} />
+                {this.state.progress !== 0 ? this.renderProgressBar() : ''}
+                {!_.isNull(this.state.file) ?
+                    <a href={this.state.file} target="_blank">
+                        <img src={this.state.file} style={{'width':'80px','height':'auto','display':'block'}}/>
+                    </a>
+                    :''}
+                <button className="ui primary button" onClick={this.triggerInput}  style={{'margin': '10px 0'}}>
+                    <i className="upload icon"></i> Upload Image
+                </button>
+                <input
+                    ref="file"
+                    type="file"
+                    name="file"
+                    id="fileInput"
+                    onChange={this.uploadFile}
+                    style={{'display': 'none'}} />
+            </div>
+        )
     }
 };
