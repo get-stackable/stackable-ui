@@ -38,7 +38,6 @@ cosmos:browserify@=0.9.3
 meteorhacks:npm
 jagi:astronomy-slug-behavior
 npm-container
-simple:json-routes
 accounts-password
 accounts-ui
 mediumeditor:mediumeditor

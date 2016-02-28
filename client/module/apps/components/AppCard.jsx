@@ -53,6 +53,9 @@ AppCard = class AppCard extends React.Component {
                                 <a href={FlowRouter.path('appUpdate', {id: this.props.app._id})}>
                                     <i className="setting icon"></i>
                                 </a>
+                                <a href={StackableApi.getContainers(this.props.app.publicKey)} target="_blank" title="Get containers API URL">
+                                    <i className="share icon"></i>
+                                </a>
                             </div>
                         </div>
                     </div>

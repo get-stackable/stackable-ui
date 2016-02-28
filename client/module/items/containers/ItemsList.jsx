@@ -93,7 +93,7 @@ ItemsList = class ItemsList extends React.Component {
                                         </thead>
                                         <tbody>
                                         {this.data.items.map((item) => {
-                                            return <ItemsListRow key={item._id} item={item} />
+                                            return <ItemsListRow key={item._id} item={item} app={this.data.app} />
                                         })}
                                         </tbody>
                                     </table>

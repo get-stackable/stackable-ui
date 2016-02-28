@@ -88,7 +88,9 @@ ContainersList = class ContainersList extends React.Component {
                                                         <a href={FlowRouter.path('containerUpdate', {id: container._id})}>{container.name}</a>
                                                     </td>
                                                     <td>
-                                                        -
+                                                        <a href={StackableApi.getContainerItems(this.data.app.publicKey, container._id)} target="_blank" title="Get container items API URL">
+                                                            <i className="share icon"></i>
+                                                        </a>
                                                     </td>
                                                     <td>
                                                         <a

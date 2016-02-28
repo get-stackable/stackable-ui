@@ -1,6 +1,7 @@
 ItemsListRow = class ItemsListRow extends React.Component {
     static propTypes = {
-        item: React.PropTypes.object.isRequired
+        item: React.PropTypes.object.isRequired,
+        app: React.PropTypes.object.isRequired
     };
 
     deleteItem () {
@@ -22,7 +23,9 @@ ItemsListRow = class ItemsListRow extends React.Component {
                     </a>
                 </td>
                 <td>
-                    -
+                    <a href={StackableApi.getItem(this.props.app.publicKey, this.props.item._id)} target="_blank" title="Get container items API URL">
+                        <i className="share icon"></i>
+                    </a>
                 </td>
                 <td>
                     {/* <ConfirmModal
