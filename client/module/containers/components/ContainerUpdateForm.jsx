@@ -74,7 +74,7 @@ ContainerUpdateForm = class ContainerUpdateForm extends React.Component {
             self.setState({items});
         });
 
-        Meteor.setTimeout(() => this.props.handleSubmit(this.state), 1500);
+        this.handleSubmit();
     }
 
     openItemModal = (item, activeTab) => {
@@ -100,8 +100,7 @@ ContainerUpdateForm = class ContainerUpdateForm extends React.Component {
 
         this.setState({items});
 
-        //submit with bit delay
-        Meteor.setTimeout(() => this.props.handleSubmit(this.state), 500);
+        this.handleSubmit();
     };
 
     deleteContainer() {
@@ -120,6 +119,14 @@ ContainerUpdateForm = class ContainerUpdateForm extends React.Component {
 
         this.setState({items});
 
+        this.handleSubmit();
+    }
+
+    handleSubmit() {
+        if (this.state.items.length === 0) {
+            FlashMessages.sendInfo('Please create at least one field in order to save container.');
+            return;
+        }
         //submit with bit delay
         Meteor.setTimeout(() => this.props.handleSubmit(this.state), 500);
     }
@@ -166,12 +173,12 @@ ContainerUpdateForm = class ContainerUpdateForm extends React.Component {
                                         name="name"
                                         value={this.state.name}
                                         onChange={(e) => this.setState({name: e.target.value})}
-                                        onBlur={this.props.handleSubmit.bind(this, this.state)}/>
+                                        onBlur={() => this.handleSubmit()}/>
                                 </div>
                             </div>
                             <div className="six wide right aligned column">
                                 <button className="ui right labeled icon green button"
-                                        onClick={this.props.handleSubmit.bind(this, this.state)}>
+                                        onClick={() => this.handleSubmit()}>
                                     <i className="save icon"></i>
                                     Save
                                 </button>

@@ -39,21 +39,6 @@ ItemsList = class ItemsList extends React.Component {
         });
     }
 
-    //componentDidUpdate() {
-    //    Session.set('active.app', {
-    //        id: this.data.app._id,
-    //        name: this.data.app.name
-    //    });
-    //}
-
-    deleteItem(itemId) {
-        Meteor.call('item.delete', itemId, (err) => {
-            if (!err) {
-                FlashMessages.sendSuccess('Item deleted successfully!');
-            }
-        });
-    }
-
     render() {
         if (this.data.loading) {
             return <Loading active={true} />
@@ -108,26 +93,7 @@ ItemsList = class ItemsList extends React.Component {
                                         </thead>
                                         <tbody>
                                         {this.data.items.map((item) => {
-                                            let dataKeys = _.keys(item.data);
-                                            return (
-                                                <tr key={item._id}>
-                                                    <td>
-                                                        <a href={FlowRouter.path('itemUpdate', {id: item._id})}>
-                                                            {item.data[dataKeys[0]]}
-                                                        </a>
-                                                    </td>
-                                                    <td>
-                                                        -
-                                                    </td>
-                                                    <td>
-                                                        <a
-                                                            className="mini negative ui button"
-                                                            onClick={() => this.deleteItem(item._id)}>
-                                                            delete
-                                                        </a>
-                                                    </td>
-                                                </tr>
-                                            )
+                                            return <ItemsListRow key={item._id} item={item} />
                                         })}
                                         </tbody>
                                     </table>

@@ -7,7 +7,7 @@
     box-shadow: none;
     border: 0;
     width: 100% !important;
-    .item {
+    > .item {
       min-width: 0 !important;
       color: $color-white;
       padding: 1.3em 0;
@@ -26,6 +26,11 @@
         margin: 0 auto 6px auto;
         display: block;
       }
+    }
+  }
+  .ui.list {
+    > .item {
+      padding: 0.5em 0 !important;
     }
   }
 }

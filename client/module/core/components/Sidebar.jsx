@@ -9,11 +9,17 @@ Sidebar = class Sidebar extends React.Component {
 
     getMeteorData() {
         return {
-            activeApp: Session.get('active.app')
+            activeApp: Session.get('active.app'),
+            apps: Application.find({}, {sort: {createdAt: -1}}).fetch()
         };
     }
 
     showContainers = () => {
+        if (this.data.apps.length === 0) {
+            Session.set('app.create.modal', true);
+            return;
+        }
+
         if (!_.isUndefined(this.data.activeApp.id)) {
             FlowRouter.go('containersList', {appId: this.data.activeApp.id});
         } else {
@@ -25,6 +31,11 @@ Sidebar = class Sidebar extends React.Component {
     };
 
     showItems = () => {
+        if (this.data.apps.length === 0) {
+            Session.set('app.create.modal', true);
+            return;
+        }
+
         if (!_.isUndefined(this.data.activeApp.id)) {
             FlowRouter.go('itemsList', {appId: this.data.activeApp.id});
         } else {
