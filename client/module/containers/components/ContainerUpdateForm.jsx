@@ -12,6 +12,9 @@ var fieldTypes = [
         title: 'Boolean',
         value: 'boolean'
     }, {
+        title: 'Image Upload',
+        value: 'image'
+    }, {
         title: 'Json',
         value: 'json'
     }, {

@@ -52,7 +52,9 @@ ItemUpdateForm = class ItemUpdateForm extends React.Component {
         return containerItems.map((schema) => {
             return (
                 <div className="field" key={schema._id}>
-                    <label style={{'color':'#34383c','fontWeight':'400'}}>{schema.name}</label>
+                    <label style={{'color':'#34383c','fontWeight':'400'}}>
+                        {titleize(schema.name)}
+                    </label>
                     {schema.type === 'text' ?
                         <TextInput
                             value={this.state[schema.name]}
@@ -82,6 +84,8 @@ ItemUpdateForm = class ItemUpdateForm extends React.Component {
                             name={schema.name}
                             value={this.state[schema.name]}
                             onChange={this.onChange.bind(this, schema.name)}/> : ''}
+                    {schema.type === 'image' ?
+                        <FileInput /> : ''}
                 </div>
             )
         });
