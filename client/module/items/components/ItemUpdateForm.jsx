@@ -59,7 +59,7 @@ ItemUpdateForm = class ItemUpdateForm extends React.Component {
         let containerItems = _.sortBy(this.props.container.items, 'listing_order');
 
         return containerItems.map((schema) => {
-            console.log(schema);
+            //console.log(schema);
             return (
                 <div className="field" key={schema._id}>
                     <label style={{'color':'#34383c','fontWeight':'400'}}>
@@ -99,7 +99,10 @@ ItemUpdateForm = class ItemUpdateForm extends React.Component {
                             file={this.state[schema.name].url}
                             onUpload={(err, res) => this.onFileUpload(err, res, schema.name)}/> : ''}
                     {schema.type === 'relation' ?
-                        <RelationInput relations={schema.relations} /> : ''}
+                        <RelationInput
+                            relations={schema.relations}
+                            value={this.state[schema.name]}
+                            onChange={(data) => this.onChange(schema.name, data)} /> : ''}
                 </div>
             )
         });

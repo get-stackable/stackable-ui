@@ -1,6 +1,8 @@
 RelationInput = class RelationInput extends React.Component {
     static propTypes = {
-        relations: React.PropTypes.object.isRequired
+        relations: React.PropTypes.object.isRequired,
+        onChange: React.PropTypes.func,
+        value: React.PropTypes.any
     };
 
     getMeteorData() {
@@ -18,8 +20,16 @@ RelationInput = class RelationInput extends React.Component {
         return data;
     }
 
-    componentDidMount() {
-        $('.ui.dropdown.relation').dropdown();
+    componentDidUpdate() {
+        var self = this;
+        $('.ui.dropdown.relation')
+            .dropdown('set text', this.props.value.data[this.props.relations.relation_field])
+            .dropdown({
+                onChange: function(value) {
+                    let item = self.data.relationItems[value];
+                    self.props.onChange({_id: item._id, containerId: item.containerId, data: item.data});
+                }
+            });
     }
 
     render() {
@@ -27,17 +37,14 @@ RelationInput = class RelationInput extends React.Component {
             return <Loading active={true} />
         }
 
-        console.log(this.data.relationContainer);
-        console.log(this.data.relationItems);
-
         return (
             <div className="ui fluid search selection dropdown relation">
                 <input type="hidden" name="country" />
                 <i className="dropdown icon"></i>
                 <div className="default text">Select item</div>
                 <div className="menu">
-                    {this.data.relationItems.map((item) => {
-                        return <div className="item" key={item._id} data-value={item._id}>{item.data[this.props.relations.relation_field]}</div>
+                    {this.data.relationItems.map((item, index) => {
+                        return <div className="item" key={item._id} data-value={index}>{item.data[this.props.relations.relation_field]}</div>
                     })}
                 </div>
             </div>
