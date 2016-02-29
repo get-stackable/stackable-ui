@@ -54,10 +54,12 @@ ItemUpdateForm = class ItemUpdateForm extends React.Component {
         }
     }
 
+    //todo use switch statement instead of IF
     loadFields() {
         let containerItems = _.sortBy(this.props.container.items, 'listing_order');
 
         return containerItems.map((schema) => {
+            console.log(schema);
             return (
                 <div className="field" key={schema._id}>
                     <label style={{'color':'#34383c','fontWeight':'400'}}>
@@ -96,6 +98,8 @@ ItemUpdateForm = class ItemUpdateForm extends React.Component {
                         <FileInput
                             file={this.state[schema.name].url}
                             onUpload={(err, res) => this.onFileUpload(err, res, schema.name)}/> : ''}
+                    {schema.type === 'relation' ?
+                        <RelationInput relations={schema.relations} /> : ''}
                 </div>
             )
         });

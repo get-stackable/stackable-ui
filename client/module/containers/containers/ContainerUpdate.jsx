@@ -27,7 +27,7 @@ ContainerUpdate = class ContainerUpdate extends React.Component {
             return <Loading active={true}/>
         }
 
-        return <ContainerUpdateForm container={this.data.container} handleSubmit={this.handleSubmit}/>
+        return <ContainerUpdateForm appId={this.data.container.appId} container={this.data.container} handleSubmit={this.handleSubmit}/>
     }
 };
 
