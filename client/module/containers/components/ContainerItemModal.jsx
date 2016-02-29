@@ -150,6 +150,7 @@ ContainerItemModal = class ContainerItemModal extends React.Component {
                                 <textarea rows="3" name="validations" value={this.state.validations}
                                       onChange={(e) => this.setState({validations: e.target.value})}></textarea>
                             </div>
+                            {this.state.type === 'relation' ?
                             <div className="fields">
                                 <label>Relation Name</label>
                                 {this.props.siblingContainers.map((container) => {
@@ -167,8 +168,8 @@ ContainerItemModal = class ContainerItemModal extends React.Component {
                                         </div>
                                     )
                                 })}
-                            </div>
-                            {this.renderRelationFields()}
+                            </div>:''}
+                            {this.state.type === 'relation' ? this.renderRelationFields() : ''}
                             <button className="ui button" type="submit" onClick={this.handleSubmit}>Submit</button>
                         </div>
                     </div>

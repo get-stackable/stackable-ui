@@ -15,9 +15,6 @@ var fieldTypes = [
         title: 'Image Upload',
         value: 'image'
     }, {
-        title: 'Json',
-        value: 'json'
-    }, {
         title: 'Enom (Select)',
         value: 'enom'
     }, {
