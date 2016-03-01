@@ -10,12 +10,20 @@ ProfileForm = class ProfileForm extends React.Component {
     constructor(props) {
         super(props);
 
+        if (_.isUndefined(props.user.profile)) {
+            props.user.profile = {};
+        }
+
+        if (_.isUndefined(props.user.emails)) {
+            props.user.emails = [];
+        }
+
         this.state = {
-            email: !_.isUndefined(props.user) && !_.isUndefined(props.user.emails) && !_.isNull(props.user.emails) ? props.user.emails[0].address : '',
-            first_name: !_.isUndefined(props.user) ? props.user.profile.first_name : '',
-            last_name: !_.isUndefined(props.user) ? props.user.profile.last_name : '',
-            location: !_.isUndefined(props.user) ? props.user.profile.location : '',
-            about: !_.isUndefined(props.user) ? props.user.profile.about : ''
+            email: props.user.emails.length !== 0 ? props.user.emails[0].address : '',
+            first_name: !_.isUndefined(props.user.profile.first_name) ? props.user.profile.first_name : '',
+            last_name: !_.isUndefined(props.user.profile.last_name) ? props.user.profile.last_name : '',
+            location: !_.isUndefined(props.user.profile.location) ? props.user.profile.location : '',
+            about: !_.isUndefined(props.user.profile.about) ? props.user.profile.about : ''
         };
     }
 
