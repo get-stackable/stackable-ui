@@ -94,7 +94,7 @@ ItemUpdateForm = class ItemUpdateForm extends React.Component {
                             onChange={this.onChange.bind(this, schema.name)}/> : ''}
                     {schema.type === 'image' ?
                         <FileInput
-                            file={this.state[schema.name].url}
+                            file={!_.isUndefined(this.state[schema.name]) ? this.state[schema.name].url : null}
                             onUpload={(err, res) => this.onFileUpload(err, res, schema.name)}/> : ''}
                 </div>
             )
