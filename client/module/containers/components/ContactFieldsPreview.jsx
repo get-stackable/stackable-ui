@@ -39,6 +39,15 @@ ContactFieldsPreview = class ContactFieldsPreview extends React.Component {
                             name="test-enom"
                             value=""
                             onChange={() => console.log('on change...')}/> : ''}
+                    {schema.type === 'image' ?
+                        <FileInput
+                            file={null}
+                            onUpload={() => console.log('on upload...')}/> : ''}
+                    {schema.type === 'relation' ?
+                        <RelationInput
+                            relations={schema.relations}
+                            value=""
+                            onChange={() => console.log('on change...')} /> : ''}
                 </div>
             )
         });
