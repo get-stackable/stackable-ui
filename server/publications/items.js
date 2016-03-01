@@ -1,10 +1,18 @@
-Meteor.publish('items.all', function (appId) {
+Meteor.publish('items.all', function (appId, containerId) {
     check(appId, String);
+    let itemFind = {};
+
+    if (!_.isUndefined(containerId)) {
+        check(containerId, String);
+        itemFind['containerId'] = containerId;
+    }
 
     //check only app owners can get data
     let app = Application.findOne({_id: appId, 'users': this.userId});
+    itemFind['appId'] = app._id;
+
     if (this.userId && app) {
-        return Item.find({appId: app._id}, {sort: {createdAt: -1}});
+        return Item.find(itemFind, {sort: {createdAt: -1}});
     } else {
         this.ready();
     }

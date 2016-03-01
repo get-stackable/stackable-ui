@@ -4,7 +4,8 @@ ContainerItemModal = class ContainerItemModal extends React.Component {
         toggleModal: React.PropTypes.func.isRequired,
         item: React.PropTypes.object.isRequired,
         update: React.PropTypes.func.isRequired,
-        activeTab: React.PropTypes.string
+        activeTab: React.PropTypes.string,
+        siblingContainers: React.PropTypes.array.isRequired
     };
 
     constructor(props) {
@@ -28,6 +29,7 @@ ContainerItemModal = class ContainerItemModal extends React.Component {
             description: props.item.description || '',
             type: props.item.type || 'text',
             validations: props.item.validations || '',
+            relations: props.item.relations || {},
             isRequired: props.item.isRequired || false,
             isDisabled: props.item.isDisabled || false,
             listing_order: props.item.listing_order || 1,
@@ -48,11 +50,40 @@ ContainerItemModal = class ContainerItemModal extends React.Component {
     }
 
     handleSubmit = () => {
-        let {_id, name, description, type, validations, isRequired, isDisabled, listing_order} = this.state;
+        let {_id, name, description, type, validations, relations, isRequired, isDisabled, listing_order} = this.state;
 
-        this.props.update({_id, name, description, type, validations, isRequired, isDisabled, listing_order});
+        this.props.update({_id, name, description, type, validations, relations, isRequired, isDisabled, listing_order});
         this.props.toggleModal();
     };
+
+    renderRelationFields() {
+        if (_.isUndefined(this.state.relations.relation_id)) {
+            return;
+        }
+
+        let relation = Container.findOne(this.state.relations.relation_id);
+
+        return (
+            <div className="fields">
+                <label>Relation Field</label>
+                {relation.items.map((item) => {
+                    return (
+                        <div className="field" key={item._id}>
+                            <div className="ui radio checkbox">
+                                <input
+                                    type="radio"
+                                    name="relation_field"
+                                    value={item.name}
+                                    checked={item.name === this.state.relations.relation_field ? 'checked' : false}
+                                    onChange={(e) => this.setState({relations: {relation_id: relation._id, relation_field: e.target.value}})}/>
+                                <label>{item.name}</label>
+                            </div>
+                        </div>
+                    )
+                })}
+            </div>
+        )
+    }
 
     render() {
         return (
@@ -119,6 +150,26 @@ ContainerItemModal = class ContainerItemModal extends React.Component {
                                 <textarea rows="3" name="validations" value={this.state.validations}
                                       onChange={(e) => this.setState({validations: e.target.value})}></textarea>
                             </div>
+                            {this.state.type === 'relation' ?
+                            <div className="fields">
+                                <label>Relation Name</label>
+                                {this.props.siblingContainers.map((container) => {
+                                    return (
+                                        <div className="field" key={container._id}>
+                                            <div className="ui radio checkbox">
+                                                <input
+                                                    type="radio"
+                                                    name="relation_id"
+                                                    value={container._id}
+                                                    checked={container._id === this.state.relations.relation_id ? 'checked' : false}
+                                                    onChange={(e) => this.setState({relations: {relation_id: e.target.value}})}/>
+                                                <label>{container.name}</label>
+                                            </div>
+                                        </div>
+                                    )
+                                })}
+                            </div>:''}
+                            {this.state.type === 'relation' ? this.renderRelationFields() : ''}
                             <button className="ui button" type="submit" onClick={this.handleSubmit}>Submit</button>
                         </div>
                     </div>

@@ -22,6 +22,6 @@ ContainerCreate = class ContainerCreate extends React.Component {
   };
 
   render() {
-    return (<ContainerUpdateForm handleSubmit={this.handleSubmit}/>)
+    return (<ContainerUpdateForm appId={this.props.appId} handleSubmit={this.handleSubmit}/>)
   }
 };

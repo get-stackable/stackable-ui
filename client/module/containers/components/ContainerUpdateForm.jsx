@@ -15,18 +15,19 @@ var fieldTypes = [
         title: 'Image Upload',
         value: 'image'
     }, {
-        title: 'Json',
-        value: 'json'
-    }, {
         title: 'Enom (Select)',
         value: 'enom'
+    }, {
+        title: 'Relations',
+        value: 'relation'
     }
 ];
 
 ContainerUpdateForm = class ContainerUpdateForm extends React.Component {
     static propTypes = {
         handleSubmit: React.PropTypes.func.isRequired,
-        container: React.PropTypes.object
+        container: React.PropTypes.object,
+        appId: React.PropTypes.string
     };
 
     constructor(props) {
@@ -38,6 +39,19 @@ ContainerUpdateForm = class ContainerUpdateForm extends React.Component {
             itemModalVisible: false,
             activeItemInModal: {},
             activeModalTab: 'info'
+        };
+    }
+
+    getMeteorData() {
+        let handle = Meteor.subscribe('containers.all', this.props.appId);
+
+        let siblingFind = {appId: this.props.appId};
+        if (!_.isUndefined(this.props.container)) {
+            siblingFind['_id'] = {$ne: this.props.container._id};
+        }
+        return {
+            loading: !handle.ready(),
+            siblingContainers: Container.find(siblingFind).fetch()
         };
     }
 
@@ -242,8 +256,11 @@ ContainerUpdateForm = class ContainerUpdateForm extends React.Component {
                     item={this.state.activeItemInModal}
                     toggleModal={() => this.setState({itemModalVisible: false})}
                     update={(item) => this.updateItem(item)}
-                    activeTab={this.state.activeModalTab} />
+                    activeTab={this.state.activeModalTab}
+                    siblingContainers={this.data.siblingContainers} />
             </div>
         )
     }
-}
+};
+
+reactMixin(ContainerUpdateForm.prototype, ReactMeteorData);
