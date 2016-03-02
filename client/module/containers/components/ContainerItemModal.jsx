@@ -91,6 +91,7 @@ ContainerItemModal = class ContainerItemModal extends React.Component {
                 <div className="header">
                     <img src="/images/logo.png"/>
                     {this.state.name.length === 0 ? 'Create' : 'Update'} {titleize(this.state.type)} Item
+                    <i className="close icon" onClick={() => this.props.toggleModal()}></i>
                 </div>
                 <div className="content">
                     <div className="ui pointing secondary menu" id="container-item-edit-tab">
@@ -104,7 +105,13 @@ ContainerItemModal = class ContainerItemModal extends React.Component {
                             className={classNames('item', { 'active': this.state.activeTab === 'validation'})}
                             data-tab="validations"
                             onClick={() => this.setState({activeTab: 'validation'})}>
-                            Validation
+                            Validations
+                        </a>
+                        <a
+                            className={classNames('item', { 'active': this.state.activeTab === 'relation'})}
+                            data-tab="validations"
+                            onClick={() => this.setState({activeTab: 'relation'})}>
+                            Relations
                         </a>
                     </div>
                     <div className={classNames('ui tab', { 'active': this.state.activeTab === 'info'})} data-tab="info">
@@ -150,7 +157,12 @@ ContainerItemModal = class ContainerItemModal extends React.Component {
                                 <textarea rows="3" name="validations" value={this.state.validations}
                                       onChange={(e) => this.setState({validations: e.target.value})}></textarea>
                             </div>
-                            {this.state.type === 'relation' ?
+                            <button className="ui button" type="submit" onClick={this.handleSubmit}>Submit</button>
+                        </div>
+                    </div>
+                    {this.state.type === 'relation' ?
+                    <div className={classNames('ui tab', { 'active': this.state.activeTab === 'relation'})} data-tab="relation">
+                        <div className="ui form">
                             <div className="fields">
                                 <label>Relation Name</label>
                                 {this.props.siblingContainers.map((container) => {
@@ -168,11 +180,11 @@ ContainerItemModal = class ContainerItemModal extends React.Component {
                                         </div>
                                     )
                                 })}
-                            </div>:''}
-                            {this.state.type === 'relation' ? this.renderRelationFields() : ''}
+                            </div>
+                            {this.renderRelationFields()}
                             <button className="ui button" type="submit" onClick={this.handleSubmit}>Submit</button>
                         </div>
-                    </div>
+                    </div>:''}
                 </div>
             </div>
         )

@@ -31,10 +31,10 @@ AppDeleteModal = class AppDeleteModal extends React.Component {
             return;
         }
 
+        this.props.toggleModal();
         Meteor.call('app.delete', this.props.app._id, (err) => {
             if (!err) {
                 FlashMessages.sendSuccess('Stack deleted successfully!');
-                this.props.toggleModal();
                 FlowRouter.go('home');
             }
         });
@@ -46,6 +46,7 @@ AppDeleteModal = class AppDeleteModal extends React.Component {
                 <div className="header">
                     <img src="/images/logo.png" />
                     Delete stack
+                    <i className="close icon" onClick={() => this.props.toggleModal()}></i>
                 </div>
                 <div className="content">
                     <div className="ui segment">

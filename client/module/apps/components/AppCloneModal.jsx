@@ -53,6 +53,7 @@ AppCloneModal = class AppCloneModal extends React.Component {
                 <div className="header">
                     <img src="/images/logo.png" />
                     Clone stack
+                    <i className="close icon" onClick={() => this.props.toggleModal()}></i>
                 </div>
                 <div className="content">
                     <div className="ui form">

@@ -75,9 +75,9 @@ ContainersList = class ContainersList extends React.Component {
                                     <table className="ui celled table" style={{'marginTop': '15px'}}>
                                         <thead>
                                         <tr>
-                                            <th>Container Name</th>
-                                            <th>Description</th>
-                                            <th>Actions</th>
+                                            <th width="50%">Container Name</th>
+                                            <th width="20%">Api URL</th>
+                                            <th width="30%">Actions</th>
                                         </tr>
                                         </thead>
                                         <tbody>
@@ -96,7 +96,7 @@ ContainersList = class ContainersList extends React.Component {
                                                         <a
                                                             className="mini ui button"
                                                             href={FlowRouter.path('itemsList', {appId: this.props.appId}, {containerId: container._id})}>
-                                                            items
+                                                            view all container items
                                                         </a>
                                                         <a
                                                             className="mini secondary ui button"

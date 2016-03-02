@@ -124,7 +124,7 @@ ContainerUpdateForm = class ContainerUpdateForm extends React.Component {
         Meteor.call('container.delete', this.props.container._id, (err) => {
             if (!err) {
                 FlashMessages.sendSuccess('Container deleted successfully!');
-                FlowRouter.go('containersList', {appId: this.props.container.appId});
+                FlowRouter.go('containersList', {appId: this.props.appId});
             }
         });
     }
@@ -160,11 +160,11 @@ ContainerUpdateForm = class ContainerUpdateForm extends React.Component {
                             Containers Tools
                         </a>
                         {!_.isUndefined(this.props.container) ?
-                        <a className="ui button item" href={FlowRouter.path('containerCreate', {appId: this.props.container.appId})}>
+                        <a className="ui button item" href={FlowRouter.path('containerCreate', {appId: this.props.appId})}>
                             Create Containers
                         </a>:''}
                         {!_.isUndefined(this.props.container) ?
-                        <a className="ui button item" href={FlowRouter.path('containersList', {appId: this.props.container.appId})}>
+                        <a className="ui button item" href={FlowRouter.path('containersList', {appId: this.props.appId})}>
                             View Containers
                         </a>:''}
                         {!_.isUndefined(this.props.container) ?
@@ -226,7 +226,13 @@ ContainerUpdateForm = class ContainerUpdateForm extends React.Component {
                                                     </span>
                                                 </td>
                                                 <td width="25%" style={{'textAlign': 'center'}}>
-                                                    <a className="underline" onClick={this.openItemModal.bind(this, item, 'validation')}>validations</a>
+                                                    {item.type !== 'relation' ?
+                                                        <a className="underline"
+                                                           onClick={this.openItemModal.bind(this, item, 'validation')}>validations</a>
+                                                        :
+                                                        <a className="underline"
+                                                           onClick={this.openItemModal.bind(this, item, 'relation')}>relations</a>
+                                                    }
                                                 </td>
                                                 <td width="25%" style={{'textAlign': 'center'}}>
                                                     <a className="underline" onClick={this.openItemModal.bind(this, item, 'info')}>configure</a>
