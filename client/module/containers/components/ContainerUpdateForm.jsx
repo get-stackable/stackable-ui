@@ -107,6 +107,7 @@ ContainerUpdateForm = class ContainerUpdateForm extends React.Component {
 
         //find in array
         let index = lodash.findIndex(items, {_id: item._id});
+
         if (index == '-1') {
             //new item
             items.push(item);
@@ -263,7 +264,8 @@ ContainerUpdateForm = class ContainerUpdateForm extends React.Component {
                     toggleModal={() => this.setState({itemModalVisible: false})}
                     update={(item) => this.updateItem(item)}
                     activeTab={this.state.activeModalTab}
-                    siblingContainers={this.data.siblingContainers} />
+                    siblingContainers={this.data.siblingContainers}
+                    allItems={this.state.items} />
             </div>
         )
     }

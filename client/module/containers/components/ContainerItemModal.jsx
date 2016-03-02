@@ -5,7 +5,8 @@ ContainerItemModal = class ContainerItemModal extends React.Component {
         item: React.PropTypes.object.isRequired,
         update: React.PropTypes.func.isRequired,
         activeTab: React.PropTypes.string,
-        siblingContainers: React.PropTypes.array.isRequired
+        siblingContainers: React.PropTypes.array.isRequired,
+        allItems: React.PropTypes.array.isRequired
     };
 
     constructor(props) {
@@ -32,7 +33,7 @@ ContainerItemModal = class ContainerItemModal extends React.Component {
             relations: props.item.relations || {},
             isRequired: props.item.isRequired || false,
             isDisabled: props.item.isDisabled || false,
-            listing_order: props.item.listing_order || 1,
+            listing_order: props.item.listing_order || props.allItems.length + 1,
             activeTab: props.activeTab || 'info'
         }
     }
@@ -51,6 +52,15 @@ ContainerItemModal = class ContainerItemModal extends React.Component {
 
     handleSubmit = () => {
         let {_id, name, description, type, validations, relations, isRequired, isDisabled, listing_order} = this.state;
+
+        //todo check if field already exists with same name
+        console.log(name);
+        console.log(this.props.allItems);
+        let exists = lodash.find(this.props.allItems, {name: name});
+        if (!_.isUndefined(exists)) {
+            FlashMessages.sendError(`Field with same name "${name}" already exists`);
+            return;
+        }
 
         this.props.update({_id, name, description, type, validations, relations, isRequired, isDisabled, listing_order});
         this.props.toggleModal();
