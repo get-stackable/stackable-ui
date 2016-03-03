@@ -30,7 +30,7 @@ ContainerItemModal = class ContainerItemModal extends React.Component {
             name: props.item.name || '',
             description: props.item.description || '',
             type: props.item.type || 'text',
-            validations: props.item.validations || '',
+            validations: props.item.validations || {},
             relations: props.item.relations || {},
             isRequired: props.item.isRequired || false,
             isDisabled: props.item.isDisabled || false,
@@ -104,6 +104,32 @@ ContainerItemModal = class ContainerItemModal extends React.Component {
     }
 
     render() {
+        let customValidationsFields = null;
+
+        if (this.state.type === 'text') {
+            customValidationsFields = <TextFieldValidations
+                value={this.state.validations}
+                onChange={(validations) => this.setState({validations})} />;
+        }
+
+        if (this.state.type === 'number') {
+            customValidationsFields = <NumberFieldValidations
+                value={this.state.validations}
+                onChange={(validations) => this.setState({validations})} />;
+        }
+
+        if (this.state.type === 'textArea') {
+            customValidationsFields = <TextAreaFieldValidations
+                value={this.state.validations}
+                onChange={(validations) => this.setState({validations})} />;
+        }
+
+        if (this.state.type === 'enom') {
+            customValidationsFields = <EnomFieldValidations
+                value={this.state.validations}
+                onChange={(validations) => this.setState({validations})} />;
+        }
+
         return (
             <div className="ui modal" id="container-item-modal" style={{'paddingLeft': '0', 'paddingRight': '0'}}>
                 <div className="header">
@@ -147,23 +173,10 @@ ContainerItemModal = class ContainerItemModal extends React.Component {
                             </div>
                             <div className="field">
                                 <div className="ui checkbox">
-                                    <input type="checkbox" name="isRequired" value={this.state.isRequired}
-                                           onChange={(e) => this.setState({isRequired: e.target.value})}/>
-                                    <label>Item Required</label>
-                                </div>
-                            </div>
-                            <div className="field">
-                                <div className="ui checkbox">
                                     <input type="checkbox" name="isDisabled" value={this.state.isDisabled}
                                            onChange={(e) => this.setState({isDisabled: e.target.value})}/>
                                     <label>Item Disabled</label>
                                 </div>
-                            </div>
-                            <div className="field">
-                                <label>Item Listing Order</label>
-                                <input type="number" name="listing_order" placeholder="Item Listing Order"
-                                       value={this.state.listing_order}
-                                       onChange={(e) => this.setState({listing_order: e.target.value})}/>
                             </div>
                             <button className="ui button" type="submit" onClick={this.handleSubmit}>Submit</button>
                         </div>
@@ -171,10 +184,15 @@ ContainerItemModal = class ContainerItemModal extends React.Component {
                     <div className={classNames('ui tab', { 'active': this.state.activeTab === 'validation'})} data-tab="validation">
                         <div className="ui form">
                             <div className="field">
-                                <label>Item Validations</label>
-                                <textarea rows="3" name="validations" value={this.state.validations}
-                                      onChange={(e) => this.setState({validations: e.target.value})}></textarea>
+                                <div className="ui checkbox">
+                                    <input type="checkbox" name="isRequired" value={this.state.isRequired}
+                                           onChange={(e) => this.setState({isRequired: e.target.value})}/>
+                                    <label>Item Required</label>
+                                </div>
                             </div>
+
+                            {customValidationsFields}
+
                             <button className="ui button" type="submit" onClick={this.handleSubmit}>Submit</button>
                         </div>
                     </div>
@@ -200,6 +218,8 @@ ContainerItemModal = class ContainerItemModal extends React.Component {
                                 })}
                             </div>
                             {this.renderRelationFields()}
+
+                            <div className="ui divider"></div>
                             <button className="ui button" type="submit" onClick={this.handleSubmit}>Submit</button>
                         </div>
                     </div>:''}
