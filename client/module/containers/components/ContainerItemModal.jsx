@@ -6,7 +6,8 @@ ContainerItemModal = class ContainerItemModal extends React.Component {
         update: React.PropTypes.func.isRequired,
         activeTab: React.PropTypes.string,
         siblingContainers: React.PropTypes.array.isRequired,
-        allItems: React.PropTypes.array.isRequired
+        allItems: React.PropTypes.array.isRequired,
+        container: React.PropTypes.object.isRequired
     };
 
     constructor(props) {
@@ -53,13 +54,20 @@ ContainerItemModal = class ContainerItemModal extends React.Component {
     handleSubmit = () => {
         let {_id, name, description, type, validations, relations, isRequired, isDisabled, listing_order} = this.state;
 
-        //todo check if field already exists with same name
-        console.log(name);
-        console.log(this.props.allItems);
+        //check if field already exists with same name
         let exists = lodash.find(this.props.allItems, {name: name});
-        if (!_.isUndefined(exists)) {
+        if (!_.isUndefined(exists) && exists._id !== _id) {
             FlashMessages.sendError(`Field with same name "${name}" already exists`);
             return;
+        }
+
+        //check if field `name` is changed, then rename in all items related to this
+        if (name !== this.props.item.name) {
+            Meteor.call('container.field.rename', this.props.container._id, this.props.item.name, name, (err) => {
+                if (!err) {
+                    console.log('renamed all data for this field')
+                }
+            });
         }
 
         this.props.update({_id, name, description, type, validations, relations, isRequired, isDisabled, listing_order});

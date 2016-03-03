@@ -122,22 +122,37 @@ ContainerUpdateForm = class ContainerUpdateForm extends React.Component {
     };
 
     deleteContainer() {
-        Meteor.call('container.delete', this.props.container._id, (err) => {
-            if (!err) {
-                FlashMessages.sendSuccess('Container deleted successfully!');
-                FlowRouter.go('containersList', {appId: this.props.appId});
-            }
-        });
+        alertify.confirm('Do you want to delete this container?', `All related ${this.state.items.length} items will be also deleted!`,
+            () => {
+                Meteor.call('container.delete', this.props.container._id, (err) => {
+                    if (!err) {
+                        FlashMessages.sendSuccess('Container deleted successfully!');
+                        FlowRouter.go('containersList', {appId: this.props.appId});
+                    }
+                });
+            },
+            () => {
+                //cancel
+            });
     }
 
     removeItem(item, index) {
-        let items = this.state.items;
+        alertify.confirm('Do you want to remove this field?', 'All related data for this field in items will be also deleted!',
+            () => {
+                let items = this.state.items;
+                items.splice(index, 1);
+                this.setState({items});
+                this.handleSubmit();
 
-        items.splice(index, 1);
-
-        this.setState({items});
-
-        this.handleSubmit();
+                Meteor.call('container.field.archive', this.props.container._id, item.name, (err) => {
+                    if (!err) {
+                        console.log('archived all data for this field')
+                    }
+                });
+            },
+            () => {
+                //cancel
+            });
     }
 
     handleSubmit() {
@@ -169,12 +184,9 @@ ContainerUpdateForm = class ContainerUpdateForm extends React.Component {
                             View Containers
                         </a>:''}
                         {!_.isUndefined(this.props.container) ?
-                        <ConfirmModal
-                            buttonText="Delete Container"
-                            buttonClass="ui button item"
-                            modalTitle="Do you want to delete this container?"
-                            modalDescription={`All related ${this.state.items.length} items will be also deleted!`}
-                            accepted={() => this.deleteContainer()}/>:''}
+                        <a className="ui button item" onClick={() => this.deleteContainer()}>
+                            Delete Container
+                        </a>:''}
 
                         <div className="item" style={{'textAlign': 'center'}}>
                             <small>With great power comes great responsibility</small>
@@ -265,7 +277,8 @@ ContainerUpdateForm = class ContainerUpdateForm extends React.Component {
                     update={(item) => this.updateItem(item)}
                     activeTab={this.state.activeModalTab}
                     siblingContainers={this.data.siblingContainers}
-                    allItems={this.state.items} />
+                    allItems={this.state.items}
+                    container={this.props.container} />
             </div>
         )
     }

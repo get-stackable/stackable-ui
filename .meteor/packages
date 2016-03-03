@@ -51,3 +51,4 @@ accounts-google
 service-configuration
 edgee:slingshot
 peerlibrary:async
+ovcharik:alertifyjs

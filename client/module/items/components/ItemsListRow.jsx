@@ -5,11 +5,17 @@ ItemsListRow = class ItemsListRow extends React.Component {
     };
 
     deleteItem () {
-        Meteor.call('item.delete', this.props.item._id, (err) => {
-            if (!err) {
-                FlashMessages.sendSuccess('Item deleted successfully!');
-            }
-        });
+        alertify.confirm('Do you want to delete this item?', 'Deleting this item will delete it permanently!',
+            () => {
+                Meteor.call('item.delete', this.props.item._id, (err) => {
+                    if (!err) {
+                        FlashMessages.sendSuccess('Item deleted successfully!');
+                    }
+                });
+            },
+            () => {
+                //cancel
+            });
     };
 
     render() {
@@ -28,12 +34,6 @@ ItemsListRow = class ItemsListRow extends React.Component {
                     </a>
                 </td>
                 <td>
-                    {/* <ConfirmModal
-                        buttonText="delete"
-                        buttonClass="mini negative ui button"
-                        modalTitle="Do you want to delete this item?"
-                        modalDescription={`All the data in this item will be deleted!`}
-                        accepted={() => this.deleteItem()}/>*/}
                     <a
                         className="mini negative ui button"
                         onClick={() => this.deleteItem()}>

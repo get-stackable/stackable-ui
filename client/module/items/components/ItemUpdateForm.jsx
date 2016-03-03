@@ -108,6 +108,20 @@ ItemUpdateForm = class ItemUpdateForm extends React.Component {
         });
     }
 
+    deleteItem() {
+        alertify.confirm('Do you want to delete this item?', 'Deleting this item will delete it permanently!',
+            () => {
+                Meteor.call('item.delete', this.props.item._id, (err) => {
+                    if (!err) {
+                        FlashMessages.sendSuccess('Item deleted successfully!');
+                    }
+                });
+            },
+            () => {
+                //cancel
+            });
+    }
+
     render() {
         return (
             <div className="ui grid full-height" style={{'marginLeft': '0'}}>
@@ -141,12 +155,9 @@ ItemUpdateForm = class ItemUpdateForm extends React.Component {
                                     Save Item
                                 </button>
                                 {!_.isUndefined(this.props.item) ?
-                                    <ConfirmModal
-                                        buttonText="Delete Item"
-                                        buttonClass="ui negative button"
-                                        modalTitle="Do you want to delete this item?"
-                                        modalDescription={`All data for this item will be deleted!`}
-                                        accepted={() => console.log('delete item')}/>:''}
+                                    <a className="ui negative button" onClick={() => this.deleteItem()}>
+                                        Delete Item
+                                    </a>:''}
                             </div>
                         </div>
                         <div className="ui divider"></div>
