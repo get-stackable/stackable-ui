@@ -40,6 +40,9 @@ Meteor.publish('items.find', function (query, limit) {
     //find by query
     let find = {};
 
+    let user = User.findOne(this.userId);
+    find['appId'] = {$in: user.apps};
+
     if (!_.isNull(query)) {
         let queryRegex = ".*" + query + ".*";
         find = {
