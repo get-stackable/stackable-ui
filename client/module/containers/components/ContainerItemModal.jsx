@@ -106,22 +106,11 @@ ContainerItemModal = class ContainerItemModal extends React.Component {
     render() {
         let customValidationsFields = null;
 
-        if (this.state.type === 'text') {
+        if (this.state.type === 'text' || this.state.type === 'number' || this.state.type === 'textArea') {
             customValidationsFields = <TextFieldValidations
                 value={this.state.validations}
-                onChange={(validations) => this.setState({validations})} />;
-        }
-
-        if (this.state.type === 'number') {
-            customValidationsFields = <NumberFieldValidations
-                value={this.state.validations}
-                onChange={(validations) => this.setState({validations})} />;
-        }
-
-        if (this.state.type === 'textArea') {
-            customValidationsFields = <TextAreaFieldValidations
-                value={this.state.validations}
-                onChange={(validations) => this.setState({validations})} />;
+                onChange={(validations) => this.setState({validations})}
+                showType={this.state.type === 'text'}/>;
         }
 
         if (this.state.type === 'enom') {
@@ -151,14 +140,15 @@ ContainerItemModal = class ContainerItemModal extends React.Component {
                             onClick={() => this.setState({activeTab: 'validation'})}>
                             Validations
                         </a>
+                        {this.state.type === 'relation' ?
                         <a
                             className={classNames('item', { 'active': this.state.activeTab === 'relation'})}
                             data-tab="validations"
                             onClick={() => this.setState({activeTab: 'relation'})}>
                             Relations
-                        </a>
+                        </a>:''}
                     </div>
-                    <div className={classNames('ui tab', { 'active': this.state.activeTab === 'info'})} data-tab="info">
+                    <div className={classNames('ui tab', {'active': this.state.activeTab === 'info'})} data-tab="info">
                         <div className="ui form">
                             <div className="field">
                                 <label>Item Name</label>
@@ -173,31 +163,39 @@ ContainerItemModal = class ContainerItemModal extends React.Component {
                             </div>
                             <div className="field">
                                 <div className="ui checkbox">
-                                    <input type="checkbox" name="isDisabled" value={this.state.isDisabled}
-                                           onChange={(e) => this.setState({isDisabled: e.target.value})}/>
+                                    <input
+                                        type="checkbox"
+                                        name="isDisabled"
+                                        checked={this.state.isDisabled}
+                                        onChange={(e) => this.setState({isDisabled: e.target.checked})}/>
                                     <label>Item Disabled</label>
                                 </div>
                             </div>
+                            <div className="ui divider"></div>
                             <button className="ui button" type="submit" onClick={this.handleSubmit}>Submit</button>
                         </div>
                     </div>
-                    <div className={classNames('ui tab', { 'active': this.state.activeTab === 'validation'})} data-tab="validation">
+                    <div className={classNames('ui tab', {'active': this.state.activeTab === 'validation'})} data-tab="validation">
                         <div className="ui form">
                             <div className="field">
                                 <div className="ui checkbox">
-                                    <input type="checkbox" name="isRequired" value={this.state.isRequired}
-                                           onChange={(e) => this.setState({isRequired: e.target.value})}/>
+                                    <input
+                                        type="checkbox"
+                                        name="isRequired"
+                                        checked={this.state.isRequired}
+                                        onChange={(e) => this.setState({isRequired: e.target.checked})}/>
                                     <label>Item Required</label>
                                 </div>
                             </div>
 
                             {customValidationsFields}
 
+                            <div className="ui divider"></div>
                             <button className="ui button" type="submit" onClick={this.handleSubmit}>Submit</button>
                         </div>
                     </div>
                     {this.state.type === 'relation' ?
-                    <div className={classNames('ui tab', { 'active': this.state.activeTab === 'relation'})} data-tab="relation">
+                    <div className={classNames('ui tab', {'active': this.state.activeTab === 'relation'})} data-tab="relation">
                         <div className="ui form">
                             <div className="fields">
                                 <label>Relation Name</label>
