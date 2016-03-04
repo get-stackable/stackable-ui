@@ -7,7 +7,7 @@ ContainerItemModal = class ContainerItemModal extends React.Component {
         activeTab: React.PropTypes.string,
         siblingContainers: React.PropTypes.array.isRequired,
         allItems: React.PropTypes.array.isRequired,
-        container: React.PropTypes.object.isRequired
+        container: React.PropTypes.object
     };
 
     constructor(props) {
@@ -62,7 +62,7 @@ ContainerItemModal = class ContainerItemModal extends React.Component {
         }
 
         //check if field `name` is changed, then rename in all items related to this
-        if (name !== this.props.item.name) {
+        if (!_.isUndefined(this.props.container) && name !== this.props.item.name) {
             Meteor.call('container.field.rename', this.props.container._id, this.props.item.name, name, (err) => {
                 if (!err) {
                     console.log('renamed all data for this field')
