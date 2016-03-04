@@ -1,7 +1,16 @@
 //https://github.com/yabwe/medium-editor
 MarkdownEditor = class MarkdownEditor extends React.Component {
     static defaultProps = {
+        isRequired: false,
+        validations: {},
         tag: 'div'
+    };
+
+    static propTypes = {
+        onChange: React.PropTypes.func.isRequired,
+        text: React.PropTypes.string,
+        isRequired: React.PropTypes.bool,
+        validations: React.PropTypes.object
     };
 
     constructor(props) {

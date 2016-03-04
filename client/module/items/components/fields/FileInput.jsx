@@ -1,11 +1,15 @@
 FileInput = class FileInput extends React.Component {
     static defaultProps = {
-        file: null
+        file: null,
+        isRequired: false,
+        validations: {}
     };
 
     static propTypes = {
         onUpload: React.PropTypes.func,
-        file: React.PropTypes.string
+        file: React.PropTypes.string,
+        isRequired: React.PropTypes.bool,
+        validations: React.PropTypes.object
     };
 
     constructor(props) {

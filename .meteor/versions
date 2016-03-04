@@ -6,7 +6,6 @@ accounts-ui@1.1.6
 accounts-ui-unstyled@1.1.8
 anti:fake@0.4.1
 autoupdate@1.2.4
-awsp:validatejs@0.6.0
 babel-compiler@5.8.24_1
 babel-runtime@0.1.4
 base64@1.0.4

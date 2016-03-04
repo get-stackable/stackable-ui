@@ -1,8 +1,13 @@
 RelationInput = class RelationInput extends React.Component {
+    static defaultProps = {
+        isRequired: false
+    };
+
     static propTypes = {
         relations: React.PropTypes.object.isRequired,
         onChange: React.PropTypes.func,
-        value: React.PropTypes.any
+        value: React.PropTypes.any,
+        isRequired: React.PropTypes.bool
     };
 
     getMeteorData() {

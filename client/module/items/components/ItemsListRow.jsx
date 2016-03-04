@@ -35,6 +35,11 @@ ItemsListRow = class ItemsListRow extends React.Component {
                 </td>
                 <td>
                     <a
+                        className="mini ui button"
+                        href={FlowRouter.path('itemUpdate', {id: this.props.item._id})}>
+                        view
+                    </a>
+                    <a
                         className="mini negative ui button"
                         onClick={() => this.deleteItem()}>
                         delete

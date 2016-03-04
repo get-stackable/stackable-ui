@@ -52,4 +52,3 @@ service-configuration
 edgee:slingshot
 peerlibrary:async
 ovcharik:alertifyjs
-awsp:validatejs
