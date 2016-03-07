@@ -15,4 +15,13 @@
         ga('send', 'pageview');
 
     </script>
+
+    <script>
+        peekin = {api_key: "772d9e112a2178adb6e5"};
+        // If you'd like to identify the user, uncomment the following line:
+        if (Meteor.userId()) {
+            peekin.identity = Meteor.userId();
+        }
+    </script>
+    <script src="//cdn.peekin.io/peekin.js" async></script>
 </head>
