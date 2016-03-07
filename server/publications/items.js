@@ -19,9 +19,10 @@ Meteor.publish('items.all', function (appId, containerId) {
 });
 
 Meteor.publish('items.single', function (id) {
-    check(id, String);
+    //check(id, String);
+    var oid = new Meteor.Collection.ObjectID(id);
 
-    let item = Item.findOne({_id: id});
+    let item = Item.findOne({_id: oid});
     let app = Application.findOne({_id: item.appId, 'users': this.userId});
 
     //check only app owners can get data

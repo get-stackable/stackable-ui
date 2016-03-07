@@ -2,7 +2,8 @@ ItemUpdate = class ItemUpdate extends React.Component {
     getMeteorData() {
         let handle = Meteor.subscribe('items.single', this.props.id);
 
-        let item = Item.findOne(this.props.id);
+        var oid = new Meteor.Collection.ObjectID(this.props.id);
+        let item = Item.findOne(oid);
         let data = {
             loading: !handle.ready()
         };

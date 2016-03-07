@@ -24,19 +24,19 @@ ItemsListRow = class ItemsListRow extends React.Component {
         return (
             <tr>
                 <td>
-                    <a href={FlowRouter.path('itemUpdate', {id: this.props.item._id})}>
+                    <a href={FlowRouter.path('itemUpdate', {id: this.props.item.getId()})}>
                         {this.props.item.data[dataKeys[0]]}
                     </a>
                 </td>
                 <td>
-                    <a href={StackableApi.getItem(this.props.app.publicKey, this.props.item._id)} target="_blank" title="Get container items API URL">
+                    <a href={StackableApi.getItem(this.props.app.publicKey, this.props.item.getId())} target="_blank" title="Get container items API URL">
                         <i className="share icon"></i>
                     </a>
                 </td>
                 <td>
                     <a
                         className="mini ui button"
-                        href={FlowRouter.path('itemUpdate', {id: this.props.item._id})}>
+                        href={FlowRouter.path('itemUpdate', {id: this.props.item.getId()})}>
                         view
                     </a>
                     <a

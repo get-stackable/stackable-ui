@@ -19,7 +19,7 @@ ItemCreate = class ItemCreate extends React.Component {
             //console.log(err, res);
             if (!err) {
                 FlashMessages.sendSuccess('Item created successfully!');
-                FlowRouter.go('itemUpdate', {id: res._id});
+                FlowRouter.go('itemUpdate', {id: res.getId()});
             } else {
                 FlashMessages.sendError(err.reason);
             }

@@ -113,11 +113,13 @@ ItemUpdateForm = class ItemUpdateForm extends React.Component {
     }
 
     deleteItem() {
+        let appId = this.props.item.appId;
         alertify.confirm('Do you want to delete this item?', 'Deleting this item will delete it permanently!',
             () => {
                 Meteor.call('item.delete', this.props.item._id, (err) => {
                     if (!err) {
                         FlashMessages.sendSuccess('Item deleted successfully!');
+                        FlowRouter.go('itemsList', {appId});
                     }
                 });
             },
