@@ -6,3 +6,12 @@ FlowRouter.route('/stack/manage/:id', {
         });
     }
 });
+
+FlowRouter.route('/stack/:id', {
+    name: 'appView',
+    action: function (params) {
+        ReactLayout.render(MainLayout, {
+            content: <AppView id={params.id}/>
+        });
+    }
+});
