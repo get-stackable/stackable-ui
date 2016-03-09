@@ -51,8 +51,13 @@ ContainerItemModal = class ContainerItemModal extends React.Component {
             : 'hide');
     }
 
+    createSlug(name) {
+        return s.camelize(s.slugify(name), true);
+    }
+
     handleSubmit = () => {
         let {_id, name, description, type, validations, relations, isRequired, isDisabled, listing_order} = this.state;
+        let slug = this.createSlug(name);
 
         //check if field already exists with same name
         let exists = lodash.find(this.props.allItems, {name: name});
@@ -70,7 +75,7 @@ ContainerItemModal = class ContainerItemModal extends React.Component {
             });
         }
 
-        this.props.update({_id, name, description, type, validations, relations, isRequired, isDisabled, listing_order});
+        this.props.update({_id, name, slug, description, type, validations, relations, isRequired, isDisabled, listing_order});
         this.props.toggleModal();
     };
 

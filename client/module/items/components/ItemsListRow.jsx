@@ -19,13 +19,11 @@ ItemsListRow = class ItemsListRow extends React.Component {
     };
 
     render() {
-        let dataKeys = _.keys(this.props.item.data);
-
         return (
             <tr>
                 <td>
                     <a href={FlowRouter.path('itemUpdate', {id: this.props.item.getId()})}>
-                        {this.props.item.data[dataKeys[0]]}
+                        {this.props.item.getFirstField()}
                     </a>
                 </td>
                 <td>

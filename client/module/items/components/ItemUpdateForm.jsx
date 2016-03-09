@@ -62,8 +62,8 @@ ItemUpdateForm = class ItemUpdateForm extends React.Component {
                 }
             }
 
-            fields[item.name] = {
-                identifier: item.name,
+            fields[item.slug] = {
+                identifier: item.slug,
                 rules: rules
             };
         });
@@ -85,12 +85,12 @@ ItemUpdateForm = class ItemUpdateForm extends React.Component {
             if (_.isUndefined(props.item)) {
                 //is create
                 containerItems.map((schema) => {
-                    stateData[schema.name] = '';
+                    stateData[schema.slug] = '';
                 });
             } else {
                 //is update
                 containerItems.map((schema) => {
-                    stateData[schema.name] = props.item.data[schema.name];
+                    stateData[schema.slug] = props.item.data[schema.slug];
                 });
             }
         }
@@ -150,19 +150,19 @@ ItemUpdateForm = class ItemUpdateForm extends React.Component {
             let field = null;
             if (schema.type === 'text') {
                 field = <TextInput
-                    name={schema.name}
-                    value={this.state[schema.name]}
-                    onChange={this.onChange.bind(this, schema.name)}/>;
+                    name={schema.slug}
+                    value={this.state[schema.slug]}
+                    onChange={this.onChange.bind(this, schema.slug)}/>;
             } else if (schema.type === 'number') {
                 field = <NumberInput
-                    name={schema.name}
-                    value={this.state[schema.name]}
-                    onChange={this.onChange.bind(this, schema.name)}/>;
+                    name={schema.slug}
+                    value={this.state[schema.slug]}
+                    onChange={this.onChange.bind(this, schema.slug)}/>;
             } else if (schema.type === 'textArea') {
                 //todo do validation
                 field = <MarkdownEditor
-                    text={this.state[schema.name]}
-                    onChange={this.onChange.bind(this, schema.name)}
+                    text={this.state[schema.slug]}
+                    onChange={this.onChange.bind(this, schema.slug)}
                     className="mardown-editor-container"
                     options={{toolbar: {diffTop: -55}}}
                     isRequired={schema.isRequired}
@@ -170,33 +170,33 @@ ItemUpdateForm = class ItemUpdateForm extends React.Component {
             } else if (schema.type === 'boolean') {
                 field = <BooleanInput
                     name={schema.name}
-                    value={this.state[schema.name]}
-                    onChange={this.onChange.bind(this, schema.name)}/>;
+                    value={this.state[schema.slug]}
+                    onChange={this.onChange.bind(this, schema.slug)}/>;
             } else if (schema.type === 'json') {
                 field = <JsonInput
-                    name={schema.name}
-                    value={this.state[schema.name]}
-                    onChange={this.onChange.bind(this, schema.name)}/>;
+                    name={schema.slug}
+                    value={this.state[schema.slug]}
+                    onChange={this.onChange.bind(this, schema.slug)}/>;
             } else if (schema.type === 'enom') {
                 //todo do isRequired
                 field = <EnomInput
-                    name={schema.name}
-                    value={this.state[schema.name]}
-                    onChange={this.onChange.bind(this, schema.name)}
+                    name={schema.slug}
+                    value={this.state[schema.slug]}
+                    onChange={this.onChange.bind(this, schema.slug)}
                     options={!_.isUndefined(schema.validations.options) ? schema.validations.options : ''}/>;
             } else if (schema.type === 'image') {
                 //todo do validation
                 field = <FileInput
-                    file={!_.isUndefined(this.state[schema.name]) ? this.state[schema.name].url : null}
-                    onUpload={(err, res) => this.onFileUpload(err, res, schema.name)}
+                    file={!_.isUndefined(this.state[schema.slug]) ? this.state[schema.slug].url : null}
+                    onUpload={(err, res) => this.onFileUpload(err, res, schema.slug)}
                     isRequired={schema.isRequired}
                     validations={schema.validations}/>;
             } else if (schema.type === 'relation') {
                 //todo do isRequired
                 field = <RelationInput
                     relations={schema.relations}
-                    value={this.state[schema.name]}
-                    onChange={(data) => this.onChange(schema.name, data)}
+                    value={this.state[schema.slug]}
+                    onChange={(data) => this.onChange(schema.slug, data)}
                     isRequired={schema.isRequired} />;
             }
 
