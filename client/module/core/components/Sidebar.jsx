@@ -53,14 +53,14 @@ Sidebar = class Sidebar extends React.Component {
                     <img src="/images/icon-dashboard.png" className="icon" style={{'width': '30px', 'height': '30px'}} />
                     Dashboard
                 </a>
-                <a className="item" onClick={this.showContainers}>
+                {/*<a className="item" onClick={this.showContainers}>
                     <img src="/images/icon-container.png" className="icon" style={{'width': '30px', 'height': '30px'}} />
                     Containers
                 </a>
                 <a className="item" onClick={this.showItems}>
                     <img src="/images/icon-items.png" className="icon" style={{'width': '30px', 'height': '32px'}} />
                     Items
-                </a>
+                </a>*/}
                 <a className="item" href={FlowRouter.path('settings')}>
                     <img src="/images/icon-settings.png" className="icon" style={{'width': '30px', 'height': '32px'}} />
                     Settings

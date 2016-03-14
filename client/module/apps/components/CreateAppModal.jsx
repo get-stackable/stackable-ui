@@ -85,7 +85,7 @@ CreateAppModal = class CreateAppModal extends React.Component {
                 });
                 Session.set('app.create.modal', false);
                 FlashMessages.sendSuccess('Stack created successfully!');
-                FlowRouter.go('containersList', {appId: res._id});
+                FlowRouter.go('appView', {id: res._id});
             }
         });
     };

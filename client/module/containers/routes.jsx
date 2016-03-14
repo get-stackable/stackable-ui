@@ -2,7 +2,7 @@ FlowRouter.route('/containers/:appId', {
     name: 'containersList',
     action: function (params) {
         ReactLayout.render(MainLayout, {
-            content: <ContainersList appId={params.appId}/>
+            content: <Containers appId={params.appId}/>
         });
     }
 });

@@ -2,3 +2,34 @@
   padding: 10px !important;
   min-height: 120px;
 }
+
+.app.view {
+  .ui.items {
+    .item {
+      position: relative;
+      margin: 4em 0;
+      .ui.image {
+        background-color: $color-orange;
+        border-radius: 78px;
+        padding: 40px;
+        width: initial;
+        img {
+          width: 30px;
+          height: 30px;
+        }
+      }
+      >.content {
+        >.description, >.header {
+          width: 70%;
+        }
+      }
+      .extra {
+        position: absolute;
+        top: 25%;
+      }
+      &:first-child {
+        margin-top: 4em;
+      }
+    }
+  }
+}
