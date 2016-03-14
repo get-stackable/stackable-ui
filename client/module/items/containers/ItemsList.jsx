@@ -20,15 +20,19 @@ ItemsList = class ItemsList extends React.Component {
                 ]
             };
         }
+
+        let activeContainer = {};
         if (!_.isUndefined(FlowRouter.getQueryParam('containerId'))) {
             find['containerId'] = FlowRouter.getQueryParam('containerId');
+            activeContainer = Container.findOne({_id: FlowRouter.getQueryParam('containerId')})
         }
 
         return {
             loading: !handle.ready() || !handle2.ready(),
             items: Item.find(find, {sort: {createdAt: -1}}).fetch(),
             containers: Container.find({}, {sort: {createdAt: -1}}).fetch(),
-            app: Application.findOne(this.props.appId)
+            app: Application.findOne(this.props.appId),
+            container: activeContainer
         };
     }
 
@@ -49,23 +53,13 @@ ItemsList = class ItemsList extends React.Component {
                 <div className="two wide column side-sub-menu">
                     <div className="ui left vertical menu">
                         <h3 className="ui header item">
-                            Items
+                            {this.data.container.name}'s Items
                         </h3>
-
-                        <h4 className="ui header item">
-                            Create Item:
-                        </h4>
-                        {this.data.containers.map((container) => {
-                            return (
-                                <a
-                                    key={container._id}
-                                    className="ui button item"
-                                    href={FlowRouter.path('itemCreate', {containerId: container._id})}>
-                                    + create {container.name}
-                                </a>
-                            )
-                        })}
-
+                        <a
+                            className="ui orange button item"
+                            href={FlowRouter.path('itemCreate', {containerId: this.data.container._id})}>
+                            + create item
+                        </a>
                         <div className="item"></div>
                     </div>
                 </div>

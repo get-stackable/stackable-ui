@@ -14,37 +14,37 @@ Sidebar = class Sidebar extends React.Component {
         };
     }
 
-    showContainers = () => {
-        if (this.data.apps.length === 0) {
-            Session.set('app.create.modal', true);
-            return;
-        }
-
-        if (!_.isUndefined(this.data.activeApp.id)) {
-            FlowRouter.go('containersList', {appId: this.data.activeApp.id});
-        } else {
-            Session.set('app.modal', true);
-            this.setState({
-                goTo: 'containers'
-            });
-        }
-    };
-
-    showItems = () => {
-        if (this.data.apps.length === 0) {
-            Session.set('app.create.modal', true);
-            return;
-        }
-
-        if (!_.isUndefined(this.data.activeApp.id)) {
-            FlowRouter.go('itemsList', {appId: this.data.activeApp.id});
-        } else {
-            Session.set('app.modal', true);
-            this.setState({
-                goTo: 'items'
-            });
-        }
-    };
+    //showContainers = () => {
+    //    if (this.data.apps.length === 0) {
+    //        Session.set('app.create.modal', true);
+    //        return;
+    //    }
+    //
+    //    if (!_.isUndefined(this.data.activeApp.id)) {
+    //        FlowRouter.go('containersList', {appId: this.data.activeApp.id});
+    //    } else {
+    //        Session.set('app.modal', true);
+    //        this.setState({
+    //            goTo: 'containers'
+    //        });
+    //    }
+    //};
+    //
+    //showItems = () => {
+    //    if (this.data.apps.length === 0) {
+    //        Session.set('app.create.modal', true);
+    //        return;
+    //    }
+    //
+    //    if (!_.isUndefined(this.data.activeApp.id)) {
+    //        FlowRouter.go('itemsList', {appId: this.data.activeApp.id});
+    //    } else {
+    //        Session.set('app.modal', true);
+    //        this.setState({
+    //            goTo: 'items'
+    //        });
+    //    }
+    //};
 
     render() {
         return (
@@ -53,11 +53,12 @@ Sidebar = class Sidebar extends React.Component {
                     <img src="/images/icon-dashboard.png" className="icon" style={{'width': '30px', 'height': '30px'}} />
                     Dashboard
                 </a>
-                {/*<a className="item" onClick={this.showContainers}>
+                {!_.isUndefined(this.data.activeApp.id) ?
+                <a className="item" href={FlowRouter.path('containersList', {appId: this.data.activeApp.id})}>
                     <img src="/images/icon-container.png" className="icon" style={{'width': '30px', 'height': '30px'}} />
                     Containers
-                </a>
-                <a className="item" onClick={this.showItems}>
+                </a>:''}
+                {/*<a className="item" onClick={this.showItems}>
                     <img src="/images/icon-items.png" className="icon" style={{'width': '30px', 'height': '32px'}} />
                     Items
                 </a>*/}

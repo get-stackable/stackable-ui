@@ -29,6 +29,8 @@ AppView = class AppView extends React.Component {
             return <Loading active={true} />
         }
 
+        return <AppSteps app={this.data.app} />
+
         if (this.data.containers.length > 0) {
             return (
                 <div className="ui grid full-height" style={{'marginLeft': '0'}}>
