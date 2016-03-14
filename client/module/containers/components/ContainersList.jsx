@@ -18,6 +18,9 @@ ContainersList = class ContainersList extends React.Component {
                                 <i
                                     className="right floated settings icon"
                                     onClick={() => FlowRouter.go('containerUpdate', {id: container._id})}></i>
+                                <a href={StackableApi.getContainerItems(this.props.app.publicKey, container._id)} target="_blank" title="Get container items API URL">
+                                    <i className="right floated share icon"></i>
+                                </a>
                                 <div className="header">
                                     {container.name}
                                 </div>

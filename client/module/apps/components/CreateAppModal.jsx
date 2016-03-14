@@ -60,6 +60,17 @@ CreateAppModal = class CreateAppModal extends React.Component {
         this.setState({
             step: 2
         });
+
+        setTimeout(() => {
+            ReactDOM.findDOMNode(this.refs.appName).focus();
+            superplaceholder({
+                el: document.getElementById('appName'),
+                sentences: ['type stack name here', 'eg: MySite.com, Amazing Stack, My Beautiful App'],
+                options: {
+                    startOnFocus: false
+                }
+            });
+        }, 800);
     };
 
     handleSubmit = () => {
@@ -124,13 +135,13 @@ CreateAppModal = class CreateAppModal extends React.Component {
                             {this.data.apps.map((app) => {
                                 return (
                                     <div className="card" key={app._id}>
-                                        <div className="content" style={{textAlign: 'center'}}>
-                                            <div className="header" style={{'margin': '10px 0'}}>
+                                        <div className="content" style={{textAlign: 'center', 'paddingBottom': '40px'}}>
+                                            <div className="header" style={{'margin': '10px 0', 'fontSize': '1.2rem', 'lineHeight': '1.5rem'}}>
                                                 <img src="/images/grey-stack.png" />
                                                 <br />
                                                 {app.name}
                                             </div>
-                                            <div className="meta">
+                                            <div className="meta" style={{'position': 'absolute', 'left': '30%', 'bottom': '10px'}}>
                                                 <button
                                                     className="mini ui basic button"
                                                     onClick={this.selectLibrary.bind(this, app)}>
@@ -179,6 +190,8 @@ CreateAppModal = class CreateAppModal extends React.Component {
                     <input
                         type="text"
                         name="app-name"
+                        ref="appName"
+                        id="appName"
                         placeholder="Stack Name"
                         value={this.state.appName}
                         onChange={(e) => this.setState({appName: e.target.value})} />

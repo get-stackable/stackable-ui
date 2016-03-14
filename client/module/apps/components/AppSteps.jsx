@@ -15,7 +15,7 @@ AppSteps = class AppSteps extends React.Component {
         return (
             <div>
                 <PageHeading>
-                    {this.props.app.name}'s Dashboard
+                    Well Done!
                 </PageHeading>
                 <div className="ui grid padding35 app view">
                     <div className="ten wide centered column">

@@ -157,12 +157,17 @@ ContainerItemModal = class ContainerItemModal extends React.Component {
                         <div className="ui form">
                             <div className="field">
                                 <label>Item Name</label>
-                                <input type="text" name="name" placeholder="Item name" value={this.state.name}
-                                       onChange={(e) => this.setState({name: e.target.value})}/>
+                                <input
+                                    type="text"
+                                    name="name"
+                                    id="itemName"
+                                    placeholder="type item name here, eg: Title, Description, Featured Image, Is Active"
+                                    value={this.state.name}
+                                    onChange={(e) => this.setState({name: e.target.value})}/>
                             </div>
                             <div className="field">
                                 <label>Item Description</label>
-                                <input type="text" name="description" placeholder="Item description"
+                                <input type="text" name="description" placeholder="type item description here"
                                        value={this.state.description}
                                        onChange={(e) => this.setState({description: e.target.value})}/>
                             </div>

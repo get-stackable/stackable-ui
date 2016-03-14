@@ -23,7 +23,7 @@ HomePage = class HomePage extends React.Component {
                 <div className="ui grid padding35">
                     <div className="sixteen wide column">
                         <h3>My Stacks</h3>
-                        <div className="ui cards">
+                        <div className="ui centered aligned cards">
                             {this.data.apps.map((app) => {
                                 return (
                                     <AppCard key={app._id} app={app} />

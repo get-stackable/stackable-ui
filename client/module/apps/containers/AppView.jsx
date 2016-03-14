@@ -30,27 +30,6 @@ AppView = class AppView extends React.Component {
         }
 
         return <AppSteps app={this.data.app} />
-
-        if (this.data.containers.length > 0) {
-            return (
-                <div className="ui grid full-height" style={{'marginLeft': '0'}}>
-                    <div className="sixteen wide column" style={{'paddingLeft': '0'}}>
-                        <div className="content-wrapper">
-                            <PageHeading>
-                                {this.data.app.name}'s Containers
-                            </PageHeading>
-                            <div className="ui grid">
-                                <div className="sixteen wide column padding35">
-                                    <ContainersList containers={this.data.containers} app={this.data.app} />
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            )
-        } else {
-            return <AppSteps app={this.data.app} />
-        }
     }
 };
 

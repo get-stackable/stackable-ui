@@ -11,13 +11,7 @@ BigTitleInput = class BigTitleInput extends React.Component {
             el: document.getElementById(this.props.name),
             sentences: ['type container name here', 'eg: Blog, Cars, Projects'],
             options: {
-                letterDelay: 100, // milliseconds
-                sentenceDelay: 1000,
-                startOnFocus: false,
-                loop: true,
-                shuffle: false,
-                showCursor: true,
-                cursor: '|'
+                startOnFocus: false
             }
         });
     }
