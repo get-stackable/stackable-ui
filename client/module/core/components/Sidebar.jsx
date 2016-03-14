@@ -53,7 +53,7 @@ Sidebar = class Sidebar extends React.Component {
                     <img src="/images/icon-dashboard.png" className="icon" style={{'width': '30px', 'height': '30px'}} />
                     Dashboard
                 </a>
-                {!_.isUndefined(this.data.activeApp.id) ?
+                {(!_.isUndefined(this.data.activeApp) && !_.isUndefined(this.data.activeApp.id)) ?
                 <a className="item" href={FlowRouter.path('containersList', {appId: this.data.activeApp.id})}>
                     <img src="/images/icon-container.png" className="icon" style={{'width': '30px', 'height': '30px'}} />
                     Containers

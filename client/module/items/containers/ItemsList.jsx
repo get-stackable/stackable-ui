@@ -73,8 +73,10 @@ ItemsList = class ItemsList extends React.Component {
                             </div>
                             <div className="sixteen wide column padding35">
                                 {this.data.items.length === 0 ?
-                                    <div className="ui segment">
-                                        <p>No items found.</p>
+                                    <div className="ui center aligned piled segment">
+                                        <p>
+                                            No items found! <a href={FlowRouter.path('itemCreate', {containerId: this.data.container._id})}>Click here</a> to create your first in {this.data.container.name}
+                                        </p>
                                     </div>
                                 :
                                     <table className="ui celled table" style={{'marginTop': '15px'}}>

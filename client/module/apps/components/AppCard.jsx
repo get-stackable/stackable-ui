@@ -16,13 +16,15 @@ AppCard = class AppCard extends React.Component {
             goTo = to;
         }
 
-        if (goTo == 'containers') {
-            FlowRouter.go('containersList', {appId: this.props.app._id});
-        } else if (goTo == 'items') {
-            FlowRouter.go('itemsList', {appId: this.props.app._id});
-        } else {
-            FlowRouter.go('appView', {id: this.props.app._id});
-        }
+
+        FlowRouter.go('containersList', {appId: this.props.app._id});
+        //if (goTo == 'containers') {
+        //    FlowRouter.go('containersList', {appId: this.props.app._id});
+        //} else if (goTo == 'items') {
+        //    FlowRouter.go('itemsList', {appId: this.props.app._id});
+        //} else {
+        //    FlowRouter.go('containersList', {appId: this.props.app._id});
+        //}
     };
 
     render() {
@@ -49,6 +51,7 @@ AppCard = class AppCard extends React.Component {
                             </a>
                             <div className="meta">
                                 Public Key: {this.props.app.publicKey}
+                                <br />
                                 <a href={FlowRouter.path('appUpdate', {id: this.props.app._id})}>
                                     <i className="setting icon"></i>
                                 </a>

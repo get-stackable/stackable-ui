@@ -103,7 +103,7 @@ CreateAppModal = class CreateAppModal extends React.Component {
                         </h3>
                     </div>
                     <div className="column">
-                        Empty stack
+
                     </div>
                     <div className="bottom aligned column">
                         <button className="ui secondary button pull-right" onClick={this.goToStepTwo}>
@@ -192,7 +192,7 @@ CreateAppModal = class CreateAppModal extends React.Component {
                         value={this.state.appDescription}
                         onChange={(e) => this.setState({appDescription: e.target.value})} />
                 </div>
-                <button className="ui button" type="submit" onClick={this.handleSubmit}>
+                <button className="ui primary button" type="submit" onClick={this.handleSubmit}>
                     Create!
                 </button>
             </div>

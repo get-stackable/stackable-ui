@@ -176,10 +176,6 @@ ContainerUpdateForm = class ContainerUpdateForm extends React.Component {
                             Containers Tools
                         </a>
                         {!_.isUndefined(this.props.container) ?
-                        <a className="ui button item" href={FlowRouter.path('containerCreate', {appId: this.props.appId})}>
-                            Create Containers
-                        </a>:''}
-                        {!_.isUndefined(this.props.container) ?
                         <a className="ui button item" href={FlowRouter.path('containersList', {appId: this.props.appId})}>
                             View Containers
                         </a>:''}
@@ -214,58 +210,61 @@ ContainerUpdateForm = class ContainerUpdateForm extends React.Component {
                                 </button>
                             </div>
                         </div>
-                        <div className="ui divider"></div>
-                        <div className="ui stackable tabs menu">
-                            {fieldTypes.map((item) => {
-                                return <a key={item.value} className="item"
-                                          onClick={this.openItemModal.bind(this, {type: item.value}, 'info')}>{item.title}</a>
-                            })}
-                        </div>
-                        <div className="ui divider"></div>
-                        <div className="ui grid">
-                            <div className="eight wide column">
-                                <table className="ui basic celled table" style={{'marginTop': '50px'}}>
-                                    <tbody ref="containerItems" id="containerItems">
-                                    {this.state.items.map((item, index) => {
-                                        return (
-                                            <tr key={item._id} data-id={item._id}>
-                                                <td width="4%">
-                                                    <i className="minus icon" onClick={() => this.removeItem(item, index)}></i>
-                                                </td>
-                                                <td width="46%">
-                                                    {item.name}
+                        <div style={{'position': 'relative'}}>
+                            <div className="ui horizontal divider">select input type</div>
+                            <div className={classNames('ui inverted dimmer', {'active': this.state.name.length === 0})}></div>
+                            <div className="ui stackable tabs menu">
+                                {fieldTypes.map((item) => {
+                                    return <a key={item.value} className="item"
+                                              onClick={this.openItemModal.bind(this, {type: item.value}, 'info')}>{item.title}</a>
+                                })}
+                            </div>
+                            <div className="ui horizontal divider">setup container inputs</div>
+                            <div className="ui grid">
+                                <div className="eight wide column">
+                                    <table className="ui basic celled table" style={{'marginTop': '50px'}}>
+                                        <tbody ref="containerItems" id="containerItems">
+                                        {this.state.items.map((item, index) => {
+                                            return (
+                                                <tr key={item._id} data-id={item._id}>
+                                                    <td width="4%">
+                                                        <i className="minus icon" onClick={() => this.removeItem(item, index)}></i>
+                                                    </td>
+                                                    <td width="46%">
+                                                        {item.name}
                                                     <span style={{'float': 'right', 'color': 'rgba(0,0,0,.4)'}}>
                                                         {titleize(item.type)}
                                                     </span>
-                                                </td>
-                                                <td width="25%" style={{'textAlign': 'center'}}>
-                                                    {item.type !== 'relation' ?
-                                                        <a className="underline"
-                                                           onClick={this.openItemModal.bind(this, item, 'validation')}>validations</a>
-                                                        :
-                                                        <a className="underline"
-                                                           onClick={this.openItemModal.bind(this, item, 'relation')}>relations</a>
-                                                    }
-                                                </td>
-                                                <td width="25%" style={{'textAlign': 'center'}}>
-                                                    <a className="underline" onClick={this.openItemModal.bind(this, item, 'info')}>configure</a>
-                                                </td>
-                                            </tr>
-                                        )
-                                    })}
-                                    </tbody>
-                                </table>
-                                <div className="ui piled segment">
-                                    You can drag and drop fields above to re-order them.
+                                                    </td>
+                                                    <td width="25%" style={{'textAlign': 'center'}}>
+                                                        {item.type !== 'relation' ?
+                                                            <a className="underline"
+                                                               onClick={this.openItemModal.bind(this, item, 'validation')}>validations</a>
+                                                            :
+                                                            <a className="underline"
+                                                               onClick={this.openItemModal.bind(this, item, 'relation')}>relations</a>
+                                                        }
+                                                    </td>
+                                                    <td width="25%" style={{'textAlign': 'center'}}>
+                                                        <a className="underline" onClick={this.openItemModal.bind(this, item, 'info')}>configure</a>
+                                                    </td>
+                                                </tr>
+                                            )
+                                        })}
+                                        </tbody>
+                                    </table>
+                                    <div className="ui piled segment">
+                                        You can drag and drop fields above to re-order them.
+                                    </div>
+                                    <div className="ui basic segment" style={{'marginTop':'100px'}}>
+                                        <p>
+                                            Container describe your data. <span style={{'color':'#51BCA8'}}>Select a field type and get ready to rock!</span>
+                                        </p>
+                                    </div>
                                 </div>
-                                <div className="ui basic segment" style={{'marginTop':'100px'}}>
-                                    <p>
-                                        Container describe your data. <span style={{'color':'#51BCA8'}}>Select a field type and get ready to rock!</span>
-                                    </p>
+                                <div className="eight wide column">
+                                    <ContactFieldsPreview items={this.state.items} />
                                 </div>
-                            </div>
-                            <div className="eight wide column">
-                                <ContactFieldsPreview items={this.state.items} />
                             </div>
                         </div>
                     </div>

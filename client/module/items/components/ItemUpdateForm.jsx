@@ -224,6 +224,13 @@ ItemUpdateForm = class ItemUpdateForm extends React.Component {
                             Item Tools
                         </a>
 
+
+                        <a
+                            className="ui button item"
+                            href={FlowRouter.path('itemsList', {appId: this.props.container.appId}, {containerId: this.props.container._id})}>
+                            Back to {this.props.container.name}'s items
+                        </a>
+
                         <div className="item" style={{'textAlign': 'center'}}>
                             <small>With great power comes great responsibility</small>
                         </div>
