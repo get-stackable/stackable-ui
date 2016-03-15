@@ -53,8 +53,6 @@ SearchResults = class SearchResults extends React.Component {
                                             <thead>
                                             <tr>
                                                 <th>Item Name</th>
-                                                <th>Description</th>
-                                                <th>Actions</th>
                                             </tr>
                                             </thead>
                                             <tbody>
@@ -63,18 +61,8 @@ SearchResults = class SearchResults extends React.Component {
                                                 return (
                                                     <tr key={item._id}>
                                                         <td>
-                                                            <a href={FlowRouter.path('itemUpdate', {type: item.container, id: item._id})}>
-                                                                {item.data[dataKeys[0]]}
-                                                            </a>
-                                                        </td>
-                                                        <td>
-
-                                                        </td>
-                                                        <td>
-                                                            <a
-                                                                className="mini negative ui button"
-                                                                onClick={() => this.deleteItem(item._id)}>
-                                                                delete
+                                                            <a href={FlowRouter.path('itemUpdate', {id: item._id})}>
+                                                                {item.getFirstField()}
                                                             </a>
                                                         </td>
                                                     </tr>

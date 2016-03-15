@@ -59,6 +59,24 @@ ContainerItemModal = class ContainerItemModal extends React.Component {
         let {_id, name, description, type, validations, relations, isRequired, isDisabled, listing_order} = this.state;
         let slug = this.createSlug(name);
 
+        if (name.length === 0) {
+            FlashMessages.sendError('Please type in field name');
+            return;
+        }
+
+        if (type === 'relation') {
+            if (_.isUndefined(relations.relation_id)
+                || _.isUndefined(relations.relation_field)
+                || relations.relation_id.length === 0
+                || relations.relation_field.length === 0) {
+                FlashMessages.sendError('Please select relation first in order to continue.');
+                this.setState({
+                    activeTab: 'relation'
+                });
+                return
+            }
+        }
+
         //check if field already exists with same name
         let exists = lodash.find(this.props.allItems, {name: name});
         if (!_.isUndefined(exists) && exists._id !== _id) {
@@ -128,7 +146,7 @@ ContainerItemModal = class ContainerItemModal extends React.Component {
             <div className="ui modal" id="container-item-modal" style={{'paddingLeft': '0', 'paddingRight': '0'}}>
                 <div className="header">
                     <img src="/images/logo.png"/>
-                    {this.state.name.length === 0 ? 'Create' : 'Update'} {titleize(this.state.type)} Item
+                    {this.state.name.length === 0 ? 'Create' : 'Update'} {titleize(this.state.type)} Field
                     <i className="close icon" onClick={() => this.props.toggleModal()}></i>
                 </div>
                 <div className="content">
@@ -156,18 +174,18 @@ ContainerItemModal = class ContainerItemModal extends React.Component {
                     <div className={classNames('ui tab', {'active': this.state.activeTab === 'info'})} data-tab="info">
                         <div className="ui form">
                             <div className="field">
-                                <label>Item Name</label>
+                                <label>Field Name</label>
                                 <input
                                     type="text"
                                     name="name"
                                     id="itemName"
-                                    placeholder="type item name here, eg: Title, Description, Featured Image, Is Active"
+                                    placeholder="type field name here, eg: Title, Description, Featured Image, Is Active"
                                     value={this.state.name}
                                     onChange={(e) => this.setState({name: e.target.value})}/>
                             </div>
                             <div className="field">
-                                <label>Item Description</label>
-                                <input type="text" name="description" placeholder="type item description here"
+                                <label>Field Description</label>
+                                <input type="text" name="description" placeholder="type field description here"
                                        value={this.state.description}
                                        onChange={(e) => this.setState({description: e.target.value})}/>
                             </div>
@@ -178,11 +196,11 @@ ContainerItemModal = class ContainerItemModal extends React.Component {
                                         name="isDisabled"
                                         checked={this.state.isDisabled}
                                         onChange={(e) => this.setState({isDisabled: e.target.checked})}/>
-                                    <label>Item Disabled</label>
+                                    <label>Field Disabled</label>
                                 </div>
                             </div>
                             <div className="ui divider"></div>
-                            <button className="ui button" type="submit" onClick={this.handleSubmit}>Submit</button>
+                            <button className="ui primary button" type="submit" onClick={this.handleSubmit}>Submit</button>
                         </div>
                     </div>
                     <div className={classNames('ui tab', {'active': this.state.activeTab === 'validation'})} data-tab="validation">
@@ -194,14 +212,14 @@ ContainerItemModal = class ContainerItemModal extends React.Component {
                                         name="isRequired"
                                         checked={this.state.isRequired}
                                         onChange={(e) => this.setState({isRequired: e.target.checked})}/>
-                                    <label>Item Required</label>
+                                    <label>Field Required</label>
                                 </div>
                             </div>
 
                             {customValidationsFields}
 
                             <div className="ui divider"></div>
-                            <button className="ui button" type="submit" onClick={this.handleSubmit}>Submit</button>
+                            <button className="ui primary button" type="submit" onClick={this.handleSubmit}>Submit</button>
                         </div>
                     </div>
                     {this.state.type === 'relation' ?
@@ -228,7 +246,7 @@ ContainerItemModal = class ContainerItemModal extends React.Component {
                             {this.renderRelationFields()}
 
                             <div className="ui divider"></div>
-                            <button className="ui button" type="submit" onClick={this.handleSubmit}>Submit</button>
+                            <button className="ui primary button" type="submit" onClick={this.handleSubmit}>Submit</button>
                         </div>
                     </div>:''}
                 </div>
