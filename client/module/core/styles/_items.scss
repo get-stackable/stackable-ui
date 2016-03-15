@@ -24,3 +24,32 @@
     padding: 20px;
   }
 }
+
+.item-edit {
+  .items-list {
+    border-right: 1px solid rgba(34, 36, 38, 0.15);
+    padding-top: 50px !important;
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+    background-color: $color-white;
+    .item {
+      padding: 1.25em 1em;
+      a.header {
+        color: $color-grey !important;
+      }
+      .description {
+        font-size: 0.9rem;
+        color: rgba(0, 0, 0, 0.6);
+      }
+      &.active {
+        background-color: $background-color;
+      }
+      &:first-child {
+        padding-top: 1.25em;
+      }
+      &:last-child {
+        padding-bottom: 1.25em;
+      }
+    }
+  }
+}

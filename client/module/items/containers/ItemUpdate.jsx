@@ -5,12 +5,20 @@ ItemUpdate = class ItemUpdate extends React.Component {
         var oid = new Meteor.Collection.ObjectID(this.props.id);
         let item = Item.findOne(oid);
         let data = {
-            loading: !handle.ready()
+            loading: true
         };
 
         if (handle.ready() && !_.isUndefined(item)) {
+            let container = Container.findOne({_id: item.containerId});
             data['item'] = item;
-            data['container'] = Container.findOne({_id: item.containerId});
+            data['container'] = container;
+
+
+            let handle2 = Meteor.subscribe('items.all', container.appId, container._id);
+            if (handle2.ready()) {
+                data['allItems'] = Item.find({containerId: container._id}, {sort: {createdAt: -1}}).fetch();
+                data['loading'] = false;
+            }
         }
 
         return data;
@@ -34,6 +42,7 @@ ItemUpdate = class ItemUpdate extends React.Component {
             <ItemUpdateForm
                 item={this.data.item}
                 container={this.data.container}
+                allItems={this.data.allItems}
                 handleSubmit={this.handleSubmit} />
         )
     }

@@ -4,11 +4,13 @@ ContainersList = class ContainersList extends React.Component {
         app: React.PropTypes.object.isRequired
     };
 
-    render() {
+    componentDidMount() {
         if (this.props.containers.length === 0) {
-            return FlowRouter.go('appView', {id: this.props.app._id});
+            FlowRouter.go('appView', {id: this.props.app._id});
         }
+    }
 
+    render() {
         return (
             <div className="ui cards">
                 {this.props.containers.map((container) => {

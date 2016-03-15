@@ -1,4 +1,4 @@
-ItemUpdateForm = class ItemUpdateForm extends React.Component {
+ItemUpdateFormOld = class ItemUpdateFormOld extends React.Component {
     static defaultProps = {
         container: {}
     };
@@ -6,8 +6,7 @@ ItemUpdateForm = class ItemUpdateForm extends React.Component {
     static propTypes = {
         handleSubmit: React.PropTypes.func.isRequired,
         container: React.PropTypes.object.isRequired,
-        item: React.PropTypes.object,
-        allItems: React.PropTypes.array.isRequired
+        item: React.PropTypes.object
     };
 
     constructor(props) {
@@ -213,48 +212,27 @@ ItemUpdateForm = class ItemUpdateForm extends React.Component {
         });
     }
 
-    renderAllItems() {
-        if (this.props.allItems.length === 0) {
-            return (
-                <div className="item">
-                    <div className="content">
-                        No items found.
-                    </div>
-                </div>
-            )
-        }
-
-        return this.props.allItems.map((item) => {
-            let isActive = !_.isUndefined(this.props.item) && item._id === this.props.item._id;
-            return (
-                <div className={classNames('item', {'active': isActive})} key={item._id}>
-                    <div className="right floated content">
-                        {/*<div className="ui button">Add</div>*/}
-                    </div>
-                    <div className="content">
-                        <a className="header" onClick={() => FlowRouter.go('itemUpdate', {id: item.getId()})}>{item.getFirstField()}</a>
-                        <div className="description">created {item.relDate()}</div>
-                    </div>
-                </div>
-            )
-        });
-    }
-
     render() {
         return (
-            <div className="ui grid full-height item-edit" style={{'marginLeft': '0'}}>
-                <div className="three wide column items-list">
-                    <a
-                        className="ui primary right floated mini button"
-                        style={{'marginRight': '10px'}}
-                        href={FlowRouter.path('itemCreate', {containerId: this.props.container._id})}>
-                        + create new
-                    </a>
-                    <div className="ui middle aligned divided link list" style={{'marginTop': '30px'}}>
-                        {this.renderAllItems()}
+            <div className="ui grid full-height" style={{'marginLeft': '0'}}>
+                <div className="two wide column side-sub-menu">
+                    <div className="ui left vertical menu">
+                        <h3 className="ui header item">
+                            Items
+                        </h3>
+                        <a
+                            className="ui button secondary item"
+                            style={{'fontSize': '0.9rem'}}
+                            href={FlowRouter.path('itemsList', {appId: this.props.container.appId}, {containerId: this.props.container._id})}>
+                            Back to {this.props.container.name}
+                        </a>
+
+                        <div className="item" style={{'textAlign': 'center'}}>
+                            <small>With great power comes great responsibility</small>
+                        </div>
                     </div>
                 </div>
-                <div className="thirteen wide column" style={{'paddingLeft': '0'}}>
+                <div className="fourteen wide column" style={{'paddingLeft': '0'}}>
                     <div className="content-wrapper" style={{'padding': '25px 35px !important'}}>
 
                         <div className="ui grid">

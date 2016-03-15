@@ -122,12 +122,13 @@ ContainerUpdateForm = class ContainerUpdateForm extends React.Component {
     };
 
     deleteContainer() {
+        let appId = this.props.container.appId;
         alertify.confirm('Do you want to delete this container?', `All related ${this.state.items.length} items will be also deleted!`,
             () => {
                 Meteor.call('container.delete', this.props.container._id, (err) => {
                     if (!err) {
                         FlashMessages.sendSuccess('Container deleted successfully!');
-                        FlowRouter.go('containersList', {appId: this.props.appId});
+                        FlowRouter.go('containersList', {appId});
                     }
                 });
             },
