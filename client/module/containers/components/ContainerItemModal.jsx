@@ -77,6 +77,16 @@ ContainerItemModal = class ContainerItemModal extends React.Component {
             }
         }
 
+        if (type === 'enom') {
+            if (_.isUndefined(validations.options) || validations.options.length === 0) {
+                FlashMessages.sendError('Please set options for select input.');
+                this.setState({
+                    activeTab: 'validation'
+                });
+                return
+            }
+        }
+
         //check if field already exists with same name
         let exists = lodash.find(this.props.allItems, {name: name});
         if (!_.isUndefined(exists) && exists._id !== _id) {

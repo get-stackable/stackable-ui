@@ -16,6 +16,10 @@ EnomInput = class EnomInput extends React.Component {
         };
     }
 
+    componentDidMount() {
+        //$('#' + this.props.name).dropdown();
+    }
+
     createStringToArray(options) {
         let array = options.split(',');
         return array.map((item) => {
@@ -28,6 +32,7 @@ EnomInput = class EnomInput extends React.Component {
             <select
                 {...this.props}
                 className="ui fluid normal dropdown"
+                id={this.props.name}
                 onChange={this.props.onChange}>
                 <option>-- select option --</option>
                 {this.state.options.map((item, index) => {

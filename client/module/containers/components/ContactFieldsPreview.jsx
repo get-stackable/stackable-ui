@@ -48,6 +48,7 @@ ContactFieldsPreview = class ContactFieldsPreview extends React.Component {
                             relations={schema.relations}
                             value=""
                             onChange={() => console.log('on change...')} /> : ''}
+                    <p className="field-description">{schema.description}</p>
                 </div>
             )
         });

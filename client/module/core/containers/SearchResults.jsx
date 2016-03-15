@@ -53,6 +53,7 @@ SearchResults = class SearchResults extends React.Component {
                                             <thead>
                                             <tr>
                                                 <th>Item Name</th>
+                                                <th>Container</th>
                                             </tr>
                                             </thead>
                                             <tbody>
@@ -62,6 +63,11 @@ SearchResults = class SearchResults extends React.Component {
                                                         <td>
                                                             <a href={FlowRouter.path('itemUpdate', {id: item.getId()})}>
                                                                 {item.getFirstField()}
+                                                            </a>
+                                                        </td>
+                                                        <td>
+                                                            <a href={FlowRouter.path('itemContainerView', {containerId: item.containerId})}>
+                                                                {titleize(item.container)}
                                                             </a>
                                                         </td>
                                                     </tr>
