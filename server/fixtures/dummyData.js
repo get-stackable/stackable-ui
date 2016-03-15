@@ -37,11 +37,15 @@ Fixtures.applicationLibrary.push({
         name: 'Blog',
         items: [{
             name: 'Title',
+            slug: 'title',
             type: 'text',
-            required: true
+            required: true,
+            listing_order: 1
         }, {
             name: 'Description',
-            type: 'textArea'
+            slug: 'description',
+            type: 'textArea',
+            listing_order: 2
         }]
     }]
 });
@@ -53,17 +57,25 @@ Fixtures.applicationLibrary.push({
         name: 'Products',
         items: [{
             name: 'Title',
+            slug: 'title',
             type: 'text',
-            required: true
+            required: true,
+            listing_order: 1
         }, {
             name: 'Description',
-            type: 'textArea'
+            slug: 'description',
+            type: 'textArea',
+            listing_order: 2
         }, {
             name: 'Cost',
-            type: 'text'
+            slug: 'cost',
+            type: 'text',
+            listing_order: 3
         }, {
             name: 'Is Active',
-            type: 'boolean'
+            slug: 'isActive',
+            type: 'boolean',
+            listing_order: 4
         }]
     }]
 });

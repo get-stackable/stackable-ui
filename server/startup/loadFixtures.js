@@ -7,7 +7,7 @@ function loadFixture(fixtures, collection) {
 }
 
 Meteor.startup(function () {
-    if (false) {
+    if (true) {
         //loadFixture(Fixtures['users'], User);
         loadFixture(Fixtures['applicationLibrary'], ApplicationLibrary);
     }

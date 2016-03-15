@@ -131,13 +131,12 @@ ItemUpdateForm = class ItemUpdateForm extends React.Component {
     }
 
     deleteItem() {
-        let appId = this.props.item.appId;
         alertify.confirm('Do you want to delete this item?', 'Deleting this item will delete it permanently!',
             () => {
                 Meteor.call('item.delete', this.props.item._id, (err) => {
                     if (!err) {
                         FlashMessages.sendSuccess('Item deleted successfully!');
-                        FlowRouter.go('itemsList', {appId});
+                        FlowRouter.go('itemContainerView', {containerId: this.props.container._id});
                     }
                 });
             },
@@ -278,7 +277,7 @@ ItemUpdateForm = class ItemUpdateForm extends React.Component {
         return (
             <div className="ui grid full-height item-edit" style={{'marginLeft': '0'}}>
                 <div className="two wide column containers-list">
-                    <button className="fluid ui green button" style={{'textAlign': 'left'}}>
+                    <button className="fluid ui green button">
                         <img src="/images/grey-stack.png" style={{'width': '15px', 'height': 'auto', 'marginRight': '10px'}} />
                         {this.props.app.name}
                     </button>

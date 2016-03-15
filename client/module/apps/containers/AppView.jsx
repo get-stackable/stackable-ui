@@ -2,11 +2,24 @@ AppView = class AppView extends React.Component {
     getMeteorData() {
         let handle = Meteor.subscribe('containers.all', this.props.id);
 
-        return {
-            loading: !handle.ready(),
-            app: Application.findOne(this.props.id),
-            containers: Container.find({appId: this.props.id}, {sort: {createdAt: -1}}).fetch()
+        let data = {
+            loading: true
         };
+
+        if (handle.ready()) {
+            let containers = Container.find({appId: this.props.id}, {sort: {createdAt: -1}}).fetch();
+
+            if (containers.length !== 0) {
+                FlowRouter.go('containersList', {appId: this.props.id});
+                return;
+            }
+
+            data['app'] = Application.findOne(this.props.id);
+            data['containers'] = containers;
+            data['loading'] = false;
+        }
+
+        return data;
     }
 
     componentDidMount() {
