@@ -57,11 +57,10 @@ SearchResults = class SearchResults extends React.Component {
                                             </thead>
                                             <tbody>
                                             {this.data.items.map((item) => {
-                                                let dataKeys = _.keys(item.data);
                                                 return (
-                                                    <tr key={item._id}>
+                                                    <tr key={item.getId()}>
                                                         <td>
-                                                            <a href={FlowRouter.path('itemUpdate', {id: item._id})}>
+                                                            <a href={FlowRouter.path('itemUpdate', {id: item.getId()})}>
                                                                 {item.getFirstField()}
                                                             </a>
                                                         </td>
