@@ -141,6 +141,15 @@ h3 {
   }
 }
 
+.ui.vertical.menu {
+  .item {
+    &.secondary {
+      color: #6C737B;
+      background: #e0e1e2 none;
+    }
+  }
+}
+
 .dimmed.dimmable > .ui.animating.dimmer, .dimmed.dimmable > .ui.visible.dimmer, .ui.active.dimmer {
   opacity: 0.75;
 }

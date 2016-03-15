@@ -52,7 +52,7 @@ Containers = class Containers extends React.Component {
                 <div className="two wide column side-sub-menu">
                     <div className="ui left vertical menu">
                         <h3 className="ui header item">
-                            Containers
+                            {this.data.app.name}'s Containers
                         </h3>
                         <a className="ui orange button item" href={FlowRouter.path('containerCreate', {appId: this.props.appId})}>
                             + create container

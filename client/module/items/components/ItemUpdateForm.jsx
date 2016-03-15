@@ -220,15 +220,11 @@ ItemUpdateForm = class ItemUpdateForm extends React.Component {
                         <h3 className="ui header item">
                             Items
                         </h3>
-                        <a className="ui orange button item">
-                            Item Tools
-                        </a>
-
-
                         <a
-                            className="ui button item"
+                            className="ui button secondary item"
+                            style={{'fontSize': '0.9rem'}}
                             href={FlowRouter.path('itemsList', {appId: this.props.container.appId}, {containerId: this.props.container._id})}>
-                            Back to {this.props.container.name}'s items
+                            Back to {this.props.container.name}
                         </a>
 
                         <div className="item" style={{'textAlign': 'center'}}>
