@@ -292,7 +292,7 @@ ItemUpdateForm = class ItemUpdateForm extends React.Component {
                         href={FlowRouter.path('itemCreate', {containerId: this.props.container._id})}>
                         + create {this.props.container.name}
                     </a>
-                    <div className="ui middle aligned divided link list" style={{'marginTop': '30px'}}>
+                    <div className="ui middle aligned divided link list" style={{'marginTop': '40px'}}>
                         {this.renderAllItems()}
                     </div>
                 </div>

@@ -96,8 +96,8 @@ ContainerItemModal = class ContainerItemModal extends React.Component {
                                 <input
                                     type="radio"
                                     name="relation_field"
-                                    value={item.name}
-                                    checked={item.name === this.state.relations.relation_field ? 'checked' : false}
+                                    value={item.slug}
+                                    checked={item.slug === this.state.relations.relation_field ? 'checked' : false}
                                     onChange={(e) => this.setState({relations: {relation_id: relation._id, relation_field: e.target.value}})}/>
                                 <label>{item.name}</label>
                             </div>
