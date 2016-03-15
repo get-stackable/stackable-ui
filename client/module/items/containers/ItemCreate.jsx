@@ -9,10 +9,13 @@ ItemCreate = class ItemCreate extends React.Component {
         if (handle.ready()) {
             let container = Container.findOne({_id: this.props.containerId});
             data['container'] = container;
+            data['app'] = Application.findOne({_id: container.appId});
 
             let handle2 = Meteor.subscribe('items.all', container.appId, container._id);
-            if (handle2.ready()) {
+            let handle3 = Meteor.subscribe('containers.all', container.appId);
+            if (handle2.ready() && handle3.ready()) {
                 data['allItems'] = Item.find({containerId: container._id}, {sort: {createdAt: -1}}).fetch();
+                data['allContainers'] = Container.find({appId: container.appId}, {sort: {createdAt: -1}}).fetch();
                 data['loading'] = false;
             }
         }
@@ -47,6 +50,9 @@ ItemCreate = class ItemCreate extends React.Component {
             <ItemUpdateForm
                 container={this.data.container}
                 allItems={this.data.allItems}
+                allContainers={this.data.allContainers}
+                isContainerView={!_.isUndefined(this.props.isView)}
+                app={this.data.app}
                 handleSubmit={this.handleSubmit} />
         )
     }

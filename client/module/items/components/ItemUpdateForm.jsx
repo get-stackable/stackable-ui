@@ -1,13 +1,17 @@
 ItemUpdateForm = class ItemUpdateForm extends React.Component {
     static defaultProps = {
-        container: {}
+        container: {},
+        isContainerView: false
     };
 
     static propTypes = {
         handleSubmit: React.PropTypes.func.isRequired,
         container: React.PropTypes.object.isRequired,
         item: React.PropTypes.object,
-        allItems: React.PropTypes.array.isRequired
+        allItems: React.PropTypes.array.isRequired,
+        allContainers: React.PropTypes.array.isRequired,
+        isContainerView: React.PropTypes.bool,
+        app: React.PropTypes.object.isRequired
     };
 
     constructor(props) {
@@ -18,12 +22,25 @@ ItemUpdateForm = class ItemUpdateForm extends React.Component {
 
     componentDidMount() {
         //init validations
-        this.initValidations();
+        this.initValidations(this.props);
     }
 
-    initValidations() {
+    componentWillReceiveProps(nextProps) {
+        this.setState(this.initState(nextProps));
+    }
+
+    componentDidUpdate() {
+        //init validations
+        this.initValidations(this.props);
+    }
+
+    initValidations(props) {
+        if (props.isContainerView) {
+            return false;
+        }
+
         let fields = {};
-        this.props.container.items.map((item) => {
+        props.container.items.map((item) => {
             let rules = [];
             if (item.isRequired) {
                 rules.push({
@@ -74,11 +91,11 @@ ItemUpdateForm = class ItemUpdateForm extends React.Component {
         });
     }
 
-    componentWillReceiveProps(nextProps) {
-        this.setState(this.initState(nextProps));
-    }
-
     initState(props) {
+        if (this.props.isContainerView) {
+            return {};
+        }
+
         let stateData = {};
         let containerItems = _.sortBy(props.container.items, 'listing_order');
 
@@ -213,6 +230,23 @@ ItemUpdateForm = class ItemUpdateForm extends React.Component {
         });
     }
 
+    renderAllContainers() {
+        return this.props.allContainers.map((container) => {
+            let isActive = container._id === this.props.container._id;
+            return (
+                <a
+                    className={classNames('item', {'active': isActive})}
+                    key={container._id}
+                    onClick={() => FlowRouter.go('itemContainerView', {containerId: container._id})}>
+                    <i className="circle icon"></i>
+                    <div className="content">
+                        {container.name}
+                    </div>
+                </a>
+            )
+        });
+    }
+
     renderAllItems() {
         if (this.props.allItems.length === 0) {
             return (
@@ -243,44 +277,60 @@ ItemUpdateForm = class ItemUpdateForm extends React.Component {
     render() {
         return (
             <div className="ui grid full-height item-edit" style={{'marginLeft': '0'}}>
+                <div className="two wide column containers-list">
+                    <button className="fluid ui green button" style={{'textAlign': 'left'}}>
+                        <img src="/images/grey-stack.png" style={{'width': '15px', 'height': 'auto', 'marginRight': '10px'}} />
+                        {this.props.app.name}
+                    </button>
+                    <div className="ui link list" style={{'marginTop': '30px'}}>
+                        {this.renderAllContainers()}
+                    </div>
+                </div>
                 <div className="three wide column items-list">
                     <a
-                        className="ui primary right floated mini button"
+                        className="ui primary right floated tiny button"
                         style={{'marginRight': '10px'}}
                         href={FlowRouter.path('itemCreate', {containerId: this.props.container._id})}>
-                        + create new
+                        + create {this.props.container.name}
                     </a>
                     <div className="ui middle aligned divided link list" style={{'marginTop': '30px'}}>
                         {this.renderAllItems()}
                     </div>
                 </div>
-                <div className="thirteen wide column" style={{'paddingLeft': '0'}}>
+                <div className="eleven wide column" style={{'paddingLeft': '0'}}>
                     <div className="content-wrapper" style={{'padding': '25px 35px !important'}}>
 
-                        <div className="ui grid">
-                            <div className="ten wide column">
-                                <div className="ui large header" style={{'color': '#8b8e90', 'fontWight': '400'}}>
-                                    <span style={{'color':'#46a290', 'textDecoration':'underline'}}>Item</span> Is Stored inside your <span style={{'color':'#f15952', 'textDecoration':'underline'}}>{this.props.container.name}</span> container
+                        {!this.props.isContainerView ?
+                            <div>
+                                <div className="ui grid">
+                                    <div className="ten wide column">
+                                        {/*<div className="ui large header" style={{'color': '#8b8e90', 'fontWight': '400'}}>
+                                         <span style={{'color':'#46a290', 'textDecoration':'underline'}}>Item</span> Is Stored inside your <span style={{'color':'#f15952', 'textDecoration':'underline'}}>{this.props.container.name}</span> container
+                                         </div>*/}
+                                    </div>
+                                    <div className="six wide right aligned column">
+                                        <button
+                                            className="ui positive button"
+                                            onClick={this.doSubmit}>
+                                            Save Item
+                                        </button>
+                                        {!_.isUndefined(this.props.item) ?
+                                            <a className="ui negative button" onClick={() => this.deleteItem()}>
+                                                Delete Item
+                                            </a>:''}
+                                    </div>
+                                </div>
+                                <div className="ui divider"></div>
+                                <div className="ui form item">
+                                    {this.loadFields()}
+                                    <div className="ui error message"></div>
                                 </div>
                             </div>
-                            <div className="six wide right aligned column">
-                                <button
-                                    className="ui positive button"
-                                    onClick={this.doSubmit}>
-                                    Save Item
-                                </button>
-                                {!_.isUndefined(this.props.item) ?
-                                    <a className="ui negative button" onClick={() => this.deleteItem()}>
-                                        Delete Item
-                                    </a>:''}
+                            :
+                            <div className="ui center aligned piled segment">
+                                <p>No item selected.</p>
                             </div>
-                        </div>
-                        <div className="ui divider"></div>
-                        <div className="ui form item">
-                            {this.loadFields()}
-                            <div className="ui error message"></div>
-                        </div>
-
+                        }
                     </div>
                 </div>
             </div>

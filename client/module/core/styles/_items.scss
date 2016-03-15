@@ -1,15 +1,10 @@
 .mardown-editor-container {
-  border: 2px solid $sidebar-bg;
+  border: 1px solid $color-light-grey;
   padding: 5px;
   min-height: 111px;
   &:focus {
     outline: 0;
   }
-}
-
-.item-field {
-  border: 2px solid $sidebar-bg !important;
-  border-radius: 0 !important;
 }
 
 .items-preview {
@@ -26,21 +21,12 @@
 }
 
 .item-edit {
-  .items-list {
+  .containers-list, .items-list {
     border-right: 1px solid rgba(34, 36, 38, 0.15);
     padding-top: 50px !important;
-    padding-left: 0 !important;
-    padding-right: 0 !important;
     background-color: $color-white;
     .item {
       padding: 1.25em 1em;
-      a.header {
-        color: $color-grey !important;
-      }
-      .description {
-        font-size: 0.9rem;
-        color: rgba(0, 0, 0, 0.6);
-      }
       &.active {
         background-color: $background-color;
       }
@@ -49,6 +35,28 @@
       }
       &:last-child {
         padding-bottom: 1.25em;
+      }
+    }
+  }
+  .containers-list {
+    .item {
+      &.active {
+        i {
+          color: $color-green !important;
+        }
+      }
+    }
+  }
+  .items-list {
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+    .item {
+      a.header {
+        color: $color-grey !important;
+      }
+      .description {
+        font-size: 0.9rem;
+        color: rgba(0, 0, 0, 0.6);
       }
     }
   }

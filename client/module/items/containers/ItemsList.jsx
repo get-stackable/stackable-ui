@@ -60,12 +60,6 @@ ItemsList = class ItemsList extends React.Component {
                             href={FlowRouter.path('itemCreate', {containerId: this.data.container._id})}>
                             + create item
                         </a>
-                        <a
-                            className="ui button secondary item"
-                            style={{'marginTop': '20px', 'fontSize': '0.9rem'}}
-                            href={FlowRouter.path('containersList', {appId: this.data.container.appId})}>
-                            Back to all containers
-                        </a>
                         <div className="item"></div>
                     </div>
                 </div>

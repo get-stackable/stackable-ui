@@ -34,13 +34,8 @@ ContainersList = class ContainersList extends React.Component {
                                 <div className="ui two buttons">
                                     <a
                                         className="ui basic green button"
-                                        href={FlowRouter.path('itemsList', {appId: this.props.app._id}, {containerId: container._id})}>
-                                        List Items
-                                    </a>
-                                    <a
-                                        className="ui basic grey button"
-                                        href={FlowRouter.path('itemCreate', {containerId: container._id})}>
-                                        Add Items
+                                        href={FlowRouter.path('itemContainerView', {containerId: container._id})}>
+                                        View {container.name}
                                     </a>
                                 </div>
                             </div>
