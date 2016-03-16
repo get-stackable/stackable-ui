@@ -24,7 +24,7 @@ ContainersList = class ContainersList extends React.Component {
                                     <i className="right floated share icon"></i>
                                 </a>
                                 <div className="header">
-                                    {container.name}
+                                    {titleize(pluralize(container.name))}
                                 </div>
                                 {/*<div className="meta">
                                     0 items
@@ -35,7 +35,7 @@ ContainersList = class ContainersList extends React.Component {
                                     <a
                                         className="ui basic green button"
                                         href={FlowRouter.path('itemContainerView', {containerId: container._id})}>
-                                        manage {container.name}
+                                        manage {pluralize(container.name.toLowerCase())}
                                     </a>
                                 </div>
                             </div>

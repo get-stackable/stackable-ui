@@ -240,7 +240,7 @@ ItemUpdateForm = class ItemUpdateForm extends React.Component {
                     onClick={() => FlowRouter.go('itemContainerView', {containerId: container._id})}>
                     <i className="circle icon"></i>
                     <div className="content">
-                        {container.name}
+                        {titleize(pluralize(container.name))}
                     </div>
                 </a>
             )
@@ -266,7 +266,9 @@ ItemUpdateForm = class ItemUpdateForm extends React.Component {
                         {/*<div className="ui button">Add</div>*/}
                     </div>
                     <div className="content">
-                        <a className="header" onClick={() => FlowRouter.go('itemUpdate', {id: item.getId()})}>{item.getFirstField()}</a>
+                        <a className="header" onClick={() => FlowRouter.go('itemUpdate', {id: item.getId()})}>
+                            {item.getFirstField()}
+                        </a>
                         <div className="description">created {item.relDate()}</div>
                     </div>
                 </div>
@@ -280,7 +282,7 @@ ItemUpdateForm = class ItemUpdateForm extends React.Component {
                 <div className="two wide column containers-list">
                     <button className="fluid ui green button" style={{'lineHeight': '26px', 'padding': '0.4em 0.2em', 'textAlign': 'left'}}>
                         <img src="/images/stack-icon.png" style={{'width': '25px', 'height': 'auto', 'float': 'left'}} />
-                        {this.props.app.name}
+                        {titleize(this.props.app.name)}
                     </button>
                     <div className="ui link list" style={{'marginTop': '30px'}}>
                         {this.renderAllContainers()}
@@ -292,7 +294,7 @@ ItemUpdateForm = class ItemUpdateForm extends React.Component {
                         style={{'marginRight': '10px'}}
                         href={FlowRouter.path('itemCreate', {containerId: this.props.container._id})}>
                         <i className="plus icon"></i>
-                        create {this.props.container.name}
+                        create {pluralize(this.props.container.name.toLowerCase(), 1)}
                     </a>
                     <div className="ui middle aligned divided link list" style={{'marginTop': '40px'}}>
                         {this.renderAllItems()}
