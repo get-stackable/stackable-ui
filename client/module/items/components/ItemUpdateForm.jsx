@@ -277,8 +277,8 @@ ItemUpdateForm = class ItemUpdateForm extends React.Component {
         return (
             <div className="ui grid full-height item-edit" style={{'marginLeft': '0'}}>
                 <div className="two wide column containers-list">
-                    <button className="fluid ui green button">
-                        <img src="/images/grey-stack.png" style={{'width': '15px', 'height': 'auto', 'marginRight': '10px'}} />
+                    <button className="fluid ui green button" style={{'lineHeight': '26px', 'padding': '0.4em 0.2em', 'textAlign': 'left'}}>
+                        <img src="/images/stack-icon.png" style={{'width': '25px', 'height': 'auto', 'float': 'left'}} />
                         {this.props.app.name}
                     </button>
                     <div className="ui link list" style={{'marginTop': '30px'}}>
@@ -287,10 +287,11 @@ ItemUpdateForm = class ItemUpdateForm extends React.Component {
                 </div>
                 <div className="three wide column items-list">
                     <a
-                        className="ui primary right floated tiny button"
+                        className="ui primary tiny right floated labeled icon button"
                         style={{'marginRight': '10px'}}
                         href={FlowRouter.path('itemCreate', {containerId: this.props.container._id})}>
-                        + create {this.props.container.name}
+                        <i className="plus icon"></i>
+                        create {this.props.container.name}
                     </a>
                     <div className="ui middle aligned divided link list" style={{'marginTop': '40px'}}>
                         {this.renderAllItems()}
@@ -309,13 +310,15 @@ ItemUpdateForm = class ItemUpdateForm extends React.Component {
                                     </div>
                                     <div className="six wide right aligned column">
                                         <button
-                                            className="ui positive button"
+                                            className="small ui positive right labeled icon button"
                                             onClick={this.doSubmit}>
-                                            Save Item
+                                            <i className="save icon"></i>
+                                            Save
                                         </button>
                                         {!_.isUndefined(this.props.item) ?
-                                            <a className="ui negative button" onClick={() => this.deleteItem()}>
-                                                Delete Item
+                                            <a className="small ui negative right labeled icon button" onClick={() => this.deleteItem()}>
+                                                <i className="trash outline icon"></i>
+                                                Delete
                                             </a>:''}
                                     </div>
                                 </div>

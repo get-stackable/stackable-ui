@@ -52,11 +52,13 @@ AppCard = class AppCard extends React.Component {
                             <div className="meta">
                                 Public Key: {this.props.app.publicKey}
                                 <br />
-                                <a href={FlowRouter.path('appUpdate', {id: this.props.app._id})}>
-                                    <i className="setting icon"></i>
+                                <a className="tiny ui basic button" href={FlowRouter.path('appUpdate', {id: this.props.app._id})}>
+                                    <i className="icon setting"></i>
+                                    settings
                                 </a>
-                                <a href={StackableApi.getContainers(this.props.app.publicKey)} target="_blank" title="Get containers API URL">
-                                    <i className="share icon"></i>
+                                <a className="tiny ui basic button" href={StackableApi.getContainers(this.props.app.publicKey)} target="_blank">
+                                    <i className="icon share"></i>
+                                    api url
                                 </a>
                             </div>
                         </div>

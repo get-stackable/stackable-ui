@@ -135,9 +135,23 @@ h3 {
 
 .ui.button {
   font-weight: $font-normal;
-  border-radius: 0;
+  &.primary {
+    background-color: $sidebar-bg;
+  }
   &.secondary {
     background-color: $color-grey;
+  }
+  &.positive {
+    background-color: $color-green;
+  }
+  &.negative {
+    background-color: $color-red;
+  }
+  &.basic {
+    &.green {
+      box-shadow: 0 0 0 1px $color-green inset !important;
+      color: $color-green !important;
+    }
   }
 }
 
