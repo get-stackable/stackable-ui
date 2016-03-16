@@ -96,7 +96,7 @@ FileInput = class FileInput extends React.Component {
     }
 
     triggerInput() {
-        $('#fileInput').click();
+        $(`#fileInput-${this.props.name}`).click();
     }
 
     render() {
@@ -116,7 +116,7 @@ FileInput = class FileInput extends React.Component {
                     ref="file"
                     type="file"
                     name="file"
-                    id="fileInput"
+                    id={`fileInput-${this.props.name}`}
                     onChange={this.uploadFile}
                     style={{'display': 'none'}} />
             </div>

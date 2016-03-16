@@ -28,7 +28,7 @@ RelationInput = class RelationInput extends React.Component {
     componentDidUpdate() {
         let self = this;
         let defaultText = !_.isUndefined(self.props.value) && !_.isNull(self.props.value) && !_.isUndefined(self.props.value.data) ? self.props.value.data[self.props.relations.relation_field] : '';
-        $('.ui.dropdown.relation')
+        $(`#relation-${this.props.name}`)
             .dropdown('set text', defaultText)
             .dropdown({
                 onChange: function(value) {
@@ -44,7 +44,7 @@ RelationInput = class RelationInput extends React.Component {
         }
 
         return (
-            <div className="ui fluid search selection dropdown relation">
+            <div className="ui fluid search selection dropdown relation" id={`relation-${this.props.name}`}>
                 <input type="hidden" name="country" />
                 <i className="dropdown icon"></i>
                 <div className="default text">Select item</div>

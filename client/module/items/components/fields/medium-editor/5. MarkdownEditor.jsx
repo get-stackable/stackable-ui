@@ -11,6 +11,9 @@ MarkdownEditor = class MarkdownEditor extends React.Component {
                 'fileDragging': new FileDragging(),
                 'anchor': new AnchorForm(),
                 'autoLink': new AutoLink()
+            },
+            placeholder: {
+                text: 'start typing, you can style content by selecting it!'
             }
         }
     };

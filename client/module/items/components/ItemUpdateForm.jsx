@@ -203,6 +203,7 @@ ItemUpdateForm = class ItemUpdateForm extends React.Component {
             } else if (schema.type === 'image') {
                 //todo do validation
                 field = <FileInput
+                    name={schema.slug}
                     file={!_.isUndefined(this.state[schema.slug]) ? this.state[schema.slug].url : null}
                     onUpload={(err, res) => this.onFileUpload(err, res, schema.slug)}
                     isRequired={schema.isRequired}
@@ -210,6 +211,7 @@ ItemUpdateForm = class ItemUpdateForm extends React.Component {
             } else if (schema.type === 'relation') {
                 //todo do isRequired
                 field = <RelationInput
+                    name={schema.slug}
                     relations={schema.relations}
                     value={this.state[schema.slug]}
                     onChange={(data) => this.onChange(schema.slug, data)}
