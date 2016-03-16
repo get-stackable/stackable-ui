@@ -1,6 +1,23 @@
 .app.card {
   padding: 10px !important;
   min-height: 120px;
+  .content {
+    .header {
+      font-size: 1.2em;
+    }
+    .meta {
+      font-size: 0.9em;
+    }
+  }
+  .extra.content {
+    position: absolute;
+    bottom: 14px;
+    .ui.button {
+      box-shadow: none;
+      padding: 0.78571429em 0 0.78571429em;
+      margin-right: 20px;
+    }
+  }
 }
 
 .app.view {
