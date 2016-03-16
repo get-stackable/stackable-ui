@@ -224,6 +224,7 @@ ItemUpdateForm = class ItemUpdateForm extends React.Component {
                         {schema.isRequired ? <span className="red">*</span> : '' }
                     </label>
                     {field}
+                    <p className="field-description">{schema.description}</p>
                 </div>
             )
         });
