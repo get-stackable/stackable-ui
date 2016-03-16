@@ -27,7 +27,7 @@ RelationInput = class RelationInput extends React.Component {
 
     componentDidUpdate() {
         let self = this;
-        let defaultText = !_.isUndefined(self.props.value) && !_.isUndefined(self.props.value.data) ? self.props.value.data[self.props.relations.relation_field] : '';
+        let defaultText = !_.isUndefined(self.props.value) && !_.isNull(self.props.value) && !_.isUndefined(self.props.value.data) ? self.props.value.data[self.props.relations.relation_field] : '';
         $('.ui.dropdown.relation')
             .dropdown('set text', defaultText)
             .dropdown({

@@ -3,7 +3,16 @@ MarkdownEditor = class MarkdownEditor extends React.Component {
     static defaultProps = {
         isRequired: false,
         validations: {},
-        tag: 'div'
+        tag: 'div',
+        options: {
+            toolbar: {diffTop: -55},
+            extensions: {
+                'placeholder': new Placeholder(),
+                'fileDragging': new FileDragging(),
+                'anchor': new AnchorForm(),
+                'autoLink': new AutoLink()
+            }
+        }
     };
 
     static propTypes = {

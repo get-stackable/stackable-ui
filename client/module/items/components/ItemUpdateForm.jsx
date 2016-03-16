@@ -181,7 +181,6 @@ ItemUpdateForm = class ItemUpdateForm extends React.Component {
                     text={this.state[schema.slug]}
                     onChange={this.onChange.bind(this, schema.slug)}
                     className="mardown-editor-container"
-                    options={{toolbar: {diffTop: -55}}}
                     isRequired={schema.isRequired}
                     validations={schema.validations}/>;
             } else if (schema.type === 'boolean') {

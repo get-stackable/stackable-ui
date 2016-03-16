@@ -5,3 +5,4 @@ reactMixin = require('react-mixin');
 blacklist = require('blacklist');
 assign = require('object-assign');
 dragula = require('react-dragula');
+MediumEditor = require('medium-editor');
