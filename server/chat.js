@@ -50,12 +50,13 @@ let channelCreate = function (userId) {
 
         Chat.insert({channelId: channelId, userId: userId, messages: []});
 
-        let userInfo = `User name: ${user.fullName()} and email: ${user.email()}`;
-        slack.chat.postMessage({token, channel: channelId, text: userInfo}, Meteor.bindEnvironment((err, data)=> {}));
-
         //invite team members
         slack.channels.invite({token, channel: channelId, user: parmidnerId}, Meteor.bindEnvironment(function (err, data) {}));
         slack.channels.invite({token, channel: channelId, user: rishiId}, Meteor.bindEnvironment(function (err, data) {}));
+
+        //send user info
+        let userInfo = `User name: ${user.fullName()} and email: ${user.email()}`;
+        slack.chat.postMessage({token, channel: channelId, text: userInfo}, Meteor.bindEnvironment((err, data)=> {}));
 
         future.return({channelId});
     }));
