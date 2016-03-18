@@ -1,0 +1,49 @@
+.chat-box {
+  color:#333;
+  width:245px;
+  border:1px solid #344150;
+  border-bottom:none;
+  background-color:white;
+  position:fixed;
+  right:10px;
+  bottom:0;
+  z-index:9999;
+  -webkit-box-shadow:1px 1px 5px rgba(0,0,0,.2);
+  -moz-box-shadow:1px 1px 5px rgba(0,0,0,.2);
+  box-shadow:1px 1px 5px rgba(0,0,0,.2);
+  max-height: 320px;
+  > label {
+    display:block;
+    height:24px;
+    line-height:24px;
+    background-color:#344150;
+    color:white;
+    font-weight:bold;
+    padding:0 1em 1px;
+    text-align: center;
+  }
+  .comments {
+    padding:10px;
+    overflow-y: scroll;
+    height: 254px;
+    margin: 0 0 38px 0;
+    &.hidden {
+      display:none;
+    }
+  }
+  .action {
+    margin-bottom: 35px;
+    position: absolute;
+    bottom: -35px;
+    width: 100%;
+    &.hidden {
+      display:none;
+    }
+    input {
+      border-radius: 0;
+    }
+    button {
+      border-radius: 0 !important;
+    }
+  }
+}

@@ -12,9 +12,17 @@ ChatBox = class ChatBox extends React.Component {
         super(props);
 
         this.state = {
-            text: ''
+            text: '',
+            isVisible: false
         };
     }
+
+    handleKeyPress = (e) => {
+        console.log('key', e.key);
+        if (e.key === 'Enter') {
+            this.handleSubmit()
+        }
+    };
 
     handleSubmit = () => {
         if (this.state.text.length === 0) {
@@ -39,14 +47,27 @@ ChatBox = class ChatBox extends React.Component {
         }
     };
 
+    scrollBottom() {
+        if ($('#last-chat').length !== 0) {
+            setTimeout(() => {
+                $('.chat-box .ui.comments').stop().animate({
+                    scrollTop: $('#last-chat').offset().top
+                }, 1000);
+            }, 800);
+        }
+    }
+
     render() {
         if (this.data.loading) {
             return <Loading active={true} />
         }
 
         return (
-            <div className="chat-box" style={{width: '300px', height: '300px', border: '1px solid grey', overflow: 'scroll', position: 'absolute', bottom: '0' ,right: '0', 'background': 'white', 'padding': '11px'}}>
-                <div className="ui comments">
+            <div className="chat-box">
+                <label onClick={() => this.setState({isVisible: !this.state.isVisible})}>
+                    {this.state.isVisible ? 'Close chat' : 'Need help?'}
+                </label>
+                <div className={classNames('ui comments', {'hidden': !this.state.isVisible})}>
                     {!_.isUndefined(this.data.chat) ?
                         this.data.chat.messages.map((message, index) => {
                             return (
@@ -67,19 +88,19 @@ ChatBox = class ChatBox extends React.Component {
                                 </div>
                             )
                         }) : ''}
-
-                    <div className="ui reply form">
-                        <div className="field">
-                        <textarea
-                            rows="2"
-                            style={{height: '4em'}}
-                            value={this.state.text}
-                            onChange={(e) => this.setState({text: e.target.value})}/>
-                        </div>
-                        <div className="ui blue labeled submit icon button" onClick={this.handleSubmit}>
-                            <i className="icon edit"></i> Send
-                        </div>
-                    </div>
+                    <div id="last-chat"></div>
+                    {this.scrollBottom()}
+                </div>
+                <div className={classNames('ui action input', {'hidden': !this.state.isVisible})}>
+                    <input
+                        type="text"
+                        placeholder="type message..."
+                        value={this.state.text}
+                        onChange={(e) => this.setState({text: e.target.value})}
+                        onKeyPress={this.handleKeyPress}/>
+                    <button className="ui blue icon button" onClick={this.handleSubmit}>
+                        <i className="send icon"></i>
+                    </button>
                 </div>
             </div>
         )
