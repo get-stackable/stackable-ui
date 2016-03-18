@@ -18,7 +18,6 @@ ChatBox = class ChatBox extends React.Component {
     }
 
     handleKeyPress = (e) => {
-        console.log('key', e.key);
         if (e.key === 'Enter') {
             this.handleSubmit()
         }
@@ -31,7 +30,7 @@ ChatBox = class ChatBox extends React.Component {
 
         if (_.isUndefined(this.data.chat)) {
             Meteor.call('chat.channel.create', (err, res) => {
-                console.log(err, res);
+                //console.log(err, res);
                 Meteor.call('chat.message.send', this.state.text, (err, res) => {
                     this.setState({
                         text: ''
