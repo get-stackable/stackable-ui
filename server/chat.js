@@ -34,6 +34,9 @@ bot.message(Meteor.bindEnvironment((message) => {
 bot.listen({token});
 
 let channelCreate = function (userId) {
+    let user = User.findOne({_id: userId});
+
+
     var future = new Future();
 
     let channelName = 'user-' + Random.id(4);
@@ -47,6 +50,10 @@ let channelCreate = function (userId) {
 
         Chat.insert({channelId: channelId, userId: userId, messages: []});
 
+        let userInfo = `User name: ${user.fullName()} and email: ${user.email()}`;
+        slack.chat.postMessage({token, channel: channelId, userInfo}, Meteor.bindEnvironment((err, data)=> {}));
+
+        //invite team members
         slack.channels.invite({token, channel: channelId, user: parmidnerId}, Meteor.bindEnvironment(function (err, data) {}));
         slack.channels.invite({token, channel: channelId, user: rishiId}, Meteor.bindEnvironment(function (err, data) {}));
 
@@ -58,6 +65,21 @@ let channelCreate = function (userId) {
     return future.wait();
 };
 
+let channelArchive = function (channelId) {
+    var future = new Future();
+
+    Chat.remove({channelId});
+    slack.channels.archive({token, channel: channelId}, Meteor.bindEnvironment((err, data)=> {
+        if (err) {
+            return future.return(err);
+        }
+
+        future.return(true);
+    }));
+
+    return future.wait();
+};
+
 Meteor.methods({
     'chat.channel.create': function () {
         return channelCreate(this.userId);
@@ -65,18 +87,7 @@ Meteor.methods({
     'chat.channel.archive': function (channelId) {
         check(channelId, String);
 
-        var future = new Future();
-
-        Chat.remove({channelId});
-        slack.channels.archive({token, channel: channelId}, Meteor.bindEnvironment((err, data)=> {
-            if (err) {
-                return future.return(err);
-            }
-
-            future.return(true);
-        }));
-
-        return future.wait();
+        return channelArchive(channelId);
     },
     'chat.message.send': function (text) {
         check(text, String);
@@ -104,11 +115,18 @@ Meteor.methods({
         }));
 
         return future.wait();
+    },
+    'chat.cleanup': function () {
+        let chats = Chat.find().fetch();
+        chats.map((chat) => {
+            return channelArchive(chat.channelId);
+        });
     }
 });
 
 Meteor.publish('user.chat', function () {
     if (this.userId) {
+        //return Chat.find({userId: this.userId}, {fields: {messages: {$slice: -30}}});
         return Chat.find({userId: this.userId});
     } else {
         this.ready();
