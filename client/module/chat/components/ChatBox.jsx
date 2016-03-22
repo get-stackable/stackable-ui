@@ -6,7 +6,6 @@ ChatBoxInner = class ChatBoxInner extends React.Component {
             text: '',
             isVisible: false,
             hasNew: false,
-            messagesCount: 0,
             sendDisabled: false
         };
     }
@@ -18,20 +17,22 @@ ChatBoxInner = class ChatBoxInner extends React.Component {
             });
         }
 
-        if (!this.state.isVisible
-            && !_.isUndefined(this.props.chat)
-            && this.state.messagesCount < this.props.chat.messages.length) {
-            this.setState({
-                hasNew: true,
-                messagesCount: this.props.chat.messages.length
-            });
-        } else if (!_.isUndefined(this.props.chat) && this.state.messagesCount < this.props.chat.messages.length) {
-            this.setState({
-                messagesCount: this.props.chat.messages.length
-            });
+        if (this.state.isVisible) {
+            this.scrollBottom();
         }
 
-        this.scrollBottom();
+        if (!_.isUndefined(this.props.chat)) {
+            let currentTime = new Date();
+            let lastMsg = _.last(this.props.chat.messages);
+
+            if (moment(lastMsg.date).isSameOrAfter(currentTime, 'second')) {
+                if (!this.state.isVisible) {
+                    this.setState({
+                        hasNew: true
+                    });
+                }
+            }
+        }
     }
 
     handleKeyPress = (e) => {

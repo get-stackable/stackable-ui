@@ -331,6 +331,18 @@ ItemUpdateForm = class ItemUpdateForm extends React.Component {
                                     {this.loadFields()}
                                     <div className="ui error message"></div>
                                 </div>
+                                {!_.isUndefined(this.props.item) ?
+                                    <div className="ui grid">
+                                        <div className="sixteen wide column">
+                                            <a
+                                                className="pull-right"
+                                                style={{'marginTop': '10px', 'marginBottom': '20px'}}
+                                                href={StackableApi.getItem(this.props.app.publicKey, this.props.item.getId())}
+                                                target="_blank">
+                                                api url <i className="icon share" />
+                                            </a>
+                                        </div>
+                                    </div>:''}
                             </div>
                             :
                             <div className="ui center aligned piled segment">

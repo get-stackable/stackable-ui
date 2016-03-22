@@ -1,14 +1,22 @@
 //import google fonts
 @import url(https://fonts.googleapis.com/css?family=Raleway:400,700);
 
+html {
+  height: inherit;
+  min-height: 100vh;
+}
+
 body {
   font-family: $default-font;
   background: $background-color;
   color: $default-font-color;
+  height: 100%;
+  min-height: 100vh;
 }
 
 #react-root {
-  height: 100%;
+  height: inherit;
+  min-height: 100vh;
 }
 
 a {
@@ -61,11 +69,13 @@ a {
 
 .main.container {
   margin-top: 58px;
-  height: 100%;
+  height: inherit;
+  min-height: 100vh;
 }
 
 .full-height {
-  height: 100vh;
+  height: inherit;
+  min-height: 100vh;
 }
 
 .main-right-container {
