@@ -2,6 +2,9 @@ ItemCreate = class ItemCreate extends React.Component {
     getMeteorData() {
         let handle = Meteor.subscribe('containers.single', this.props.containerId);
 
+
+        let user = User.findOne(Meteor.userId());
+
         let data = {
             loading: true
         };
@@ -14,7 +17,13 @@ ItemCreate = class ItemCreate extends React.Component {
             let handle2 = Meteor.subscribe('items.all', container.appId, container._id);
             let handle3 = Meteor.subscribe('containers.all', container.appId);
             if (handle2.ready() && handle3.ready()) {
-                data['allItems'] = Item.find({containerId: container._id}, {sort: {createdAt: -1}}).fetch();
+                console.log(user.profile);
+                if (user.profile.isPaid) {
+                    data['allItems'] = Item.find({containerId: container._id}, {sort: {createdAt: -1}}).fetch();
+                } else {
+                    data['allItems'] = ItemFree.find({containerId: container._id}, {sort: {createdAt: -1}}).fetch();
+                }
+
                 data['allContainers'] = Container.find({appId: container.appId}, {sort: {createdAt: -1}}).fetch();
                 data['loading'] = false;
             }
