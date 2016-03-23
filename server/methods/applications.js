@@ -13,7 +13,8 @@ Meteor.methods({
         Container.remove({appId: app._id});
 
         //remove all related items
-        Item.remove({appId: app._id});
+        ItemPaid.remove({appId: app._id});
+        ItemFree.remove({appId: app._id});
 
         return app.remove();
     },

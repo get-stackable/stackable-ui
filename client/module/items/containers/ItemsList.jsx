@@ -11,6 +11,9 @@ ItemsList = class ItemsList extends React.Component {
         let handle = Meteor.subscribe('items.all', this.props.appId);
         let handle2 = Meteor.subscribe('containers.all', this.props.appId);
 
+        let user = User.findOne(Meteor.userId());
+        let Item = user.isPaid ? ItemPaid : ItemFree;
+
         let find = {};
         if (!_.isNull(this.state.query)) {
             let queryRegex = ".*" + this.state.query + ".*";

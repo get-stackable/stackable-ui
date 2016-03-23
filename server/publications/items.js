@@ -4,6 +4,7 @@ Meteor.publish('items.all', function (appId, containerId) {
     let options = {sort: {createdAt: -1}};
 
     let user = User.findOne(this.userId);
+    let Item = user.isPaid ? ItemPaid : ItemFree;
 
     if (!_.isUndefined(containerId)) {
         check(containerId, String);
@@ -15,12 +16,7 @@ Meteor.publish('items.all', function (appId, containerId) {
     itemFind['appId'] = app._id;
 
     if (this.userId && app) {
-        console.log('is paid', user.profile.isPaid);
-        if (user.profile.isPaid) {
-            return Item.find(itemFind, options);
-        } else {
-            return ItemFree.find(itemFind, options);
-        }
+        return Item.find(itemFind, options);
     } else {
         this.ready();
     }
@@ -31,29 +27,17 @@ Meteor.publish('items.single', function (id) {
     var oid = new Meteor.Collection.ObjectID(id);
 
     let user = User.findOne(this.userId);
+    let Item = user.isPaid ? ItemPaid : ItemFree;
 
-    let item;
-    if (user.profile.isPaid) {
-        item = Item.findOne({_id: oid});
-    } else {
-        item = ItemFree.findOne({_id: oid});
-    }
+    let item = Item.findOne({_id: oid});
     let app = Application.findOne({_id: item.appId, 'users': this.userId});
 
     //check only app owners can get data
     if (this.userId && app) {
-        if (user.profile.isPaid) {
-            return [
-                Container.find({_id: item.containerId}),
-                Item.find({_id: item._id})
-            ];
-        } else {
-            return [
-                Container.find({_id: item.containerId}),
-                ItemFree.find({_id: item._id})
-            ];
-        }
-
+        return [
+            Container.find({_id: item.containerId}),
+            Item.find({_id: item._id})
+        ];
     } else {
         this.ready();
     }
