@@ -204,7 +204,7 @@ ItemUpdateForm = class ItemUpdateForm extends React.Component {
                 //todo do validation
                 field = <FileInput
                     name={schema.slug}
-                    file={!_.isUndefined(this.state[schema.slug]) ? this.state[schema.slug].url : null}
+                    file={!_.isUndefined(this.state[schema.slug]) && !_.isNull(this.state[schema.slug]) ? this.state[schema.slug].url : null}
                     onUpload={(err, res) => this.onFileUpload(err, res, schema.slug)}
                     isRequired={schema.isRequired}
                     validations={schema.validations}/>;

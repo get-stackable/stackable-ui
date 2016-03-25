@@ -95,9 +95,9 @@ FileInput = class FileInput extends React.Component {
         )
     }
 
-    triggerInput() {
+    triggerInput = () => {
         $(`#fileInput-${this.props.name}`).click();
-    }
+    };
 
     render() {
         return (
@@ -109,7 +109,7 @@ FileInput = class FileInput extends React.Component {
                         <img src={this.state.file} style={{'width':'80px','height':'auto','display':'block'}}/>
                     </a>
                     :''}
-                <button className="ui primary button" onClick={this.triggerInput}  style={{'margin': '10px 0'}}>
+                <button className="ui primary button" onClick={this.triggerInput.bind(this)}  style={{'margin': '10px 0'}}>
                     <i className="upload icon"></i> Upload Image
                 </button>
                 <input
