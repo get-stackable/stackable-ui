@@ -3,6 +3,10 @@ ItemUpdate = class ItemUpdate extends React.Component {
         let handle = Meteor.subscribe('items.single', this.props.id);
 
         var oid = new Meteor.Collection.ObjectID(this.props.id);
+
+        let user = User.findOne(Meteor.userId());
+        let Item = user.isPaid ? ItemPaid : ItemFree;
+
         let item = Item.findOne(oid);
         let data = {
             loading: true

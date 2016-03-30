@@ -11,11 +11,15 @@ Meteor.methods({
         }
 
         //remove all related entries
-        Item.remove({containerId: container._id});
+        ItemPaid.remove({containerId: container._id});
+        ItemFree.remove({containerId: container._id});
 
         return container.remove();
     },
     'container.field.archive': function (containerId, fieldName) {
+        let user = User.findOne(this.userId);
+        let Item = user.isPaid ? ItemPaid : ItemFree;
+
         let items = Item.find({containerId}).fetch();
         async.each(items, function(item, callback) {
             let data = item.data;
@@ -44,6 +48,9 @@ Meteor.methods({
         });
     },
     'container.field.rename': function (containerId, oldName, newName) {
+        let user = User.findOne(this.userId);
+        let Item = user.isPaid ? ItemPaid : ItemFree;
+
         let items = Item.find({containerId}).fetch();
 
         async.each(items, function(item, callback) {

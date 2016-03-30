@@ -1,4 +1,4 @@
-let allowedFields = {emails: 1, profile: 1};
+let allowedFields = {emails: 1, profile: 1, isPaid: 1};
 
 Meteor.publish('user.data', function() {
     if (this.userId) {

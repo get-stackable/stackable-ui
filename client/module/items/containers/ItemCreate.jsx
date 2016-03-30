@@ -2,6 +2,9 @@ ItemCreate = class ItemCreate extends React.Component {
     getMeteorData() {
         let handle = Meteor.subscribe('containers.single', this.props.containerId);
 
+        let user = User.findOne(Meteor.userId());
+        let Item = user.profile.isPaid ? ItemPaid : ItemFree;
+
         let data = {
             loading: true
         };

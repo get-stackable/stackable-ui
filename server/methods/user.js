@@ -1,6 +1,9 @@
 Accounts.onCreateUser(function(options, user) {
     user.apps = [];
     user.profile = {};
+    //user.slug = '';
+    user.isPaid = false;
+    user.isActive = true;
 
     if (!_.isUndefined(user.services) && !_.isUndefined(user.services.google)) {
         user.emails = [{
