@@ -26,6 +26,8 @@ MainLayout = class MainLayout extends React.Component {
 
         window.addEventListener('resize', this.handleResize);
         this.checkDesktop();
+
+        Smooch.init({ appToken: '101mfmxkapg9rc28mi907efeh' });
     }
 
     render() {
@@ -42,7 +44,7 @@ MainLayout = class MainLayout extends React.Component {
                         </div>
                     </div>
                 </div>
-                <ChatBox />
+                {/*<ChatBox />*/}
                 <CreateAppModal />
             </div>
         )

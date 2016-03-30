@@ -6,3 +6,4 @@ blacklist = require('blacklist');
 assign = require('object-assign');
 dragula = require('react-dragula');
 MediumEditor = require('medium-editor');
+Smooch = require('smooch');
