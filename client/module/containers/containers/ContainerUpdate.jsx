@@ -11,7 +11,8 @@ ContainerUpdate = class ContainerUpdate extends React.Component {
     handleSubmit = (data) => {
         let formData = {
             name: data.name,
-            items: data.items
+            items: data.items,
+            isSingleItem: data.isSingleItem
         };
 
         Meteor.call('container.update', this.props.id, formData, (err, res) => {

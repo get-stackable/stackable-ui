@@ -36,6 +36,7 @@ ContainerUpdateForm = class ContainerUpdateForm extends React.Component {
         this.state = {
             name: !_.isUndefined(props.container) ? props.container.name : '',
             items: !_.isUndefined(props.container) ? _.sortBy(props.container.items, 'listing_order') : [],
+            isSingleItem: !_.isUndefined(props.container) ? props.container.isSingleItem : false,
             itemModalVisible: false,
             activeItemInModal: {},
             activeModalTab: 'info'
@@ -67,7 +68,8 @@ ContainerUpdateForm = class ContainerUpdateForm extends React.Component {
         if (!_.isUndefined(nextProps.container)) {
             this.setState({
                 name: nextProps.container.name,
-                items: nextProps.container.items
+                items: nextProps.container.items,
+                isSingleItem: nextProps.container.isSingleItem
             });
         }
     }
@@ -256,6 +258,18 @@ ContainerUpdateForm = class ContainerUpdateForm extends React.Component {
                                     </table>
                                     <div className="ui piled segment">
                                         You can drag and drop fields above to re-order them.
+                                    </div>
+                                    <div className="ui piled segment">
+                                        <div className="ui toggle checkbox">
+                                            <input
+                                                name="isSingleItem"
+                                                type="checkbox"
+                                                value={this.state.isSingleItem}
+                                                onChange={(e) => this.setState({isSingleItem: e.target.checked})}
+                                                onBlur={() => this.handleSubmit()}
+                                                checked={this.state.isSingleItem}/>
+                                            <label>Is single item container?</label>
+                                        </div>
                                     </div>
                                     <div className="ui basic segment" style={{'marginTop':'100px'}}>
                                         <p>

@@ -17,13 +17,40 @@ ItemCreate = class ItemCreate extends React.Component {
             let handle2 = Meteor.subscribe('items.all', container.appId, container._id);
             let handle3 = Meteor.subscribe('containers.all', container.appId);
             if (handle2.ready() && handle3.ready()) {
-                data['allItems'] = Item.find({containerId: container._id}, {sort: {createdAt: -1}}).fetch();
+                let allItems = Item.find({containerId: container._id}, {sort: {createdAt: -1}}).fetch();
+                data['allItems'] = allItems;
                 data['allContainers'] = Container.find({appId: container.appId}, {sort: {createdAt: -1}}).fetch();
-                data['loading'] = false;
+
+                if (container.isSingleItem) {
+                    //if is single item
+                    this.loadSingleItemContainer(allItems, container._id, container.appId);
+                } else {
+                    data['loading'] = false;
+                }
             }
         }
 
         return data;
+    }
+
+    loadSingleItemContainer(allItems, containerId, appId) {
+        if (allItems.length === 0) {
+            //create a item if not there
+            let itemData = {containerId, appId, data: {}};
+
+            Meteor.call('item.create', itemData, (err, res) => {
+                //console.log(err, res);
+                if (!err) {
+                    FlowRouter.go('itemUpdate', {id: res.getId()});
+                } else {
+                    FlashMessages.sendError(err.reason);
+                }
+            });
+        } else {
+            //when one item is there
+            //redirect to it
+            FlowRouter.go('itemUpdate', {id: allItems[0].getId()});
+        }
     }
 
     handleSubmit = (data) => {

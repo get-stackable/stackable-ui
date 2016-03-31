@@ -278,17 +278,9 @@ ItemUpdateForm = class ItemUpdateForm extends React.Component {
     }
 
     render() {
-        return (
-            <div className="ui grid full-height item-edit" style={{'marginLeft': '0'}}>
-                <div className="two wide column containers-list">
-                    <button className="fluid ui green button" style={{'lineHeight': '26px', 'padding': '0.4em 0.2em', 'textAlign': 'left'}}>
-                        <img src="/images/stack-icon.png" style={{'width': '25px', 'height': 'auto', 'float': 'left'}} />
-                        {titleize(this.props.app.name)}
-                    </button>
-                    <div className="ui link list" style={{'marginTop': '30px'}}>
-                        {this.renderAllContainers()}
-                    </div>
-                </div>
+        let itemsList;
+        if (!this.props.container.isSingleItem) {
+            itemsList = (
                 <div className="three wide column items-list">
                     <a
                         className="ui primary tiny right floated labeled icon button"
@@ -301,7 +293,22 @@ ItemUpdateForm = class ItemUpdateForm extends React.Component {
                         {this.renderAllItems()}
                     </div>
                 </div>
-                <div className="eleven wide column" style={{'paddingLeft': '0'}}>
+            );
+        }
+
+        return (
+            <div className="ui grid full-height item-edit" style={{'marginLeft': '0'}}>
+                <div className="two wide column containers-list">
+                    <button className="fluid ui green button" style={{'lineHeight': '26px', 'padding': '0.4em 0.2em', 'textAlign': 'left'}}>
+                        <img src="/images/stack-icon.png" style={{'width': '25px', 'height': 'auto', 'float': 'left'}} />
+                        {titleize(this.props.app.name)}
+                    </button>
+                    <div className="ui link list" style={{'marginTop': '30px'}}>
+                        {this.renderAllContainers()}
+                    </div>
+                </div>
+                {itemsList}
+                <div className={classNames({'fourteen wide column': this.props.container.isSingleItem, 'eleven wide column': !this.props.container.isSingleItem})} style={{'paddingLeft': '0'}}>
                     <div className="content-wrapper" style={{'padding': '25px 35px !important'}}>
 
                         {!this.props.isContainerView ?
@@ -319,7 +326,7 @@ ItemUpdateForm = class ItemUpdateForm extends React.Component {
                                             <i className="save icon"></i>
                                             Save
                                         </button>
-                                        {!_.isUndefined(this.props.item) ?
+                                        {!_.isUndefined(this.props.item) && !this.props.container.isSingleItem ?
                                             <a className="small ui negative right labeled icon button" onClick={() => this.deleteItem()}>
                                                 <i className="trash outline icon"></i>
                                                 Delete
