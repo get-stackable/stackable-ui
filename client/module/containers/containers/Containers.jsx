@@ -36,10 +36,12 @@ Containers = class Containers extends React.Component {
     }
 
     setActiveApp() {
-        Session.set('active.app', {
-            id: this.data.app._id,
-            name: this.data.app.name
-        });
+        if (!_.isUndefined(this.data.app)) {
+            Session.set('active.app', {
+                id: this.data.app._id,
+                name: this.data.app.name
+            });
+        }
     }
 
     render() {

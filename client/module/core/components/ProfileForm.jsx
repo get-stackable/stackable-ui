@@ -35,7 +35,11 @@ ProfileForm = class ProfileForm extends React.Component {
             'profile.about': this.state.about
         };
 
-        Meteor.call('user.update', data, (err, res) => {
+        Meteor.call('user.update', data, (err) => {
+            if (err) {
+                console.log(err);
+            }
+
             if (!err) {
                 FlashMessages.sendSuccess('Updated profile data successfully!');
             }
@@ -79,7 +83,7 @@ ProfileForm = class ProfileForm extends React.Component {
                         name="about"
                         placeholder="About You"
                         value={this.state.about}
-                        onChange={(e) => this.setState({about: e.target.value})}></textarea>
+                        onChange={(e) => this.setState({about: e.target.value})} />
                 </div>
                 {/*<div className="ui divider"></div>
                 <div className="field">

@@ -5,7 +5,7 @@ ItemUpdate = class ItemUpdate extends React.Component {
         var oid = new Meteor.Collection.ObjectID(this.props.id);
 
         let user = User.findOne(Meteor.userId());
-        let Item = user.isPaid ? ItemPaid : ItemFree;
+        let Item = !_.isUndefined(user) && user.isPaid ? ItemPaid : ItemFree;
 
         let item = Item.findOne(oid);
         let data = {
@@ -40,7 +40,7 @@ ItemUpdate = class ItemUpdate extends React.Component {
     };
 
     render() {
-        if (this.data.loading) {
+        if (this.data.loading || _.isUndefined(this.data.item)) {
             return <Loading active={true} />
         }
 
