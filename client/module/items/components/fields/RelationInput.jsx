@@ -13,6 +13,9 @@ RelationInput = class RelationInput extends React.Component {
     getMeteorData() {
         let data = {loading: true};
 
+        let user = User.findOne(Meteor.userId());
+        let Item = !_.isUndefined(user) && user.isPaid ? ItemPaid : ItemFree;
+
         let handle = Meteor.subscribe('containers.single', this.props.relations.relation_id);
         if (handle.ready()) {
             let container = Container.findOne(this.props.relations.relation_id);
