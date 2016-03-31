@@ -31,7 +31,7 @@ ItemUpdate = class ItemUpdate extends React.Component {
     }
 
     handleSubmit = (data) => {
-        Meteor.call('item.update', this.data.item._id, data, (err, res) => {
+        Meteor.call('item.update', this.data.item.getId(), data, (err, res) => {
             //console.log(err, res);
             if (!err) {
                 FlashMessages.sendSuccess('Item updated successfully!');

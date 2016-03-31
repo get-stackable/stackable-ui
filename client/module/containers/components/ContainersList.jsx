@@ -39,7 +39,7 @@ ContainersList = class ContainersList extends React.Component {
                                         className="ui basic red button"
                                         style={{'fontSize': '0.77rem', 'padding': '10px 5px'}}>
                                         <i className="settings icon" />
-                                        Manage {titleize(containerName)}
+                                        manage container
                                     </a>
                                 </div>
                             </div>
