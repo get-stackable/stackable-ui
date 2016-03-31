@@ -239,9 +239,9 @@ ItemUpdateForm = class ItemUpdateForm extends React.Component {
                     className={classNames('item', {'active': isActive})}
                     key={container._id}
                     onClick={() => FlowRouter.go('itemContainerView', {containerId: container._id})}>
-                    <i className="circle icon"></i>
+                    <i className="circle icon" />
                     <div className="content">
-                        {titleize(pluralize(container.name))}
+                        {container.isSingleItem ? titleize(container.name) : titleize(pluralize(container.name))}
                     </div>
                 </a>
             )

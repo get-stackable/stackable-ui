@@ -14,31 +14,39 @@ ContainersList = class ContainersList extends React.Component {
         return (
             <div className="ui cards">
                 {this.props.containers.map((container) => {
+                    let containerName = container.isSingleItem ? container.name : pluralize(container.name);
+
                     return (
                         <div className="card" key={container._id}>
                             <div className="content">
-                                <i
-                                    className="right floated settings icon"
-                                    onClick={() => FlowRouter.go('containerUpdate', {id: container._id})}></i>
-                                <a href={StackableApi.getContainerItems(this.props.app.publicKey, container._id)} target="_blank" title="Get container items API URL">
-                                    <i className="right floated share icon"></i>
-                                </a>
                                 <div className="header">
-                                    {titleize(pluralize(container.name))}
+                                    {titleize(containerName)}
                                 </div>
-                                {/*<div className="meta">
-                                    0 items
-                                </div>*/}
                             </div>
                             <div className="extra content">
                                 <div className="ui two buttons">
                                     <a
                                         className="ui basic green button"
-                                        href={FlowRouter.path('itemContainerView', {containerId: container._id})}>
-                                        manage {pluralize(container.name.toLowerCase())}
+                                        href={StackableApi.getContainerItems(this.props.app.publicKey, container._id)}
+                                        target="_blank"
+                                        title="Get container items API URL"
+                                        style={{'fontSize': '0.77rem', 'padding': '10px 5px'}}>
+                                        <i className="share icon" />
+                                        API URL
+                                    </a>
+                                    <a
+                                        href={FlowRouter.path('containerUpdate', {id: container._id})}
+                                        className="ui basic red button"
+                                        style={{'fontSize': '0.77rem', 'padding': '10px 5px'}}>
+                                        <i className="settings icon" />
+                                        Manage {titleize(containerName)}
                                     </a>
                                 </div>
                             </div>
+                            <a className="ui primary bottom attached button" href={FlowRouter.path('itemContainerView', {containerId: container._id})}>
+                                <i className="add icon" />
+                                {container.isSingleItem ? <span>manage {pluralize(containerName.toLowerCase(), 1)} item</span> : <span>add & manage {pluralize(containerName.toLowerCase(), 1)} items</span>}
+                            </a>
                         </div>
                     )
                 })}
