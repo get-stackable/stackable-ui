@@ -23,7 +23,7 @@ PORT=1984 ROOT_URL='http://localhost' MONGO_URL='' node main.js
 
 ```
 cd private/cli
-mup --settings=settings.json deploy deploy
+mup deploy
 ```
 
 ### Testing like production

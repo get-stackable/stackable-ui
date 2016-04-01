@@ -41,7 +41,8 @@ UserStats = class UserStats extends React.Component {
     }
 
     renderModal() {
-        let shareUrl = 'http://ui.stackable.space' + FlowRouter.path('login', {}, {ref: this.props.user.referral.key});
+        let key = !_.isUndefined(this.props.user.referral) ? this.props.user.referral.key : 'invalid';
+        let shareUrl = 'http://ui.stackable.space' + FlowRouter.path('login', {}, {ref: key});
 
         return (
             <div className="ui modal" id="share-ref-modal" style={{padding: '0'}}>
@@ -80,12 +81,14 @@ UserStats = class UserStats extends React.Component {
     }
 
     render() {
+        let balance = !_.isUndefined(this.props.user.referral) ? this.props.user.referral.balance : 0;
+
         return (
             <div className="ui grid user stats">
                 <div className="two wide column">
                     <div className="ui mini statistic">
                         <div className="value">
-                            ${this.props.user.referral.balance}.00
+                            ${balance}.00
                         </div>
                         <div className="label">
                             credit balance
@@ -98,7 +101,7 @@ UserStats = class UserStats extends React.Component {
                             <div className="progress"></div>
                         </div>
                         <div className="label">
-                            <span style={{textDecoration: 'underline'}}>invite</span> friends to get free <span style={{color: '#51B5E0'}}>production</span> plan ${this.state.referralCommission} credits
+                            <span style={{textDecoration: 'underline'}}>invite</span> friends to get free <span style={{color: '#51B5E0'}}>production</span> plan ${this.state.referralCommission} credits per signup!
                         </div>
                     </div>
                 </div>
