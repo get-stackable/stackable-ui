@@ -42,7 +42,7 @@ UserStats = class UserStats extends React.Component {
 
     renderModal() {
         let key = !_.isUndefined(this.props.user.referral) ? this.props.user.referral.key : 'invalid';
-        let shareUrl = 'http://ui.stackable.space' + FlowRouter.path('login', {}, {ref: key});
+        let shareUrl = `http://www.stackable.space?ref=${key}`;
 
         return (
             <div className="ui modal" id="share-ref-modal" style={{padding: '0'}}>
