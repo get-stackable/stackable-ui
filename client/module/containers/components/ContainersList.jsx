@@ -22,6 +22,9 @@ ContainersList = class ContainersList extends React.Component {
                                 <div className="header">
                                     {titleize(containerName)}
                                 </div>
+                                <div className="meta">
+                                    Container ID: {container._id}
+                                </div>
                             </div>
                             <div className="extra content">
                                 <div className="ui two buttons">

@@ -20,6 +20,7 @@ HomePage = class HomePage extends React.Component {
                 <PageHeading>
                     Dashboard
                 </PageHeading>
+                <UserStats user={this.data.user} />
                 <div className="ui grid padding35">
                     <div className="sixteen wide column">
                         <h3>My Stacks</h3>

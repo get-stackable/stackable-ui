@@ -61,7 +61,11 @@ FlowRouter.route('/not-found', {
 
 FlowRouter.route('/login', {
     name: 'login',
-    action: function() {
+    action: function(params, queryParams) {
+        if (!_.isUndefined(queryParams.ref)) {
+            Session.set('ref-key', queryParams.ref);
+        }
+
         ReactLayout.render(BlankLayout, {
             content: <Login />
         });
