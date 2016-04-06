@@ -84,6 +84,7 @@ CreateAppModal = class CreateAppModal extends React.Component {
             libraryId: this.state.libraryId
         };
 
+        trackEvent('Created Stack');
         Meteor.call('app.create', data, (err, res) => {
             //console.log(err, res);
             if (!err) {

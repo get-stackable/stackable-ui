@@ -9,6 +9,8 @@ AppUpdate = class AppUpdate extends React.Component {
     }
 
     componentDidMount() {
+        trackEvent('Updating Stack');
+
         $('#app-update-tabs .item').tab();
     }
 

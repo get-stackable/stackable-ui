@@ -1,5 +1,6 @@
 AppCardEmpty = class AppCardEmpty extends React.Component {
     showCreateModal = () => {
+        trackEvent('Creating Stack');
         Session.set('app.create.modal', true);
     };
 

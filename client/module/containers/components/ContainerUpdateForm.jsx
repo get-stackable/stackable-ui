@@ -97,6 +97,8 @@ ContainerUpdateForm = class ContainerUpdateForm extends React.Component {
     }
 
     openItemModal = (item, activeTab) => {
+        trackEvent('Creating Container Field');
+
         this.setState({
             itemModalVisible: true,
             activeItemInModal: item,

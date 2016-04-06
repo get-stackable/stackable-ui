@@ -1,4 +1,8 @@
 ItemUpdate = class ItemUpdate extends React.Component {
+    componentDidMount() {
+        trackEvent('Updating Item');
+    }
+
     getMeteorData() {
         let handle = Meteor.subscribe('items.single', this.props.id);
 

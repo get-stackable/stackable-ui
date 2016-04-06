@@ -16,6 +16,8 @@ SearchForm = class SearchForm extends React.Component {
     doSearch = (e) => {
         let ENTER = 13;
 
+        trackEvent('Did Search');
+
         //only search if search term is more then 2 chars
         if (this.state.query.length > 2 && e.keyCode == ENTER) {
             FlowRouter.go('/search/:query', {query: this.state.query});

@@ -80,6 +80,11 @@ UserStats = class UserStats extends React.Component {
         )
     }
 
+    showModal = () => {
+        trackEvent('Inviting User');
+        this.setState({modalVisible: true});
+    };
+
     render() {
         let balance = !_.isUndefined(this.props.user.referral) ? this.props.user.referral.balance : 0;
 
@@ -96,7 +101,7 @@ UserStats = class UserStats extends React.Component {
                     </div>
                 </div>
                 <div className="seven wide column">
-                    <div className="ui blue progress" data-value={this.state.freeMonths} data-total="12" id="userBalance" onClick={() => this.setState({modalVisible: true})}>
+                    <div className="ui blue progress" data-value={this.state.freeMonths} data-total="12" id="userBalance" onClick={this.showModal}>
                         <div className="bar">
                             <div className="progress"></div>
                         </div>

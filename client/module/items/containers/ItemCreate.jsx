@@ -1,4 +1,8 @@
 ItemCreate = class ItemCreate extends React.Component {
+    componentDidMount() {
+        trackEvent('Creating Item');
+    }
+
     getMeteorData() {
         let handle = Meteor.subscribe('containers.single', this.props.containerId);
 
@@ -54,6 +58,8 @@ ItemCreate = class ItemCreate extends React.Component {
     }
 
     handleSubmit = (data) => {
+        trackEvent('Created Item');
+
         let formData = {
             containerId: this.data.container._id,
             appId:  this.data.container.appId,

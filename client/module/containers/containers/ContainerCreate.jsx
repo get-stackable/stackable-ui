@@ -1,4 +1,8 @@
 ContainerCreate = class ContainerCreate extends React.Component {
+    componentDidMount() {
+        trackEvent('Creating Container');
+    }
+
     handleSubmit = (data) => {
         if (data.name.length === 0) {
             FlashMessages.sendError('Please type container name.');

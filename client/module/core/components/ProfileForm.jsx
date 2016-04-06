@@ -28,6 +28,8 @@ ProfileForm = class ProfileForm extends React.Component {
     }
 
     handleSubmit = () => {
+        trackEvent('Updated Profile');
+
         let data = {
             'profile.first_name': this.state.first_name,
             'profile.last_name': this.state.last_name,

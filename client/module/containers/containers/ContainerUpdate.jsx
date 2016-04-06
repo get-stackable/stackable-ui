@@ -1,4 +1,8 @@
 ContainerUpdate = class ContainerUpdate extends React.Component {
+    componentDidMount() {
+        trackEvent('Updating Container');
+    }
+
     getMeteorData() {
         let handle = Meteor.subscribe('containers.single', this.props.id);
 
