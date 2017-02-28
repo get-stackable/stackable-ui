@@ -20,6 +20,12 @@ ssh dokku@198.199.125.233 domains:add stackable-app ui.stackable.space
 
 To make changes
 
+Make sure to add remote
+
+```
+git remote add dokku dokku@198.199.125.233:stackable-app
+```
+
 ```
 git push dokku master
 ```
