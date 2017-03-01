@@ -44,7 +44,6 @@ MainLayout = class MainLayout extends React.Component {
                         </div>
                     </div>
                 </div>
-                {/*<ChatBox />*/}
                 <CreateAppModal />
             </div>
         )
