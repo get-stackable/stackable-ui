@@ -22,7 +22,7 @@ Accounts.onCreateUser(function(options, user) {
     }
 
     //subscribe to mailchimp
-    Meteor.call('mailchimp.subscribe', user.emails[0].address);
+    // Meteor.call('mailchimp.subscribe', user.emails[0].address);
 
     return user;
 });

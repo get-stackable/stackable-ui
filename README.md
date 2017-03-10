@@ -15,6 +15,8 @@ ssh dokku@198.199.125.233 config:set stackable-app BUILDPACK_URL=https://github.
 ssh dokku@198.199.125.233 config:set stackable-app ROOT_URL="http://ui.stackable.space"
 ssh dokku@198.199.125.233 config:set stackable-app MONGOHQ_URL="mongodb://katocms:katocms@cockney.2.mongolayer.com:10231,cockney.3.mongolayer.com:10231/katocms?replicaSet=set-55e6c9795556ddd3af0005ab"
 ssh dokku@198.199.125.233 config:set stackable-app FREE_MONGO_URL="mongodb://stackable:stackable@cockney.2.mongolayer.com:10231,cockney.3.mongolayer.com:10231/stackable?replicaSet=set-55e6c9795556ddd3af0005ab"
+ssh dokku@198.199.125.233 config:set stackable-app METEOR_SETTINGS="$(cat settings.json)"
+ssh dokku@198.199.125.233 config:set stackable-app METEOR_SETTINGS=$(cat settings.json)
 ssh dokku@198.199.125.233 domains:add stackable-app ui.stackable.space
 ```
 
