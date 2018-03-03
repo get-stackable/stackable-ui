@@ -15,6 +15,7 @@ ssh dokku@198.199.125.233 config:set stackable-app BUILDPACK_URL=https://github.
 ssh dokku@198.199.125.233 config:set stackable-app ROOT_URL="http://ui.stackable.space"
 ssh dokku@198.199.125.233 config:set stackable-app MONGOHQ_URL="mongodb://stackable:dsgf34tdgdfg@159.89.197.227:27017/stackable"
 ssh dokku@198.199.125.233 config:set stackable-app FREE_MONGO_URL="mongodb://stackable-slave:sdif98sdfhifsf@159.89.197.227:27017/stackable-slave"
+ssh dokku@198.199.125.233 config:set stackable-app METEOR_SETTINGS="$(cat settings.json)"
 ssh dokku@198.199.125.233 domains:add stackable-app ui.stackable.space
 ```
 
