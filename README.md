@@ -1,62 +1,54 @@
-# Stackable
+# Kickoff Reactjs
 
-## Start App
+> An boilerplate for frontend apps using ReactJs with batteries included.
 
-`meteor --settings settings.json`
 
-## To deploy
+[DEMO](https://kickoff-reactjs.netlify.com/)
 
-### To deploy using Dokku
+[![Remix on Glitch](https://cdn.glitch.com/2703baf2-b643-4da7-ab91-7ee2a2d00b5b%2Fremix-button.svg)](https://glitch.com/edit/#!/remix/kickoff-reactjs)
 
-Init setup
-
-```
-ssh dokku@198.199.125.233 config:set stackable-app BUILDPACK_URL=https://github.com/AdmitHub/meteor-buildpack-horse.git
-ssh dokku@198.199.125.233 config:set stackable-app ROOT_URL="http://ui.stackable.space"
-ssh dokku@198.199.125.233 config:set stackable-app MONGOHQ_URL="mongodb://stackable:dsgf34tdgdfg@159.89.197.227:27017/stackable"
-ssh dokku@198.199.125.233 config:set stackable-app FREE_MONGO_URL="mongodb://stackable-slave:sdif98sdfhifsf@159.89.197.227:27017/stackable-slave"
-ssh dokku@198.199.125.233 config:set stackable-app METEOR_SETTINGS="$(cat settings.json)"
-ssh dokku@198.199.125.233 domains:add stackable-app ui.stackable.space
+## Requirements
+```bash
+- [Node](https://nodejs.org) 4.x or better
 ```
 
-To make changes
-
-Make sure to add remote
-
-```
-git remote add dokku dokku@198.199.125.233:stackable-app
-```
-
-```
-git push dokku master
+## Stack
+```bash
+- [React](http://facebook.github.io/react)
+- [create-react-app](https://github.com/facebook/create-react-app)
+- [Apollo GraphQL](https://www.apollographql.com)
 ```
 
-### Deploy manually
+## Installation
 
-`meteor build .`
+Close this repository locally by:
 
-Then extract tar file on server and run following:
-
-```
-$ (cd programs/server && npm install)
-$ export MONGO_URL='mongodb://katocms:katocms@cockney.2.mongolayer.com:10231,cockney.3.mongolayer.com:10231/katocms?replicaSet=set-55e6c9795556ddd3af0005ab'
-$ export ROOT_URL='http://localhost'
-$ PORT=3000 node main.js
-```
-PORT=1984 ROOT_URL='http://localhost' MONGO_URL='' node main.js
+```sh
+git clone https://github.com/perminder-klair/kickoff-reactjs.git app
 ```
 
-## To deploy using MUP
+Start by installing dependencies:
 
+```sh
+yarn install
 ```
-cd private/cli
-mup deploy
+
+## Running
+
+Once dependencies are installed, run with:
+
+```sh
+yarn start
 ```
 
-### Testing like production
+## Configuration
 
-MONGO_URL="mongodb://katocms:katocms@cockney.2.mongolayer.com:10231,cockney.3.mongolayer.com:10231/katocms?replicaSet=set-55e6c9795556ddd3af0005ab" FREE_MONGO_URL="mongodb://stackable:stackable@cockney.2.mongolayer.com:10231,cockney.3.mongolayer.com:10231/stackable?replicaSet=set-55e6c9795556ddd3af0005ab" meteor  --production
+Configuration file is located at `.src//utils/config.js`
 
+## Build
 
-FREE_MONGO_URL='mongodb://myUserAdmin:abc123@146.185.137.239:27017/admin' meteor
-mongodb://stackable:stackable@cockney.2.mongolayer.com:10231,cockney.3.mongolayer.com:10231/stackable?replicaSet=set-55e6c9795556ddd3af0005ab
+To build for production
+
+```sh
+yarn run build
+```
