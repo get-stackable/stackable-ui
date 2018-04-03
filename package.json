@@ -13,6 +13,7 @@
     "apollo-link": "^1.2.1",
     "apollo-link-context": "^1.0.7",
     "apollo-link-state": "^0.4.1",
+    "classnames": "^2.2.5",
     "formik": "^0.11.11",
     "graphql": "^0.13.2",
     "graphql-tag": "^2.8.0",
