@@ -1,0 +1,22 @@
+.side-sub-menu {
+  background-color: $color-grey;
+  .vertical.menu {
+    background: transparent;
+    border-radius: 0;
+    box-shadow: none;
+    border: 0;
+    width: 100% !important;
+    .item {
+      color: $font-grey;
+      padding: 1.88571em 1.14286em;
+      &.header {
+        text-align: center;
+        font-weight: $font-normal;
+      }
+      &.button {
+        padding: 0.92857143em 1.0285714em;
+        margin: 0 auto;
+      }
+    }
+  }
+}

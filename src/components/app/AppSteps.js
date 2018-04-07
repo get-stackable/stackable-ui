@@ -36,6 +36,7 @@ class AppSteps extends React.Component {
                     </div>
                   </div>
                   <div className="extra">
+                  {/* TODO: */}
                     {/* <button
                       className="ui right floated green button"
                       onClick={() => FlowRouter.go('containerCreate', {appId: this.props.app._id})}

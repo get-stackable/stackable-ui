@@ -1,8 +1,8 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import _ from 'underscore';
 
-import config from '../utils/config';
+
+import config from '../../utils/config'
 import SearchForm from './SearchForm';
 
 class Header extends React.Component {
@@ -34,23 +34,23 @@ class Header extends React.Component {
       // }, 500);
   };
 
-  renderApps() {
-      if (this.data.apps.length === 0) {
-          return;
-      }
+  // renderApps() {
+  //     if (this.data.apps.length === 0) {
+  //         return;
+  //     }
 
-      const apps = this.data.apps.map((app) => (
-        <a
-          className="item"
-          key={app._id}
-          href={FlowRouter.path('containersList', {appId: app._id})}
-        >
-          <i className="caret right icon" /> {app.name}
-        </a>
-      ));
+  //     const apps = this.data.apps.map((app) => (
+  //       <a
+  //         className="item"
+  //         key={app._id}
+  //         href={FlowRouter.path('containersList', {appId: app._id})}
+  //       >
+  //         <i className="caret right icon" /> {app.name}
+  //       </a>
+  //     ));
 
-      return apps;
-  }
+  //     return apps;
+  // }
 
   render() {
       return (
@@ -61,17 +61,15 @@ class Header extends React.Component {
               {config.siteName}
               <div className="sub header">{config.siteDescription}</div>
             </Link>
-            {this.showSearch() ?
-              <div className="item">
-                <SearchForm />
-              </div>:''}
+           
             <div className="item">
-              <p className="active-site">
-                {!_.isUndefined(this.data.activeApp) ? this.data.activeApp.name : ''}
-              </p>
+              <SearchForm />
+            </div>
+            <div className="item">
+              <p className="active-site" />
             </div>
             <div className="right item">
-              <a onClick={() => this.logout()}>
+              <a onClick={() => this.logout()} >
                 <i className="sign out icon" />
                           logout
               </a>
@@ -79,8 +77,8 @@ class Header extends React.Component {
             <div className="ui simple dropdown right item" style={{'marginLeft': '30px !important'}}>
                       Switch Stacks <i className="dropdown icon" />
               <div className="menu">
-                {this.renderApps()}
-                <a className="item" onClick={this.showCreateModal}>
+                
+                <a className="item" onClick={this.showCreateModal} >
                   <i className="plus icon" /> new stack
                 </a>
               </div>
@@ -93,21 +91,3 @@ class Header extends React.Component {
 
 export default Header;
 
-
-
-// import React from 'react';
-// import { Link } from 'react-router-dom';
-
-// import config from '../utils/config';
-
-// export default () => (
-//   <nav className="navbar is-transparent" role="navigation" aria-label="dropdown navigation">
-//     <Link className="navbar-item" to="/">
-//       {config.siteName}
-//     </Link>
-//     <Link className="navbar-item" to="/">Home</Link>
-//     <Link className="navbar-item" to="/about">About</Link>
-//     <Link className="navbar-item" to="/contact">Contact</Link>
-//     <Link className="navbar-item" to="/cars">Cars</Link>
-//   </nav>
-// );

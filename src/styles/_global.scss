@@ -1,0 +1,197 @@
+//import google fonts
+@import url(https://fonts.googleapis.com/css?family=Raleway:400,700);
+
+html {
+  height: inherit;
+  min-height: 100vh;
+}
+
+body {
+  font-family: $default-font;
+  background: $background-color;
+  color: $default-font-color;
+  height: 100%;
+  min-height: 100vh;
+}
+
+#react-root {
+  height: inherit;
+  min-height: 100vh;
+}
+
+a {
+  color: $default-font-color;
+  cursor: pointer !important;
+  &.underline {
+    text-decoration: underline;
+    color: $color-blue;
+  }
+}
+
+.ui {
+  &.menu {
+    font-family: $default-font;
+  }
+  &.inverted {
+    &.menu {
+      background: $color-grey;
+    }
+  }
+}
+
+.orange.button {
+  background-color: $color-orange !important;
+  color: $color-white !important;
+}
+
+.green.button {
+  background-color: $color-green !important;
+  color: $color-white !important;
+}
+
+.ui.header, h1, h2, h3, h4, h5, .ui.button {
+  font-family: $default-font;
+}
+
+.ui.cards > .card > .content > .header, .ui.card > .content > .header {
+  font-family: $default-font;
+}
+
+.ui.form input:not([type]), .ui.form input[type="date"], .ui.form input[type="datetime-local"], .ui.form input[type="email"], .ui.form input[type="number"], .ui.form input[type="password"], .ui.form input[type="search"], .ui.form input[type="tel"], .ui.form input[type="time"], .ui.form input[type="text"], .ui.form input[type="url"] {
+  font-family: $default-font;
+}
+
+.ui.cards > .card, .ui.card {
+  &:hover {
+    box-shadow: 0px 1px 3px 0px $default-font-color, 0px 0px 0px 1px $default-font-color;
+  }
+}
+
+.main.container {
+  margin-top: 58px;
+  height: inherit;
+  min-height: 100vh;
+}
+
+.full-height {
+  height: inherit;
+  min-height: 100vh;
+}
+
+.main-right-container {
+  padding-left: 0 !important;
+}
+
+.ui.header.page.heading {
+  background-color: $color-white;
+  box-shadow: 0 0 4px 0 rgba(0, 0, 0, 0.25) !important;
+  padding: 22px 34px;
+  color: $default-font-color;
+  font-weight: $font-normal;
+  font-size: 1.514em;
+}
+
+.padding35 {
+  padding: 0 35px !important;
+}
+
+h3 {
+  font-weight: $font-normal;
+}
+
+.ui.table {
+  thead {
+    th {
+      background: #F8FAFB;
+      color: $color-grey;
+    }
+  }
+}
+
+.content-wrapper {
+  background-color: $color-white;
+  padding-bottom: 8em;
+}
+
+.blank-layout {
+  height: 100vh;
+  .column {
+    max-width: 600px;
+  }
+}
+
+.ui.modal {
+  border: 2px solid $color-grey;
+  border-radius: 0;
+  > .header:not(.ui) {
+    background-color: $color-grey;
+    color: $color-white;
+    text-align: center;
+    border-radius: 0;
+    font-weight: $font-normal;
+    font-size: 2.2rem;
+    font-family: $default-font;
+    img {
+      width: 30px;
+      height: auto;
+      float: left;
+      margin-top: 10px;
+    }
+    i {
+      float: right;
+    }
+  }
+}
+
+.ui.button {
+  font-weight: $font-normal;
+  &.primary {
+    background-color: $sidebar-bg;
+  }
+  &.secondary {
+    background-color: $color-grey;
+  }
+  &.positive {
+    background-color: $color-green;
+  }
+  &.negative {
+    background-color: $color-red;
+  }
+  &.basic {
+    &.green {
+      box-shadow: 0 0 0 1px $color-green inset !important;
+      color: $color-green !important;
+    }
+  }
+}
+
+.ui.vertical.menu {
+  .item {
+    &.secondary {
+      color: #6C737B;
+      background: #e0e1e2 none;
+    }
+  }
+}
+
+.dimmed.dimmable > .ui.animating.dimmer, .dimmed.dimmable > .ui.visible.dimmer, .ui.active.dimmer {
+  opacity: 0.75;
+}
+
+.hidden {
+  display: none;
+}
+
+.ui.items {
+  .item {
+    >.content {
+      >.description, >.header {
+        color: $default-font-color !important;
+      }
+    }
+  }
+}
+
+.ui.divider {
+  color: $font-grey;
+}

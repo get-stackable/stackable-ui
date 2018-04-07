@@ -1,7 +1,7 @@
 import React from 'react';
 import Helmet from 'react-helmet';
 
-import Header from './Header';
+import Header from './core/Header';
 import config from '../utils/config';
 
 export default ({ children}) => (

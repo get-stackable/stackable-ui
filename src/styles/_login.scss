@@ -1,0 +1,43 @@
+.at-pwd-form {
+  margin-top: 30px;
+  .ui.header {
+    background-color: $color-grey;
+    margin-bottom: 0;
+    text-align: left;
+    padding: 1em 3em;
+    color: $color-white;
+    font-size: 1.994em;
+    img {
+      width: 34px;
+      height: auto;
+      margin-top: -4px;
+    }
+    .sub.header {
+      color: $color-white;
+      float: right;
+      margin-top: 18px;
+      font-size: 0.91rem;
+    }
+  }
+  .ui.segment {
+    box-shadow: none;
+    border: 0;
+    padding: 1em 5em;
+    border-radius: 0 0 0.285714rem 0.285714rem;
+  }
+  form {
+    label {
+      text-align: left;
+      color: $color-grey !important;
+      font-weight: $font-normal !important;
+      font-size: 0.82857143em !important;
+    }
+    input {
+    }
+  }
+  .ui.form .field.field input:-webkit-autofill {
+    border-color: transparent !important;
+    box-shadow: none !important;
+    background-color: #F4F4F4 !important;
+  }
+}
