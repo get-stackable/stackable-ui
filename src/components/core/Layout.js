@@ -2,7 +2,7 @@ import React from 'react';
 import Helmet from 'react-helmet';
 import classNames from 'classnames';
 
-import config from '../utils/config';
+import config from '../../utils/config';
 import Header from './Header';
 import Sidebar from './Sidebar';
 
