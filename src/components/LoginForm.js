@@ -63,7 +63,7 @@ export default withFormik({
       setSubmitting,
     },
   ) => {
-    // console.log('submit', values);
+    console.log('submit', values);
     props.submit(values);
     setSubmitting(false);
   },

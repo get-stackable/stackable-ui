@@ -7,6 +7,7 @@ import { ThemeProvider } from 'styled-components';
 import theme from './utils/theme';
 import apolloClient from './utils/apolloClient';
 import registerServiceWorker from './utils/registerServiceWorker';
+import './styles/main.scss';
 
 import Layout from './components/core/Layout';
 // import Home from './pages/Home';
