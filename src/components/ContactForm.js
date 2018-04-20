@@ -5,7 +5,7 @@ import gql from 'graphql-tag';
 import { withFormik } from 'formik';
 import Yup from 'yup';
 
-const ContactForm = props => {
+const ContactForm = (props) => {
   const {
     values,
     touched,
@@ -115,15 +115,15 @@ export default compose( // eslint-disable-line
   graphql(addContactMutation, {
     name: 'addContact',
     props: ({ addContact }) => ({
-      addContact: contactInput => {
+      addContact: (contactInput) => {
         addContact({
           variables: contactInput,
         })
-          .then(result => {
+          .then((result) => {
             console.log('result', result);
             alert('Contact form sent successfully');
           })
-          .catch(error => {
+          .catch((error) => {
             console.log('error', error);
             alert(error);
           });

@@ -47,12 +47,12 @@ class AppView extends React.Component {
   // }
 
   render() {
-      if (this.data.loading) {
-          return <Loading active />
-      }
+    if (this.data.loading) {
+      return <Loading active />;
+    }
 
-      return <AppSteps app={this.data.app} />
+    return <AppSteps app={this.data.app} />;
   }
-};
+}
 
 export default AppView;

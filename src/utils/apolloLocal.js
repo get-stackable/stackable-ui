@@ -1,19 +1,32 @@
-import { withClientState } from "apollo-link-state";
-import { InMemoryCache } from "apollo-cache-inmemory";
+import { withClientState } from 'apollo-link-state';
+import { InMemoryCache } from 'apollo-cache-inmemory';
+import { persistCache } from 'apollo-cache-persist';
 
-const inMemoryCache = new InMemoryCache();
+const cache = new InMemoryCache();
+
+// persistCache({
+//   cache,
+//   storage: window.localStorage,
+// });
 
 const stateLink = withClientState({
-  inMemoryCache,
+  cache,
   resolvers: {
-    Mutation: {}
+    Mutation: {},
   },
   defaults: {
     counter: {
-      __typename: "Counter",
-      value: 1
-    }
-  }
+      __typename: 'Counter',
+      value: 1,
+    },
+    user: {
+      __typename: 'User',
+      id: null,
+      email: null,
+      firstName: null,
+      lastName: null,
+    },
+  },
 });
 
 export default stateLink;

@@ -8,12 +8,12 @@ class Loading extends React.Component {
   // },
 
   render() {
-      return (
+    return (
         <div className={classNames('ui inverted dimmer', {active: this.props.active})}>{/*eslint-disable-line*/}
           <div className="ui medium loader" />
         </div>
-      )
+    );
   }
 }
 
-export default Loading
+export default Loading;

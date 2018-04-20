@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { BrowserRouter as Router, Route, Redirect, } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Redirect } from 'react-router-dom';
 import { ApolloProvider } from 'react-apollo';
 import { ThemeProvider } from 'styled-components';
 
@@ -9,27 +9,27 @@ import apolloClient from './utils/apolloClient';
 import registerServiceWorker from './utils/registerServiceWorker';
 import './styles/main.scss';
 
-import Layout from './components/core/Layout';
 // import Home from './pages/Home';
 import HomePage from './pages/HomePage';
-import Login from './pages/Login'
+import Login from './pages/Login';
 
+import './styles/main.css';
 
 // For private routes
 const PrivateRoute = ({ component: Component, ...rest }) => (
   <Route
     {...rest}
     render={props =>
-      localStorage.getItem('token') ? (
+      (localStorage.getItem('token') ? (
         <Component {...props} />
       ) : (
         <Redirect
           to={{
-            pathname: "/login",
-            state: { from: props.location }
+            pathname: '/login',
+            state: { from: props.location },
           }}
         />
-      )
+      ))
     }
   />
 );
@@ -38,10 +38,10 @@ const App = () => (
   <ApolloProvider client={apolloClient}>
     <ThemeProvider theme={theme}>
       <Router>
-        <Layout>
-          <PrivateRoute exact path="/" component={HomePage} />
+        <React.Fragment>
           <Route exact path="/login" component={Login} />
-        </Layout>
+          <PrivateRoute exact path="/dashboard" component={HomePage} />
+        </React.Fragment>
       </Router>
     </ThemeProvider>
   </ApolloProvider>

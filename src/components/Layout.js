@@ -4,7 +4,7 @@ import Helmet from 'react-helmet';
 import Header from './core/Header';
 import config from '../utils/config';
 
-export default ({ children}) => (
+export default ({ children }) => (
   <div className="container">
     <Helmet title={config.siteName} />
     <Header />

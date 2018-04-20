@@ -8,7 +8,7 @@ import config from '../utils/config';
 
 const LinkStyled = styled(Link)`
   color: ${props => props.theme.primary};
-`
+`;
 
 export default () => (
   <nav className="navbar is-transparent" role="navigation" aria-label="dropdown navigation">

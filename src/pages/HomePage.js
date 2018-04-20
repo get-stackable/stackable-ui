@@ -2,9 +2,10 @@ import React from 'react';
 import classNames from 'classnames';
 // import Helmet from 'react-helmet';
 import gql from 'graphql-tag';
-import { Query} from 'react-apollo';
+import { Query } from 'react-apollo';
 
 // import Loading from '../components/Loading';
+import Layout from '../components/core/Layout';
 import PageHeading from '../components/core/PageHeading';
 
 const homePageQuery = gql`
@@ -29,12 +30,13 @@ class HomePage extends React.Component {
   // }
 
   render() {
-      return (
+    return (
+      <Layout>
         <Query query={homePageQuery}>
           {({ loading, error, data }) => {
           if (loading) return <p>Loading...</p>;
           if (error) return <p>Error :({error}</p>;
-           
+
           return (
             <div>
               <PageHeading>
@@ -44,7 +46,7 @@ class HomePage extends React.Component {
               <div className="ui grid padding35">
                 <div className="sixteen wide column">
                   <h3>My Stacks</h3>
-                  <div  className={classNames('ui cards', {'centered aligned': 'this.data.apps.length === 0'})}>
+                  <div className={classNames('ui cards', { 'centered aligned': 'this.data.apps.length === 0' })}>
                     {/* {this.data.apps.map((app) => (
                   <AppCard key={app._id} app={app} />
                               ))}
@@ -53,12 +55,12 @@ class HomePage extends React.Component {
                 </div>
               </div>
             </div>
-          )
+          );
         }}
         </Query>
-
-      )
+      </Layout>
+    );
   }
-};
+}
 
 export default HomePage;
