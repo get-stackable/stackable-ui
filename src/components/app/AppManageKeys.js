@@ -4,7 +4,6 @@ import React from 'react';
 
 
 class AppManageKeys extends React.Component {
-
 //   static propTypes = {
 //       app: React.PropTypes.object
 //   };
@@ -32,7 +31,6 @@ class AppManageKeys extends React.Component {
 //           });
 
 
-
 //   };
 
 //   handleSubmit = () => {
@@ -49,38 +47,38 @@ class AppManageKeys extends React.Component {
 //   };
 
   render() {
-      return (
-        <div className="ui form">
-          <div className="field">
-            <label>Public Key</label>
-            <input type="text" value={this.props.app.publicKey} readOnly />
-          </div>
-          <div className="field">
-            <label>Private Key</label>
-            <input type="text" value={this.props.app.privateKey} readOnly />
-          </div>
-          <a
-            className="mini negative ui button"
-            onClick={() => this.generateAppKey()}
-          >
-                  Reset Keys
-          </a>
-          <div className="ui divider" />
-          <div className="field">
-            <label>Allowed Urls</label>
-            <textarea
-              rows="3"
-              value={this.state.allowedUrls}
-              onChange={(e) => this.setState({allowedUrls: e.target.value})}
-            />
-          </div>
-          <button className="ui button" type="submit" onClick={this.handleSubmit}>
-            <i className="save icon" />
-                  Update
-          </button>
+    return (
+      <div className="ui form">
+        <div className="field">
+          <label>Public Key</label>
+          <input type="text" value={this.props.app.publicKey} readOnly />
         </div>
-      )
+        <div className="field">
+          <label>Private Key</label>
+          <input type="text" value={this.props.app.privateKey} readOnly />
+        </div>
+        <a
+          className="mini negative ui button"
+          onClick={() => this.generateAppKey()}
+        >
+                  Reset Keys
+        </a>
+        <div className="ui divider" />
+        <div className="field">
+          <label>Allowed Urls</label>
+          <textarea
+            rows="3"
+            value={this.state.allowedUrls}
+            onChange={e => this.setState({ allowedUrls: e.target.value })}
+          />
+        </div>
+        <button className="ui button" type="submit" onClick={this.handleSubmit}>
+          <i className="save icon" />
+                  Update
+        </button>
+      </div>
+    );
   }
-};
+}
 
 export default AppManageKeys;
