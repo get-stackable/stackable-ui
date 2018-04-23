@@ -26,10 +26,10 @@ const authLink = setContext((_, { headers }) => {
 
 const cache = new InMemoryCache();
 
-persistCache({
-  cache,
-  storage: window.localStorage,
-});
+// persistCache({
+//   cache,
+//   storage: window.localStorage,
+// });
 
 const client = new ApolloClient({
   link: authLink.concat(ApolloLink.from([apolloLocal, httpLink])),
