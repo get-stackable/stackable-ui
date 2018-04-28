@@ -1,5 +1,5 @@
 import React from 'react';
-import { isNull } from 'underscore';
+
 
 class AppStepOneModel extends React.Component {
   render() {
@@ -18,7 +18,7 @@ class AppStepOneModel extends React.Component {
           <div className="column" />
           <div className="bottom aligned column">
             <button className="ui secondary button pull-right" onClick={this.goToStepTwo}>
-                          CREATE EMPTY STACK
+              CREATE EMPTY STACK
             </button>
           </div>
         </div>

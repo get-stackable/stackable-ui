@@ -5,12 +5,12 @@ class CreateAppModalTrigger extends React.Component {
   constructor(props) {
     super(props);
 
-    // this.loadModal(props);
+    this.loadModal(props);
   }
 
-  // componentWillUpdate(nextProps) {
-  //   this.loadModal(nextProps);
-  // }
+  componentWillUpdate(nextProps) {
+    this.loadModal(nextProps);
+  }
 
   // loadModal(props) {
   //   $('#app-create-modal')

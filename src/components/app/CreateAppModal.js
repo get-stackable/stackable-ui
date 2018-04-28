@@ -1,25 +1,25 @@
-// TODO:
-
 import React from 'react';
 // // import PropTypes from 'prop-types';
 
-import AppStepOneModel from './AppStepOneModel';
-import AppStepTwoModel from './AppStepTwoModel';
-import CreateAppModalTrigger from './CreateAppModalTrigger';
+// import AppStepOneModel from './AppStepOneModel';
+// import AppStepTwoModel from './AppStepTwoModel';
+import AppCreateForm from './form/AppCreateForm';
+// import CreateAppModalTrigger from './CreateAppModalTrigger';
 
 class CreateAppModal extends React.Component {
-  // constructor(props) {
-  //   super(props);
+  constructor(props) {
+    super(props);
 
-  //   this.state = {
-  //     isLoading: false,
-  //     step: 1,
-  //     library: null,
-  //     libraryId: null,
-  //     appName: '',
-  //     appDescription: '',
-  //   };
-  // }
+    this.state = {
+      // isLoading: false,
+      // step: 1,
+      // library: null,
+      // libraryId: null,
+      // appName: '',
+      // appDescription: '',
+    };
+  }
+
 
   // getMeteorData() {
   //   const handle = Meteor.subscribe('apps.libraries.all');
@@ -84,10 +84,9 @@ class CreateAppModal extends React.Component {
   //   });
   // };
 
-
   render() {
     return (
-      <div className="ui modal" id="app-create-modal">
+      <div className="ui modal active" id="app-create-modal">
         <div className="header">
           <img src="/images/logo.png" alt="logo" />
                   Create new stack
@@ -100,10 +99,10 @@ class CreateAppModal extends React.Component {
           {/* <Loading active={this.state.isLoading} />
           {this.state.step === 1 ? <AppStepOneModel /> : ''}
           {this.state.step === 2 ? <AppStepTwoModel /> : ''} */}
-          <AppStepOneModel />
-          <AppStepTwoModel />
+          {/* <AppStepOneModel /> */}
+          <AppCreateForm />
         </div>
-        <CreateAppModalTrigger />
+        {/* <CreateAppModalTrigger /> */}
       </div>
     );
   }
