@@ -2,8 +2,8 @@ import React from 'react';
 // // import PropTypes from 'prop-types';
 
 // import AppStepOneModel from './AppStepOneModel';
-// import AppStepTwoModel from './AppStepTwoModel';
-import AppCreateForm from './form/AppCreateForm';
+import AppStepTwoModel from './AppStepTwoModel';
+
 // import CreateAppModalTrigger from './CreateAppModalTrigger';
 
 class CreateAppModal extends React.Component {
@@ -19,7 +19,6 @@ class CreateAppModal extends React.Component {
       // appDescription: '',
     };
   }
-
 
   // getMeteorData() {
   //   const handle = Meteor.subscribe('apps.libraries.all');
@@ -86,10 +85,10 @@ class CreateAppModal extends React.Component {
 
   render() {
     return (
-      <div className="ui modal active" id="app-create-modal">
+      <div className="ui modal " id="app-create-modal">
         <div className="header">
           <img src="/images/logo.png" alt="logo" />
-                  Create new stack
+          Create new stack
           <i
             className="close icon"
             // onClick={() => Session.set('app.create.modal', false)}
@@ -100,7 +99,7 @@ class CreateAppModal extends React.Component {
           {this.state.step === 1 ? <AppStepOneModel /> : ''}
           {this.state.step === 2 ? <AppStepTwoModel /> : ''} */}
           {/* <AppStepOneModel /> */}
-          <AppCreateForm />
+          <AppStepTwoModel />
         </div>
         {/* <CreateAppModalTrigger /> */}
       </div>

@@ -11,6 +11,7 @@
     "watch-css": "npm run build-css && node-sass-chokidar src/ -o src/ --watch --recursive"
   },
   "dependencies": {
+    "alertify.js": "^1.0.12",
     "apollo-cache-inmemory": "^1.1.12",
     "apollo-cache-persist": "^0.1.1",
     "apollo-client": "^2.2.8",

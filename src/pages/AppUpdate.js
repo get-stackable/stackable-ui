@@ -1,14 +1,37 @@
 import React from 'react';
-import { isUndefined } from 'underscore';
+import gql from 'graphql-tag';
+import alertify from 'alertify.js';
+import { Mutation, Query } from 'react-apollo';
+// import { isUndefined } from 'underscore';
 
-import Loading from '../components/core/Loading';
-import AppUpdateForm from '../components/app/AppUpdateForm';
-import AppUpdateUsers from '../components/app/AppUpdateUsers';
-import AppManageKeys from '../components/app/AppManageKeys';
-import AppCloneModal from '../components/app/AppCloneModal';
-import AppDeleteModal from '../components/app/AppDeleteModal';
+// import Loading from '../components/core/Loading';
+import AppForm from '../components/app/form/AppForm';
+// import AppUpdateUsers from '../components/app/AppUpdateUsers';
+// import AppManageKeys from '../components/app/AppManageKeys';
+// import AppCloneModal from '../components/app/AppCloneModal';
+// import AppDeleteModal from '../components/app/AppDeleteModal';
+import Layout from '../components/core/Layout';
 
+// const updateApplicationQuery = gql`
+//   mutation createApplication($id: ID!, $name: String!, $description: String) {
+//     createApplication(
+//       id: $id
+//       input: { name: $name, description: $description }
+//     ) {
+//       id
+//       name
+//     }
+//   }
+// `;
 
+const applicationQuery = gql`
+  query($id: ID!) {
+    application(id: $id) {
+      id
+      name
+    }
+  }
+`;
 class AppUpdate extends React.Component {
   // TODO:
   // constructor(props) {
@@ -41,89 +64,90 @@ class AppUpdate extends React.Component {
   // }
 
   render() {
-    if (isUndefined(this.data.app)) {
-      return <Loading active />;
-    }
+    // if (isUndefined(this.data.app)) {
+    //   return <Loading active />;
+    // }
+    const app = this.props;
 
     return (
-      <div className="ui grid full-height" style={{ marginLeft: '0' }}>
-        <div className="two wide column side-sub-menu">
-          <div className="ui left vertical menu">
-            <h3 className="ui header item">
-                          Edit Stack
-            </h3>
-            <a className="ui orange button item">
-                          Stack Tools
-            </a>
-            <a
-              className="ui button item"
-              onClick={() => this.setState({ cloneModalVisible: true })}
-            >
-                          Clone Stack
-            </a>
-            <a
-              className="ui button item"
-              onClick={() => this.setState({ deleteModalVisible: true })}
-            >
-                          Delete Stack
-            </a>
-            <div className="item" style={{ textAlign: 'center' }}>
-              <small>With great power comes great responsibility</small>
-            </div>
-          </div>
-        </div>
-        <div className="fourteen wide column" style={{ paddingLeft: '0' }}>
-          <div className="content-wrapper" style={{ padding: '25px 35px !important' }}>
+      <Layout>
+        <Query query={applicationQuery} variables={{ id: app.match.params.id }}>
+          {({ loading, error, data }) => {
+            if (loading) return <p>Loading...</p>;
+            if (error) return <p>Error :</p>;
+            console.log(data);
+            return (
+              <div className="ui grid full-height" style={{ marginLeft: '0' }}>
+                <div className="two wide column side-sub-menu">
+                  <div className="ui left vertical menu">
+                    <h3 className="ui header item">Edit Stack</h3>
+                    <a className="ui orange button item">Stack Tools</a>
+                    <a className="ui button item">Clone Stack</a>
+                    <a className="ui button item">Delete Stack</a>
+                    <div className="item" style={{ textAlign: 'center' }}>
+                      <small>With great power comes great responsibility</small>
+                    </div>
+                  </div>
+                </div>
+                <div
+                  className="fourteen wide column"
+                  style={{ paddingLeft: '0' }}
+                >
+                  <div
+                    className="content-wrapper"
+                    style={{ padding: '25px 35px !important' }}
+                  >
+                    <div
+                      className="ui pointing secondary menu"
+                      id="app-update-tabs"
+                    >
+                      <div className="item active" data-tab="app-info">
+                        Stack Information
+                      </div>
+                      <div className="item" data-tab="app-users">
+                        Manage Users
+                      </div>
+                      <div className="item" data-tab="app-keys">
+                        Manage Keys
+                      </div>
+                      <div className="item" data-tab="app-backup">
+                        Backup
+                      </div>
+                    </div>
+                    {/* <Mutation> */}
+                    <div className="ui tab active" data-tab="app-info">
+                      <AppForm />
+                    </div>
+                    {/* </Mutation> */}
+                    {/* <div className="ui tab" data-tab="app-users">
+              <AppUpdateUsers app={this.data.app} users={this.data.users} />
+            </div> */}
+                    {/* <div className="ui tab" data-tab="app-keys">
+              <AppManageKeys app={this.data.app} />
+            </div> */}
+                    <div className="ui tab" data-tab="app-backup">
+                      <div className="ui segment">
+                        <p>Comming soon!</p>
+                      </div>
+                    </div>
 
-            <div className="ui pointing secondary menu" id="app-update-tabs">
-              <div className="item active" data-tab="app-info">
-                              Stack Information
-              </div>
-              <div className="item" data-tab="app-users">
-                              Manage Users
-              </div>
-              <div className="item" data-tab="app-keys">
-                              Manage Keys
-              </div>
-              <div className="item" data-tab="app-backup">
-                              Backup
-              </div>
-            </div>
-            <div className="ui tab active" data-tab="app-info">
-              <AppUpdateForm
-                app={this.data.app}
-              />
-            </div>
-            <div className="ui tab" data-tab="app-users">
-              <AppUpdateUsers
-                app={this.data.app}
-                users={this.data.users}
-              />
-            </div>
-            <div className="ui tab" data-tab="app-keys">
-              <AppManageKeys
-                app={this.data.app}
-              />
-            </div>
-            <div className="ui tab" data-tab="app-backup">
-              <div className="ui segment">
-                <p>Comming soon!</p>
-              </div>
-            </div>
-
-            <AppCloneModal
+                    {/* <AppCloneModal
               app={this.data.app}
               visible={this.state.cloneModalVisible}
               toggleModal={() => this.setState({ cloneModalVisible: false })}
-            />
-            <AppDeleteModal
+            /> */}
+                    {/* <AppDeleteModal
               app={this.data.app}
               visible={this.state.deleteModalVisible}
               toggleModal={() => this.setState({ deleteModalVisible: false })}
-            />
-          </div>
-        </div>
-      </div>
+            /> */}
+                  </div>
+                </div>
+              </div>
+            );
+          }}
+        </Query>
+      </Layout>
     );
   }
 }
