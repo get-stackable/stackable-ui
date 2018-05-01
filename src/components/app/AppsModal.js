@@ -3,8 +3,7 @@ import React from 'react';
 
 
 class AppsModal extends React.Component {
-
-    // TODO:
+  // TODO:
 //   static propTypes = {
 //       goTo: React.PropTypes.string.isRequired
 //   };
@@ -35,13 +34,13 @@ class AppsModal extends React.Component {
 //   }
 
   render() {
-      return (
-        <div className="ui modal" id="app-modal">
-          <div className="header">
+    return (
+      <div className="ui modal" id="app-modal">
+        <div className="header">
                   Select Stack
-          </div>
-          <div className="content">
-            {/* <Loading active={this.state.isLoading} />
+        </div>
+        <div className="content">
+          {/* <Loading active={this.state.isLoading} />
             <div className="ui cards">
               {this.data.apps.map((app) => (
                 <AppCard
@@ -54,11 +53,11 @@ class AppsModal extends React.Component {
                 <AppCardEmpty />
                           :''}
             </div> */}
-          </div>
         </div>
-      )
+      </div>
+    );
   }
-};
+}
 
 // reactMixin(AppsModal.prototype, ReactMeteorData);
 export default AppsModal;

@@ -9,13 +9,13 @@ class AppUpdateUsers extends React.Component {
   // };
 
   constructor(props) {
-      super(props);
+    super(props);
 
-      this.state = {
-          userEmail: ''
-      };
+    this.state = {
+      userEmail: '',
+    };
   }
-// TODO:
+  // TODO:
   // addUser = () => {
   //     if (this.state.userEmail.length < 5) {
   //         // todo put email verification
@@ -66,40 +66,40 @@ class AppUpdateUsers extends React.Component {
   // }
 
   render() {
-      return (
-        <table className="ui celled table">
-          <thead>
-            <tr>
-              <th>Name</th>
-              <th>Action</th>
-            </tr>
-          </thead>
-          <tbody>
-            {this.renderUsers()}
-          </tbody>
-          <tfoot>
-            <tr>
-              <th colSpan="3">
-                <div className="ui right floated menu">
-                  <div className="ui form item">
-                    <div className="field">
-                      <input
-                        type="text"
-                        placeholder="User email"
-                        value={this.state.userEmail}
-                        onChange={(e) => this.setState({userEmail: e.target.value})}
-                      />
-                    </div>
-                  </div>
-                  <div className="item">
-                    <button className="ui button" onClick={this.addUser}>add user</button>
+    return (
+      <table className="ui celled table">
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          {this.renderUsers()}
+        </tbody>
+        <tfoot>
+          <tr>
+            <th colSpan="3">
+              <div className="ui right floated menu">
+                <div className="ui form item">
+                  <div className="field">
+                    <input
+                      type="text"
+                      placeholder="User email"
+                      value={this.state.userEmail}
+                      onChange={e => this.setState({ userEmail: e.target.value })}
+                    />
                   </div>
                 </div>
-              </th>
-            </tr>
-          </tfoot>
-        </table>
-      )
+                <div className="item">
+                  <button className="ui button" onClick={this.addUser}>add user</button>
+                </div>
+              </div>
+            </th>
+          </tr>
+        </tfoot>
+      </table>
+    );
   }
 }
 

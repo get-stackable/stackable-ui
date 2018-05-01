@@ -10,8 +10,9 @@ import registerServiceWorker from './utils/registerServiceWorker';
 import './styles/main.scss';
 
 // import Home from './pages/Home';
-import HomePage from './pages/HomePage';
+import Dashboard from './pages/Dashboard';
 import Login from './pages/Login';
+import AppUpdate from './pages/AppUpdate';
 
 import './styles/main.css';
 
@@ -20,7 +21,7 @@ const PrivateRoute = ({ component: Component, ...rest }) => (
   <Route
     {...rest}
     render={props =>
-      (localStorage.getItem('token') ? (
+      localStorage.getItem('token') ? (
         <Component {...props} />
       ) : (
         <Redirect
@@ -29,7 +30,7 @@ const PrivateRoute = ({ component: Component, ...rest }) => (
             state: { from: props.location },
           }}
         />
-      ))
+      )
     }
   />
 );
@@ -40,7 +41,8 @@ const App = () => (
       <Router>
         <React.Fragment>
           <Route exact path="/login" component={Login} />
-          <PrivateRoute exact path="/dashboard" component={HomePage} />
+          <PrivateRoute exact path="/dashboard" component={Dashboard} />
+          <PrivateRoute exact path="/app/:id" component={AppUpdate} />
         </React.Fragment>
       </Router>
     </ThemeProvider>

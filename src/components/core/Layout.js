@@ -21,23 +21,23 @@ class Layout extends React.Component {
     //   Session.setDefault('app.modal', false);
     //   Session.setDefault('app.create.modal', false);
 
-    window.addEventListener('resize', this.handleResize);
-    this.checkDesktop();
+    // window.addEventListener('resize', this.handleResize);
+    // this.checkDesktop();
 
     //   Smooch.init({ appToken: '101mfmxkapg9rc28mi907efeh' });
   }
 
-  checkDesktop() {
-    if (window.innerWidth < 1200) {
-      this.setState({ isDesktop: false });
-    } else {
-      this.setState({ isDesktop: true });
-    }
-  }
+  // checkDesktop() {
+  //   if (window.innerWidth < 1200) {
+  //     this.setState({ isDesktop: false });
+  //   } else {
+  //     this.setState({ isDesktop: true });
+  //   }
+  // }
 
-  handleResize() {
-    this.checkDesktop();
-  }
+  // handleResize() {
+  //   this.checkDesktop();
+  // }
 
   render() {
     const { children, type } = this.props;

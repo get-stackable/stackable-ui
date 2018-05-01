@@ -1,8 +1,8 @@
-import gql from "graphql-tag";
+import gql from 'graphql-tag';
 
 export default gql(`
 query($id: String!) {
-  allApplications(id: $id}{
+  application(id: $id}{
     id
     name
     isActive
@@ -15,5 +15,4 @@ query($id: String!) {
       lastName
     }
   }
-}`
-);
+}`);
