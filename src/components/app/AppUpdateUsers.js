@@ -1,71 +1,73 @@
 import React from 'react';
 // import PropTypes from 'prop-types';
+// import alertify from 'alertify.js';
+import gql from 'graphql-tag';
+import { Mutation, Query } from 'react-apollo';
+import { isEmpty } from 'lodash';
 
+import AppUpdateUserForm from '../app/form/AppUpdateUserForm';
+
+const allUserQuery = gql`
+  query($ids: [String]!) {
+    allUsers(ids: $ids) {
+      id
+      email
+    }
+  }
+`;
+const addUserApplicationMutation = gql`
+  mutation addUserApplication($appId: ID!, $userEmail: String!) {
+    addUserApplication(appId: $appId, userEmail: $userEmail) {
+      id
+      name
+    }
+  }
+`;
+
+const AddUsers = appId => (
+  <Mutation mutation={addUserApplicationMutation}>
+    {(addUserApplication, { loading, error }) => {
+      if (loading) return 'Loading...';
+      if (error) return `Error! ${error.message}`;
+      return (
+        <AppUpdateUserForm
+          submit={input => {
+            addUserApplication({
+              variables: { appId, userEmail: input.email },
+            });
+          }}
+        />
+      );
+    }}
+  </Mutation>
+);
 
 class AppUpdateUsers extends React.Component {
-  // static propTypes = {
-  //     app: React.PropTypes.object.isRequired,
-  //     users: React.PropTypes.array
-  // };
+  removeUser = () => {};
 
-  constructor(props) {
-    super(props);
+  renderUsers(appId) {
+    return (
+      <Query query={allUserQuery} variables={{ ids: appId }}>
+        {({ loading, error, data }) => {
+          if (loading) return 'Loading...';
+          if (error) return `Error! ${error.message}`;
+          if (isEmpty(data.allUsers)) return 'No User found';
 
-    this.state = {
-      userEmail: '',
-    };
+          return (
+            <tr>
+              <td>email</td>
+              <td>
+                <a className="mini negative ui button">remove</a>
+              </td>
+            </tr>
+          );
+        }}
+      </Query>
+    );
   }
-  // TODO:
-  // addUser = () => {
-  //     if (this.state.userEmail.length < 5) {
-  //         // todo put email verification
-  //         FlashMessages.sendError('Please provide correct email of user');
-  //         return;
-  //     }
-
-  //     Meteor.call('app.addUser', this.props.app._id, this.state.userEmail, (err) => {
-  //         if (!err) {
-  //             this.setState({
-  //                 userEmail: ''
-  //             });
-  //             FlashMessages.sendSuccess('User added successfully!');
-  //         } else {
-  //             FlashMessages.sendError(err.reason);
-  //         }
-  //     });
-  // };
-
-  // removeUser = (userId) => {
-  //     Meteor.call('app.removeUser', this.props.app._id, userId, (err) => {
-  //         if (!err) {
-  //             FlashMessages.sendSuccess('User removed successfully!');
-  //         }
-  //     });
-  // };
-
-  // renderUsers() {
-  //     if (_.isUndefined(this.props.users)) {
-  //         return;
-  //     }
-  //     return this.props.users.map((user) => (
-  //       <tr key={user._id}>
-  //         <td>
-  //           {user.emails[0].address}
-  //         </td>
-  //         <td>
-  //           {user._id !== this.props.app.createdBy ?
-  //             <a
-  //               onClick={this.removeUser.bind(this, user._id)}
-  //               className="mini negative ui button"
-  //             >
-  //                         remove
-  //             </a>:''}
-  //         </td>
-  //       </tr>
-  //         ));
-  // }
 
   render() {
+    const { appId } = this.props;
     return (
       <table className="ui celled table">
         <thead>
@@ -74,27 +76,11 @@ class AppUpdateUsers extends React.Component {
             <th>Action</th>
           </tr>
         </thead>
-        <tbody>
-          {this.renderUsers()}
-        </tbody>
+        <tbody>{this.renderUsers(appId)}</tbody>
         <tfoot>
           <tr>
             <th colSpan="3">
-              <div className="ui right floated menu">
-                <div className="ui form item">
-                  <div className="field">
-                    <input
-                      type="text"
-                      placeholder="User email"
-                      value={this.state.userEmail}
-                      onChange={e => this.setState({ userEmail: e.target.value })}
-                    />
-                  </div>
-                </div>
-                <div className="item">
-                  <button className="ui button" onClick={this.addUser}>add user</button>
-                </div>
-              </div>
+              <AddUsers appId={appId} />
             </th>
           </tr>
         </tfoot>

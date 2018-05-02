@@ -10,6 +10,7 @@ const AppForm = ({
   handleBlur,
   handleSubmit,
   isSubmitting,
+  location,
 }) => (
   <form onSubmit={handleSubmit}>
     <div className="ui form">
@@ -46,7 +47,7 @@ const AppForm = ({
         type="submit"
         disabled={isSubmitting}
       >
-        Create!
+        {location.pathname === '/dashboard' ? ' Create!' : 'Update!'}
       </button>
     </div>
   </form>
@@ -55,9 +56,9 @@ const AppForm = ({
 // Wrap our form with the using withFormik HoC
 export default withFormik({
   // Transform outer props into form values
-  mapPropsToValues: app => ({
-    name: app.name || '',
-    description: app.description || '',
+  mapPropsToValues: props => ({
+    name: props.app.name || '',
+    description: props.app.description || '',
   }),
   // Add a custom validation function (this can be async too!)
   validate: values => {},
@@ -78,4 +79,7 @@ AppForm.propTypes = {
   handleBlur: PropTypes.func.isRequired,
   handleSubmit: PropTypes.func.isRequired,
   isSubmitting: PropTypes.bool.isRequired,
+  location: PropTypes.shape({
+    pathname: PropTypes.string,
+  }).isRequired,
 };

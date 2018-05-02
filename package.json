@@ -24,6 +24,7 @@
     "formik": "^0.11.11",
     "graphql": "^0.13.2",
     "graphql-tag": "^2.8.0",
+    "lodash": "^4.17.10",
     "node-sass-chokidar": "^1.2.2",
     "prop-types": "^15.6.1",
     "react": "^16.2.0",
