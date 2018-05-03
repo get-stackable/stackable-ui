@@ -32,6 +32,31 @@ const applicationQuery = gql`
     }
   }
 `;
+
+const UpdateApplication = ({ app }) => (
+  <Mutation mutation={updateApplicationMutation}>
+    {(updateApplication, { data, loading, error }) => {
+      if (loading) return 'Loading...';
+      if (error) return `Error! ${error.message}`;
+      return (
+        <React.Fragment>
+          <AppForm
+            location={app.location}
+            app={{ name: 'hello', description: 'boom' }}
+            submit={input => {
+              updateApplication({
+                variables: {
+                  id: app.match.params.id,
+                  ...input,
+                },
+              });
+            }}
+          />
+        </React.Fragment>
+      );
+    }}
+  </Mutation>
+);
 class AppUpdate extends React.Component {
   // TODO:
   // constructor(props) {
@@ -67,6 +92,7 @@ class AppUpdate extends React.Component {
     // if (isUndefined(this.data.app)) {
     //   return <Loading active />;
     // }
+    // TODO: Normlize all data here..eg. loaction,  application  etc
     const app = this.props;
 
     return (
@@ -115,34 +141,11 @@ class AppUpdate extends React.Component {
                       </div>
                     </div>
 
-                    <div className="ui tab" data-tab="app-info">
-                      <Mutation mutation={updateApplicationMutation}>
-                        {updateApplication => (
-                          <React.Fragment>
-                            {/* TODO: */}
-                            {/* {data &&
-                              alertify.success('App Update Successfully!')}
-                            {loading && <p>Loading...</p>}
-                            {error &&
-                              alertify.success('Error :( Please try again!')} */}
-                            <AppForm
-                              location={app.location}
-                              app={data.application}
-                              submit={input => {
-                                updateApplication({
-                                  variables: {
-                                    id: app.match.params.id,
-                                    ...input,
-                                  },
-                                });
-                              }}
-                            />
-                          </React.Fragment>
-                        )}
-                      </Mutation>
+                    <div className="ui tab active" data-tab="app-info">
+                      <UpdateApplication app={app} />
                     </div>
 
-                    <div className="ui tab active" data-tab="app-users">
+                    <div className="ui tab " data-tab="app-users">
                       <AppUpdateUsers appId={app.match.params.id} />
                     </div>
                     {/* <div className="ui tab" data-tab="app-keys">

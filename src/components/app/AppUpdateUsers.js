@@ -5,7 +5,9 @@ import gql from 'graphql-tag';
 import { Mutation, Query } from 'react-apollo';
 import { isEmpty } from 'lodash';
 
-import AppUpdateUserForm from '../app/form/AppUpdateUserForm';
+import AppUpdateUserForm from './form/AppUpdateUserForm';
+
+// TODO: Minor Fixes
 
 const allUserQuery = gql`
   query($ids: [String]!) {
@@ -15,6 +17,7 @@ const allUserQuery = gql`
     }
   }
 `;
+
 const addUserApplicationMutation = gql`
   mutation addUserApplication($appId: ID!, $userEmail: String!) {
     addUserApplication(appId: $appId, userEmail: $userEmail) {
@@ -24,7 +27,16 @@ const addUserApplicationMutation = gql`
   }
 `;
 
-const AddUsers = appId => (
+const removeUserApplicationMutation = gql`
+  mutation removeUserApplication($appId: ID!, $userId: String!) {
+    removeUserApplication(appId: $appId, userId: $userId) {
+      id
+      name
+    }
+  }
+`;
+
+const AddUsers = ({ appId }) => (
   <Mutation mutation={addUserApplicationMutation}>
     {(addUserApplication, { loading, error }) => {
       if (loading) return 'Loading...';
@@ -42,29 +54,54 @@ const AddUsers = appId => (
   </Mutation>
 );
 
-class AppUpdateUsers extends React.Component {
-  removeUser = () => {};
+// TODO: Check, PropsType Validation
 
-  renderUsers(appId) {
-    return (
-      <Query query={allUserQuery} variables={{ ids: appId }}>
-        {({ loading, error, data }) => {
-          if (loading) return 'Loading...';
-          if (error) return `Error! ${error.message}`;
-          if (isEmpty(data.allUsers)) return 'No User found';
+const RemoveUser = ({ appId, userId }) => (
+  <Mutation mutation={removeUserApplicationMutation}>
+    {(removeUserApplication, { loading, error }) => {
+      if (loading) return 'Loading...';
+      if (error) return `Error! ${error.message}`;
+      return (
+        <a
+          className="mini negative ui button"
+          onClick={() => {
+            removeUserApplication({
+              variables: { appId, userId },
+            });
+          }}
+        >
+          remove
+        </a>
+      );
+    }}
+  </Mutation>
+);
 
-          return (
-            <tr>
-              <td>email</td>
+const AllUsers = ({ appId }) => (
+  <Query query={allUserQuery} variables={{ ids: appId }}>
+    {({ loading, error, data }) => {
+      if (loading) return 'Loading...';
+      if (error) return `Error! ${error.message}`;
+      if (isEmpty(data.allUsers)) return 'No User found';
+
+      return (
+        <React.Fragment>
+          {data.map(user => (
+            <tr key={user.id}>
+              <td>{user.email}</td>
               <td>
-                <a className="mini negative ui button">remove</a>
+                <RemoveUser appId={appId} userId={user.id} />
               </td>
             </tr>
-          );
-        }}
-      </Query>
-    );
-  }
+          ))}
+        </React.Fragment>
+      );
+    }}
+  </Query>
+);
+
+class AppUpdateUsers extends React.Component {
+  removeUser = () => {};
 
   render() {
     const { appId } = this.props;
@@ -76,7 +113,9 @@ class AppUpdateUsers extends React.Component {
             <th>Action</th>
           </tr>
         </thead>
-        <tbody>{this.renderUsers(appId)}</tbody>
+        <tbody>
+          <AllUsers appId={appId} />
+        </tbody>
         <tfoot>
           <tr>
             <th colSpan="3">
