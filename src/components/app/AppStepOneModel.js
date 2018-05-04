@@ -1,32 +1,37 @@
 import React from 'react';
 
-
 class AppStepOneModel extends React.Component {
   render() {
     return (
       <div>
         <div className="ui three column grid">
           <div className="column">
-            <h3 className="ui header" style={{ fontSize: '1.78rem', fontWeight: '400' }}>
-                          Blank Stack
+            <h3
+              className="ui header"
+              style={{ fontSize: '1.78rem', fontWeight: '400' }}
+            >
+              Blank Stack
               <div className="sub header">
-                 Start Fresh?
+                Start Fresh?
                 <a href="#">Learn more here</a>
               </div>
             </h3>
           </div>
           <div className="column" />
           <div className="bottom aligned column">
-            <button className="ui secondary button pull-right" onClick={this.goToStepTwo}>
+            <button
+              className="ui secondary button pull-right"
+              onClick={this.goToStepTwo}
+            >
               CREATE EMPTY STACK
             </button>
           </div>
         </div>
         <div className="ui divider" style={{ marginTop: '30px' }} />
         <h4 className="ui header" style={{ fontSize: '1.48rem' }}>
-                  Stackable Library
+          Stackable Library
           <div className="sub header">
-                      Sometimes you just want to get going quickly check out our templates
+            Sometimes you just want to get going quickly check out our templates
           </div>
         </h4>
         <div className="ui grid">

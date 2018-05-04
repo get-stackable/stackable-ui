@@ -20,10 +20,8 @@ class Layout extends React.Component {
     //   Session.setDefault('active.app', {});
     //   Session.setDefault('app.modal', false);
     //   Session.setDefault('app.create.modal', false);
-
     // window.addEventListener('resize', this.handleResize);
     // this.checkDesktop();
-
     //   Smooch.init({ appToken: '101mfmxkapg9rc28mi907efeh' });
   }
 
@@ -57,10 +55,20 @@ class Layout extends React.Component {
         <Header />
         <div className="main container">
           <div className="ui grid full-height">
-            <div className={classNames('column sidebar', { 'one wide': this.state.isDesktop, 'two wide': !this.state.isDesktop })}>
+            <div
+              className={classNames('column sidebar', {
+                'one wide': this.state.isDesktop,
+                'two wide': !this.state.isDesktop,
+              })}
+            >
               <Sidebar />
             </div>
-            <div className={classNames('column main-right-container', { 'fifteen wide': this.state.isDesktop, 'fourteen wide': !this.state.isDesktop })}>
+            <div
+              className={classNames('column main-right-container', {
+                'fifteen wide': this.state.isDesktop,
+                'fourteen wide': !this.state.isDesktop,
+              })}
+            >
               {children}
             </div>
           </div>
@@ -75,7 +83,7 @@ Layout.defaultProps = {
 };
 
 Layout.propTypes = {
-  children: PropTypes.array.isRequired,
+  children: PropTypes.object.isRequired,
   type: PropTypes.string,
 };
 

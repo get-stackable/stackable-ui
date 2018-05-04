@@ -2,9 +2,9 @@ import React from 'react';
 // import PropTypes from 'prop-types';
 
 class AppSteps extends React.Component {
-//   static propTypes = {
-//       app: React.PropTypes.object.isRequired
-//   };
+  //   static propTypes = {
+  //       app: React.PropTypes.object.isRequired
+  //   };
 
   constructor(props) {
     super(props);
@@ -28,11 +28,12 @@ class AppSteps extends React.Component {
                   <img src="/images/icon-container.png" alt="icon-container" />
                 </div>
                 <div className="middle aligned content">
-                  <div className="header">
-                                      Create your first container
-                  </div>
+                  <div className="header">Create your first container</div>
                   <div className="description">
-                    <p>Containers hold your items, tell us what kind of items you want to store by creating your container</p>
+                    <p>
+                      Containers hold your items, tell us what kind of items you
+                      want to store by creating your container
+                    </p>
                   </div>
                 </div>
                 <div className="extra">
@@ -46,23 +47,24 @@ class AppSteps extends React.Component {
                 </div>
               </div>
                 <div className={classNames('item', {'disabled': this.state.itemStepDisabled})}> {/*eslint-disable-line*/}
-                  <div className="ui small image">
-                    <img src="/images/icon-items.png"alt="icon-items" />
+                <div className="ui small image">
+                    <img src="/images/icon-items.png" alt="icon-items" />
                   </div>
-                  <div className="middle aligned content">
-                    <div className="header">
-                                      Add items to your container
-                    </div>
+                <div className="middle aligned content">
+                    <div className="header">Add items to your container</div>
                     <div className="description">
-                      <p>These might be blog posts, products or data driving your mobile app</p>
-                    </div>
+                    <p>
+                      These might be blog posts, products or data driving your
+                      mobile app
+                      </p>
                   </div>
-                  <div className="extra">
+                  </div>
+                <div className="extra">
                     <div className="ui right floated green button">
-                                      + create new item
-                    </div>
+                    + create new item
                   </div>
-                </div>
+                  </div>
+              </div>
             </div>
           </div>
         </div>

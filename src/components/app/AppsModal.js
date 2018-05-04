@@ -1,44 +1,41 @@
 import React from 'react';
 // import PropTypes from 'prop-types';
 
-
 class AppsModal extends React.Component {
   // TODO:
-//   static propTypes = {
-//       goTo: React.PropTypes.string.isRequired
-//   };
+  //   static propTypes = {
+  //       goTo: React.PropTypes.string.isRequired
+  //   };
 
-//   constructor(props) {
-//       super(props);
+  //   constructor(props) {
+  //       super(props);
 
-//       this.state = {
-//           isLoading: false
-//       };
-//   }
+  //       this.state = {
+  //           isLoading: false
+  //       };
+  //   }
 
-//   getMeteorData() {
-//       return {
-//           apps: Application.find({}, {sort: {createdAt: -1}}).fetch()
-//       };
-//   }
+  //   getMeteorData() {
+  //       return {
+  //           apps: Application.find({}, {sort: {createdAt: -1}}).fetch()
+  //       };
+  //   }
 
-//   componentDidUpdate() {
-//       $('#app-modal')
-//           .modal({
-//               detachable: false,
-//               onHidden(){
-//                   Session.set('app.modal', false);
-//               }
-//           })
-//           .modal(Session.get('app.modal') ? 'show' : 'hide');
-//   }
+  //   componentDidUpdate() {
+  //       $('#app-modal')
+  //           .modal({
+  //               detachable: false,
+  //               onHidden(){
+  //                   Session.set('app.modal', false);
+  //               }
+  //           })
+  //           .modal(Session.get('app.modal') ? 'show' : 'hide');
+  //   }
 
   render() {
     return (
       <div className="ui modal" id="app-modal">
-        <div className="header">
-                  Select Stack
-        </div>
+        <div className="header">Select Stack</div>
         <div className="content">
           {/* <Loading active={this.state.isLoading} />
             <div className="ui cards">

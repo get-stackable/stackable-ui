@@ -6,7 +6,7 @@ import classNames from 'classnames';
 import Layout from '../components/core/Layout';
 import PageHeading from '../components/core/PageHeading';
 import AppCardEmpty from '../components/app/AppCardEmpty';
-import CreateAppModal from '../components/app/CreateAppModal';
+// import CreateAppModal from '../components/app/CreateAppModal';
 import AppCard from '../components/app/AppCard';
 
 class Dashboard extends React.Component {

@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import gql from 'graphql-tag';
 // import alertify from 'alertify.js';
 import { Mutation, Query } from 'react-apollo';
@@ -6,9 +7,9 @@ import { Mutation, Query } from 'react-apollo';
 // import Loading from '../components/core/Loading';
 import AppForm from '../components/app/form/AppForm';
 import AppUpdateUsers from '../components/app/AppUpdateUsers';
-// import AppManageKeys from '../components/app/AppManageKeys';
-// import AppCloneModal from '../components/app/AppCloneModal';
-// import AppDeleteModal from '../components/app/AppDeleteModal';
+import AppManageKeys from '../components/app/AppManageKeys';
+import AppCloneModal from '../components/app/AppCloneModal';
+import AppDeleteModal from '../components/app/AppDeleteModal';
 import Layout from '../components/core/Layout';
 
 const updateApplicationMutation = gql`
@@ -29,75 +30,39 @@ const applicationQuery = gql`
       id
       name
       description
+      publicKey
+      privateKey
     }
   }
 `;
 
 const UpdateApplication = ({ app }) => (
   <Mutation mutation={updateApplicationMutation}>
-    {(updateApplication, { data, loading, error }) => {
-      if (loading) return 'Loading...';
-      if (error) return `Error! ${error.message}`;
-      return (
-        <React.Fragment>
-          <AppForm
-            location={app.location}
-            app={{ name: 'hello', description: 'boom' }}
-            submit={input => {
-              updateApplication({
-                variables: {
-                  id: app.match.params.id,
-                  ...input,
-                },
-              });
-            }}
-          />
-        </React.Fragment>
-      );
-    }}
+    {(updateApplication, { loading, error }) => (
+      <React.Fragment>
+        <AppForm
+          type="update"
+          app={app}
+          submit={input => {
+            updateApplication({
+              variables: {
+                id: app.id,
+                ...input,
+              },
+            });
+          }}
+        />
+      </React.Fragment>
+    )}
   </Mutation>
 );
 class AppUpdate extends React.Component {
-  // TODO:
-  // constructor(props) {
-  //     super(props);
-
-  //     this.state = {
-  //         cloneModalVisible: false,
-  //         deleteModalVisible: false
-  //     };
-  // }
-
-  // componentDidMount() {
-  //     trackEvent('Updating Stack');
-
-  //     $('#app-update-tabs .item').tab();
-  // }
-
-  // getMeteorData() {
-  //     let app = Application.findOne(this.props.id);
-  //     let data = {app};
-
-  //     if (!_.isUndefined(app)) {
-  //         let handle = Meteor.subscribe('users.all', app.users);
-  //         if (handle.ready()) {
-  //             data['users'] = User.find({_id: {$in: app.users}}).fetch();
-  //         }
-  //     }
-
-  //     return data;
-  // }
-
   render() {
-    // if (isUndefined(this.data.app)) {
-    //   return <Loading active />;
-    // }
-    // TODO: Normlize all data here..eg. loaction,  application  etc
-    const app = this.props;
+    const { match } = this.props;
 
     return (
       <Layout>
-        <Query query={applicationQuery} variables={{ id: app.match.params.id }}>
+        <Query query={applicationQuery} variables={{ id: match.params.id }}>
           {({ loading, error, data }) => {
             if (loading) return <p>Loading...</p>;
             if (error) return <p>Error :</p>;
@@ -142,31 +107,22 @@ class AppUpdate extends React.Component {
                     </div>
 
                     <div className="ui tab active" data-tab="app-info">
-                      <UpdateApplication app={app} />
+                      <UpdateApplication app={data.application} />
                     </div>
 
                     <div className="ui tab " data-tab="app-users">
-                      <AppUpdateUsers appId={app.match.params.id} />
+                      <AppUpdateUsers appId={match.params.id} />
                     </div>
-                    {/* <div className="ui tab" data-tab="app-keys">
-              <AppManageKeys app={this.data.app} />
-            </div> */}
+                    <div className="ui tab " data-tab="app-keys">
+                      <AppManageKeys app={data.application} />
+                    </div>
                     <div className="ui tab" data-tab="app-backup">
                       <div className="ui segment">
                         <p>Comming soon!</p>
                       </div>
                     </div>
-
-                    {/* <AppCloneModal
-              app={this.data.app}
-              visible={this.state.cloneModalVisible}
-              toggleModal={() => this.setState({ cloneModalVisible: false })}
-            /> */}
-                    {/* <AppDeleteModal
-              app={this.data.app}
-              visible={this.state.deleteModalVisible}
-              toggleModal={() => this.setState({ deleteModalVisible: false })}
-            /> */}
+                    <AppCloneModal appId={match.params.id} />
+                    <AppDeleteModal appId={match.params.id} />
                   </div>
                 </div>
               </div>
@@ -179,3 +135,10 @@ class AppUpdate extends React.Component {
 }
 
 export default AppUpdate;
+
+AppUpdate.propTypes = {
+  match: PropTypes.shape({
+    appId: PropTypes.string,
+    application: PropTypes.object,
+  }).isRequired,
+};

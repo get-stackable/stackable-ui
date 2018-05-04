@@ -1,78 +1,75 @@
 import React from 'react';
-// import PropTypes from 'prop-types';
+import PropTypes from 'prop-types';
+import gql from 'graphql-tag';
+import alertify from 'alertify.js';
+import { Mutation } from 'react-apollo';
 
+import AppDeleteForm from './form/AppDeleteForm';
+
+const deleteApplicationMutation = gql`
+  mutation deleteApplication($id: ID!) {
+    deleteApplication(id: $id) {
+      id
+    }
+  }
+`;
 
 class AppDeleteModal extends React.Component {
-//   static propTypes = {
-//       visible: React.PropTypes.bool.isRequired,
-//       toggleModal: React.PropTypes.func.isRequired,
-//       app: React.PropTypes.object.isRequired
-//   };
-
-  constructor(props) {
-      super(props);
-
-      this.state = {
-          name: ''
-      };
-  }
-
-  componentDidUpdate() {
-      const self = this;
-      $('#app-delete-modal')
-          .modal({
-              detachable: false,
-              onHidden(){
-                  self.props.toggleModal()
-              }
-          })
-          .modal(this.props.visible ? 'show' : 'hide');
-  }
-// TODO:
-//   deleteApp = () => {
-//       if (this.props.app.name !== this.state.name) {
-//           FlashMessages.sendError('Please type in correct stack name to start delete process.');
-//           return;
-//       }
-
-//       this.props.toggleModal();
-//       Meteor.call('app.delete', this.props.app._id, (err) => {
-//           if (!err) {
-//               FlashMessages.sendSuccess('Stack deleted successfully!');
-//               FlowRouter.go('home');
-//           }
-//       });
-//   };
+  // componentDidUpdate() {
+  // const self = this;
+  // $('#app-delete-modal')
+  //     .modal({
+  //         detachable: false,
+  //         onHidden(){
+  //             self.props.toggleModal()
+  //         }
+  //     })
+  //     .modal(this.props.visible ? 'show' : 'hide');
+  // }
 
   render() {
-      return (
-        <div className="ui modal" id="app-delete-modal">
-          <div className="header">
-            <img src="/images/logo.png" alt="logo" />
-                  Delete stack
-            <i className="close icon" onClick={() => this.props.toggleModal()} />
-          </div>
-          <div className="content">
-            <div className="ui segment">
-              <p>Deleting the stack will also delete its all related containers and items!</p>
-            </div>
-            <div className="ui form">
-              <div className="field">
-                <label>Confirm stack name</label>
-                <input
-                  type="text"
-                  name="name"
-                  placeholder="Confirm stack name to delete"
-                  value={this.state.name}
-                  onChange={(e) => this.setState({name: e.target.value})}
-                />
-              </div>
-              <button className="ui button" type="submit" onClick={this.deleteApp}>DELETE!</button>
-            </div>
-          </div>
+    const { appId } = this.props;
+    return (
+      <div className="ui modal" id="app-delete-modal">
+        <div className="header">
+          <img src="/images/logo.png" alt="logo" />
+          Delete stack
+          <i className="close icon" />
         </div>
-      )
+        <div className="content">
+          <div className="ui segment">
+            <p>
+              Deleting the stack will also delete its all related containers and
+              items!
+            </p>
+          </div>
+          <Mutation mutation={deleteApplicationMutation}>
+            {(deleteApplication, { data, loading, error }) => (
+              <React.Fragment>
+                <AppDeleteForm
+                  type="clone"
+                  submit={input => {
+                    deleteApplication({
+                      variables: {
+                        id: appId,
+                      },
+                    });
+                  }}
+                />
+                {loading && <p>Loading...</p>}
+                {error && <p> `${alertify.error(error.message)}`}</p>}
+                {data && <p>`${alertify.success('Sucessfully Deleted')}` </p>}
+              </React.Fragment>
+            )}
+          </Mutation>
+        </div>
+      </div>
+    );
   }
-};
+}
 
 export default AppDeleteModal;
+
+AppDeleteModal.propTypes = {
+  appId: PropTypes.string.isRequired,
+};

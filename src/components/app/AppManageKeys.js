@@ -1,84 +1,99 @@
 import React from 'react';
-// import PropTypes from 'prop-types';
+import PropTypes from 'prop-types';
 // import alertify from 'alertify.js'
+import gql from 'graphql-tag';
+import { Mutation } from 'react-apollo';
 
+import AllowedUrlsForm from './form/AllowedUrlsForm';
+// TODO: Update cache
+const updateApplicationMutation = gql`
+  mutation updateApplication($id: ID!, $allowedUrls: String!) {
+    updateApplication(id: $id, input: { allowedUrls: $allowedUrls }) {
+      id
+    }
+  }
+`;
+
+const generateKeyApplicationMutation = gql`
+  mutation generateKeyApplication($id: ID!) {
+    generateKeyApplication(id: $id) {
+      id
+    }
+  }
+`;
+
+const ResetKey = ({ appId }) => (
+  <Mutation mutation={generateKeyApplicationMutation}>
+    {(generateKeyApplication, { loading, error }) => {
+      if (loading) return 'Loading...';
+      if (error) return `Error! ${error.message}`;
+      return (
+        <a
+          className="mini negative ui button"
+          onClick={() => {
+            generateKeyApplication({ variables: { id: appId } });
+          }}
+        >
+          Reset Keys
+        </a>
+      );
+    }}
+  </Mutation>
+);
 
 class AppManageKeys extends React.Component {
-//   static propTypes = {
-//       app: React.PropTypes.object
-//   };
-
-//   constructor(props) {
-//       super(props);
-
-//       this.state = {
-//           allowedUrls: !_.isUndefined(props.app) ? props.app.allowedUrls : ''
-//       };
-//   }
-// TODO:
-//   generateAppKey = () => {
-//       alertify.confirm('Do you want to reset keys?',
-//           'Once you reset keys for stack, you need to update all your client applications with new keys',
-//           () => {
-//               Meteor.call('app.generateKey', this.props.app._id, (err) => {
-//                   if (!err) {
-//                       FlashMessages.sendSuccess('Stack key for stack re-generated successfully!');
-//                   }
-//               });
-//           },
-//           () => {
-//               // cancel
-//           });
-
-
-//   };
-
-//   handleSubmit = () => {
-//       const data = {
-//           allowedUrls: this.state.allowedUrls
-//       };
-
-//       Meteor.call('app.update', this.props.app._id, data, (err, res) => {
-//           // console.log(err, res);
-//           if (!err) {
-//               FlashMessages.sendSuccess('App updated successfully!');
-//           }
-//       });
-//   };
-
   render() {
+    const { app } = this.props;
+    const appId = app.id;
     return (
       <div className="ui form">
         <div className="field">
-          <label>Public Key</label>
-          <input type="text" value={this.props.app.publicKey} readOnly />
+          <label htmlFor="publicKey">
+            Public Key
+            <input type="text" value={app.publicKey} readOnly />
+          </label>
         </div>
         <div className="field">
-          <label>Private Key</label>
-          <input type="text" value={this.props.app.privateKey} readOnly />
+          <label htmlFor="privateKey">
+            Private Key
+            <input type="text" value={app.privateKey} readOnly />
+          </label>
         </div>
-        <a
-          className="mini negative ui button"
-          onClick={() => this.generateAppKey()}
-        >
-                  Reset Keys
-        </a>
+        <ResetKey appId={appId} />
         <div className="ui divider" />
-        <div className="field">
-          <label>Allowed Urls</label>
-          <textarea
-            rows="3"
-            value={this.state.allowedUrls}
-            onChange={e => this.setState({ allowedUrls: e.target.value })}
-          />
-        </div>
-        <button className="ui button" type="submit" onClick={this.handleSubmit}>
-          <i className="save icon" />
-                  Update
-        </button>
+        <Mutation mutation={updateApplicationMutation}>
+          {(updateApplication, { loading, error }) => {
+            if (loading) return 'Loading...';
+            if (error) return `Error! ${error.message}`;
+            return (
+              <AllowedUrlsForm
+                submit={input => {
+                  updateApplication({
+                    variables: {
+                      id: appId,
+                      ...input,
+                    },
+                  });
+                }}
+              />
+            );
+          }}
+        </Mutation>
       </div>
     );
   }
 }
 
 export default AppManageKeys;
+
+AppManageKeys.propTypes = {
+  app: PropTypes.shape({
+    appId: PropTypes.string,
+    privateKey: PropTypes.string,
+    publicKey: PropTypes.string,
+  }).isRequired,
+};
+
+ResetKey.propTypes = {
+  appId: PropTypes.string.isRequired,
+};

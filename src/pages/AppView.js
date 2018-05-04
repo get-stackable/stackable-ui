@@ -3,7 +3,6 @@ import React from 'react';
 import Loading from '../components/core/Loading';
 import AppSteps from '../components/app/AppSteps';
 
-
 class AppView extends React.Component {
   // TODO:
   // getMeteorData() {

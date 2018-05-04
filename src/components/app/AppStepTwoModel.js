@@ -19,10 +19,8 @@ class AppStepTwoModel extends React.Component {
       <Mutation mutation={createAppMutation}>
         {(createApplication, { loading, error, data }) => (
           <React.Fragment>
-            {data && alertify.success('App Created Successfully!')}
-            {loading && <p>Loading...</p>}
-            {error && alertify.success('Error :( Please try again!')}
             <AppForm
+              type="create"
               submit={input => {
                 createApplication({ variables: { ...input } });
               }}

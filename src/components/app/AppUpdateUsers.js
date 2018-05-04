@@ -1,5 +1,5 @@
 import React from 'react';
-// import PropTypes from 'prop-types';
+import PropTypes from 'prop-types';
 // import alertify from 'alertify.js';
 import gql from 'graphql-tag';
 import { Mutation, Query } from 'react-apollo';
@@ -54,8 +54,6 @@ const AddUsers = ({ appId }) => (
   </Mutation>
 );
 
-// TODO: Check, PropsType Validation
-
 const RemoveUser = ({ appId, userId }) => (
   <Mutation mutation={removeUserApplicationMutation}>
     {(removeUserApplication, { loading, error }) => {
@@ -101,8 +99,6 @@ const AllUsers = ({ appId }) => (
 );
 
 class AppUpdateUsers extends React.Component {
-  removeUser = () => {};
-
   render() {
     const { appId } = this.props;
     return (
@@ -129,3 +125,20 @@ class AppUpdateUsers extends React.Component {
 }
 
 export default AppUpdateUsers;
+
+AppUpdateUsers.propTypes = {
+  appId: PropTypes.string.isRequired,
+};
+
+AddUsers.propTypes = {
+  appId: PropTypes.string.isRequired,
+};
+
+RemoveUser.propTypes = {
+  appId: PropTypes.string.isRequired,
+  userId: PropTypes.string.isRequired,
+};
+
+AllUsers.propTypes = {
+  appId: PropTypes.string.isRequired,
+};
