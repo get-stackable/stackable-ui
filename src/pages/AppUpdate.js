@@ -57,6 +57,11 @@ const UpdateApplication = ({ app }) => (
   </Mutation>
 );
 class AppUpdate extends React.Component {
+  constructor() {
+    super();
+    this.state = {};
+  }
+
   render() {
     const { match } = this.props;
 
@@ -92,10 +97,10 @@ class AppUpdate extends React.Component {
                       className="ui pointing secondary menu"
                       id="app-update-tabs"
                     >
-                      <div className="item " data-tab="app-info">
+                      <div className="item active" data-tab="app-info">
                         Stack Information
                       </div>
-                      <div className="item active" data-tab="app-users">
+                      <div className="item " data-tab="app-users">
                         Manage Users
                       </div>
                       <div className="item" data-tab="app-keys">

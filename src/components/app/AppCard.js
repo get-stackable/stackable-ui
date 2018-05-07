@@ -48,13 +48,18 @@ class AppCard extends React.Component {
                     </div>
                     <div className="thirteen wide column">
                       <div className="content">
-                        <a className="header">{app.name}</a>
+                        <a href={`stack/${app.id}`} className="header">
+                          {app.name}
+                        </a>
                         <div className="meta">
                           Public Key: {app.privateKey}{' '}
                         </div>
                       </div>
                       <div className="extra content">
-                        <a className="tiny ui basic button">
+                        <a
+                          href={`stack/manage/${app.id}`}
+                          className="tiny ui basic button"
+                        >
                           <i className="icon setting" />
                           settings
                         </a>

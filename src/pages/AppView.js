@@ -1,7 +1,8 @@
 import React from 'react';
 
-import Loading from '../components/core/Loading';
+// import Loading from '../components/core/Loading';
 import AppSteps from '../components/app/AppSteps';
+import Layout from '../components/core/Layout';
 
 class AppView extends React.Component {
   // TODO:
@@ -46,11 +47,11 @@ class AppView extends React.Component {
   // }
 
   render() {
-    if (this.data.loading) {
-      return <Loading active />;
-    }
-
-    return <AppSteps app={this.data.app} />;
+    return (
+      <Layout>
+        <AppSteps />
+      </Layout>
+    );
   }
 }
 

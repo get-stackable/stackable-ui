@@ -1,5 +1,8 @@
 import React from 'react';
 // import PropTypes from 'prop-types';
+import classNames from 'classnames';
+
+import PageHeading from '../core/PageHeading';
 
 class AppSteps extends React.Component {
   //   static propTypes = {
@@ -17,9 +20,7 @@ class AppSteps extends React.Component {
   render() {
     return (
       <div>
-        {/* <PageHeading>
-                  Well Done!
-          </PageHeading> */}
+        <PageHeading>Well Done!</PageHeading>
         <div className="ui grid padding35 app view">
           <div className="ten wide centered column">
             <div className="ui items">
@@ -37,33 +38,33 @@ class AppSteps extends React.Component {
                   </div>
                 </div>
                 <div className="extra">
-                  {/* TODO: */}
-                  {/* <button
-                      className="ui right floated green button"
-                      onClick={() => FlowRouter.go('containerCreate', {appId: this.props.app._id})}
-                    >
-                                      + create new container
-                    </button> */}
+                  <button className="ui right floated green button">
+                    + create new container
+                  </button>
                 </div>
               </div>
-                <div className={classNames('item', {'disabled': this.state.itemStepDisabled})}> {/*eslint-disable-line*/}
+              <div
+                className={classNames('item', {
+                  disabled: this.state.itemStepDisabled,
+                })}
+              >
                 <div className="ui small image">
-                    <img src="/images/icon-items.png" alt="icon-items" />
-                  </div>
+                  <img src="/images/icon-items.png" alt="icon-items" />
+                </div>
                 <div className="middle aligned content">
-                    <div className="header">Add items to your container</div>
-                    <div className="description">
+                  <div className="header">Add items to your container</div>
+                  <div className="description">
                     <p>
                       These might be blog posts, products or data driving your
                       mobile app
-                      </p>
+                    </p>
                   </div>
-                  </div>
+                </div>
                 <div className="extra">
-                    <div className="ui right floated green button">
+                  <div className="ui right floated green button">
                     + create new item
                   </div>
-                  </div>
+                </div>
               </div>
             </div>
           </div>

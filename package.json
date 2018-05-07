@@ -37,7 +37,7 @@
     "yup": "^0.24.1"
   },
   "devDependencies": {
-    "babel-eslint": "^8.2.2",
+    "chai": "^8.2.2",
     "eslint": "^4.19.1",
     "eslint-config-airbnb": "^16.1.0",
     "eslint-config-prettier": "^2.9.0",

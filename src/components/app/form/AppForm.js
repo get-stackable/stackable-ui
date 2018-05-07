@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { withFormik } from 'formik';
-// import { isUndefined } from 'lodash';
+import { isUndefined } from 'lodash';
 
 // this form is use for both purpose( create and update)
 // Our inner form component which receives our form's state and updater methods as props
@@ -61,8 +61,8 @@ const AppForm = ({
 export default withFormik({
   // Transform outer props into form values
   mapPropsToValues: props => ({
-    name: '',
-    description: '',
+    name: !isUndefined(props.app) ? props.app.name : '',
+    description: !isUndefined(props.app) ? props.app.description : '',
   }),
   // Add a custom validation function (this can be async too!)
   validate: () => {},

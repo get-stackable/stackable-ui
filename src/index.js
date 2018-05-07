@@ -13,6 +13,8 @@ import './styles/main.scss';
 import Dashboard from './pages/Dashboard';
 import Login from './pages/Login';
 import AppUpdate from './pages/AppUpdate';
+import AppView from './pages/AppView';
+import ContainerCreate from './pages/ContainerCreate';
 
 import './styles/main.css';
 
@@ -42,7 +44,9 @@ const App = () => (
         <React.Fragment>
           <Route exact path="/login" component={Login} />
           <PrivateRoute exact path="/dashboard" component={Dashboard} />
-          <PrivateRoute exact path="/app/:id" component={AppUpdate} />
+          <PrivateRoute exact path="/stack/manage/:id" component={AppUpdate} />
+          <PrivateRoute exact path="/stack/:id" component={AppView} />
+          <Route exact path="/test" component={ContainerCreate} />
         </React.Fragment>
       </Router>
     </ThemeProvider>
