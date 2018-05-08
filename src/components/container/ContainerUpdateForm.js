@@ -107,6 +107,7 @@ class ContainerUpdateForm extends React.Component {
                   style={{ marginTop: '50px' }}
                 >
                   <tbody ref="containerItems" id="containerItems">
+                    {/* TODO: map container item  */}
                     bsdhv
                   </tbody>
                 </table>

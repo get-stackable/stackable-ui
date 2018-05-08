@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import gql from 'graphql-tag';
 // import alertify from 'alertify.js';
 import { Mutation, Query } from 'react-apollo';
+import classNames from 'classnames';
 
 // import Loading from '../components/core/Loading';
 import AppForm from '../components/app/form/AppForm';
@@ -59,10 +60,11 @@ const UpdateApplication = ({ app }) => (
 class AppUpdate extends React.Component {
   constructor() {
     super();
-    this.state = {};
+    this.state = { activeTab: 'app-info' };
   }
 
   render() {
+    const { activeTab } = this.state;
     const { match } = this.props;
 
     return (
@@ -97,31 +99,79 @@ class AppUpdate extends React.Component {
                       className="ui pointing secondary menu"
                       id="app-update-tabs"
                     >
-                      <div className="item active" data-tab="app-info">
+                      <a
+                        className={classNames('item', {
+                          active: activeTab === 'app-info',
+                        })}
+                        onClick={() => this.setState({ activeTab: 'app-info' })}
+                        data-tab="app-info"
+                      >
                         Stack Information
-                      </div>
-                      <div className="item " data-tab="app-users">
+                      </a>
+                      <a
+                        className={classNames('item', {
+                          active: activeTab === 'app-users',
+                        })}
+                        onClick={() =>
+                          this.setState({ activeTab: 'app-users' })
+                        }
+                        data-tab="app-info"
+                      >
                         Manage Users
-                      </div>
-                      <div className="item" data-tab="app-keys">
+                      </a>
+                      <a
+                        className={classNames('item', {
+                          active: activeTab === 'app-keys',
+                        })}
+                        onClick={() => this.setState({ activeTab: 'app-keys' })}
+                        data-tab="app-keys"
+                      >
                         Manage Keys
-                      </div>
-                      <div className="item" data-tab="app-backup">
+                      </a>
+                      <a
+                        className={classNames('item', {
+                          active: activeTab === 'app-backup',
+                        })}
+                        onClick={() =>
+                          this.setState({ activeTab: 'app-backup' })
+                        }
+                        data-tab="app-backup"
+                      >
                         Backup
-                      </div>
+                      </a>
                     </div>
 
-                    <div className="ui tab active" data-tab="app-info">
+                    <div
+                      className={classNames('ui tab ', {
+                        active: activeTab === 'app-info',
+                      })}
+                      data-tab="app-info"
+                    >
                       <UpdateApplication app={data.application} />
                     </div>
 
-                    <div className="ui tab " data-tab="app-users">
+                    <div
+                      className={classNames('ui tab ', {
+                        active: activeTab === 'app-users',
+                      })}
+                      data-tab="app-users"
+                    >
                       <AppUpdateUsers appId={match.params.id} />
                     </div>
-                    <div className="ui tab " data-tab="app-keys">
+                    <div
+                      className={classNames('ui tab ', {
+                        active: activeTab === 'app-keys',
+                      })}
+                      data-tab="app-keys"
+                    >
                       <AppManageKeys app={data.application} />
                     </div>
-                    <div className="ui tab" data-tab="app-backup">
+                    <div
+                      className={classNames('ui tab ', {
+                        active: activeTab === 'app-backup',
+                      })}
+                      data-tab="app-backup"
+                    >
                       <div className="ui segment">
                         <p>Comming soon!</p>
                       </div>
