@@ -1,7 +1,9 @@
 import React from 'react';
 import classNames from 'classnames';
+import alertify from 'alertify.js';
 
 import BigTitleInput from './BigTitleInput';
+import ContainerItemModal from './ContainerItemModal';
 
 const fieldTypes = [
   {
@@ -35,6 +37,161 @@ const fieldTypes = [
 ];
 
 class ContainerUpdateForm extends React.Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      name: '',
+      // name: !_.isUndefined(props.container) ? props.container.name : '',
+      // items: !_.isUndefined(props.container)
+      //   ? _.sortBy(props.container.items, 'listing_order')
+      //   : [],
+      // isSingleItem: !_.isUndefined(props.container)
+      //   ? props.container.isSingleItem
+      //   : false,
+      // itemModalVisible: false,
+      // activeItemInModal: {},
+      // activeModalTab: 'info',
+    };
+  }
+
+  // getMeteorData() {
+  //   const handle = Meteor.subscribe('containers.all', this.props.appId);
+
+  //   const siblingFind = { appId: this.props.appId };
+  //   if (!_.isUndefined(this.props.container)) {
+  //     siblingFind._id = { $ne: this.props.container._id };
+  //   }
+  //   return {
+  //     loading: !handle.ready(),
+  //     siblingContainers: Container.find(siblingFind).fetch(),
+  //   };
+  // }
+
+  // componentDidMount() {
+  //   const drake = dragula([ReactDOM.findDOMNode(this.refs.containerItems)]);
+
+  //   drake.on('dragend', el => {
+  //     this.reOrderItems();
+  //   });
+  // }
+
+  // componentWillReceiveProps(nextProps) {
+  //   if (!_.isUndefined(nextProps.container)) {
+  //     this.setState({
+  //       name: nextProps.container.name,
+  //       items: nextProps.container.items,
+  //       isSingleItem: nextProps.container.isSingleItem,
+  //     });
+  //   }
+  // }
+
+  // reOrderItems() {
+  //   const items = this.state.items;
+  //   const self = this;
+  //   const children = $('#containerItems').children();
+
+  //   children.each(function(index) {
+  //     const order = index + 1;
+  //     const itemId = $(this).data('id');
+  //     // console.log(order, itemId);
+  //     // console.log(self.state.items);
+  //     // find in array
+  //     const itemIndex = lodash.findIndex(self.state.items, { _id: itemId });
+  //     const item = items[itemIndex];
+  //     item.listing_order = order;
+  //     items[itemIndex] = item;
+
+  //     self.setState({ items });
+  //   });
+
+  //   this.handleSubmit();
+  // }
+
+  // openItemModal = (item, activeTab) => {
+  //   trackEvent('Creating Container Field');
+
+  //   this.setState({
+  //     itemModalVisible: true,
+  //     activeItemInModal: item,
+  //     activeModalTab: activeTab,
+  //   });
+  // };
+
+  // updateItem(item) {
+  //   const items = this.state.items;
+
+  //   // find in array
+  //   const index = lodash.findIndex(items, { _id: item._id });
+
+  //   if (index == '-1') {
+  //     // new item
+  //     items.push(item);
+  //   } else {
+  //     // update item
+  //     items[index] = item;
+  //   }
+
+  //   this.setState({ items });
+
+  //   this.handleSubmit();
+  // }
+
+  // deleteContainer() {
+  //   const appId = this.props.container.appId;
+  //   alertify.confirm(
+  //     'Do you want to delete this container?',
+  //     `All related ${this.state.items.length} items will be also deleted!`,
+  //     () => {
+  //       Meteor.call('container.delete', this.props.container._id, err => {
+  //         if (!err) {
+  //           FlashMessages.sendSuccess('Container deleted successfully!');
+  //           FlowRouter.go('containersList', { appId });
+  //         }
+  //       });
+  //     },
+  //     () => {
+  //       // cancel
+  //     },
+  //   );
+  // }
+
+  // removeItem(item, index) {
+  //   alertify.confirm(
+  //     'Do you want to remove this field?',
+  //     'All related data for this field in items will be also deleted!',
+  //     () => {
+  //       const items = this.state.items;
+  //       items.splice(index, 1);
+  //       this.setState({ items });
+  //       this.handleSubmit();
+
+  //       Meteor.call(
+  //         'container.field.archive',
+  //         this.props.container._id,
+  //         item.name,
+  //         err => {
+  //           if (!err) {
+  //             console.log('archived all data for this field');
+  //           }
+  //         },
+  //       );
+  //     },
+  //     () => {
+  //       // cancel
+  //     },
+  //   );
+  // }
+
+  handleSubmit() {
+    if (this.state.items.length === 0) {
+      alertify.log(
+        'Please create at least one field in order to save container.',
+      );
+    }
+    // submit with bit delay
+    // Meteor.setTimeout(() => this.props.handleSubmit(this.state), 500);
+  }
   render() {
     return (
       <div className="ui grid full-height" style={{ marginLeft: '0' }}>
@@ -72,9 +229,9 @@ class ContainerUpdateForm extends React.Component {
                   <BigTitleInput
                     label="type container name here"
                     name="name"
-                    // value={this.state.name}
-                    // onChange={e => this.setState({ name: e.target.value })}
-                    // onBlur={() => this.handleSubmit()}
+                    value={this.state.name}
+                    onChange={e => this.setState({ name: e.target.value })}
+                    onBlur={() => this.handleSubmit()}
                   />
                   <div className="six wide right aligned column">
                     <button
@@ -119,16 +276,17 @@ class ContainerUpdateForm extends React.Component {
             </div>
           </div>
         </div>
-        {/* <ContainerItemModal
-          visible={this.state.itemModalVisible}
-          item={this.state.activeItemInModal}
-          toggleModal={() => this.setState({ itemModalVisible: false })}
-          update={item => this.updateItem(item)}
-          activeTab={this.state.activeModalTab}
-          siblingContainers={this.data.siblingContainers}
-          allItems={this.state.items}
-          container={this.props.container}
-        /> */}
+        <ContainerItemModal
+          data="hello"
+          // visible={this.state.itemModalVisible}
+          // item={this.state.activeItemInModal}
+          // toggleModal={() => this.setState({ itemModalVisible: false })}
+          // update={item => this.updateItem(item)}
+          // activeTab={this.state.activeModalTab}
+          // siblingContainers={this.data.siblingContainers}
+          // allItems={this.state.items}
+          // container={this.props.container}
+        />
       </div>
     );
   }

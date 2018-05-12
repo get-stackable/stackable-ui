@@ -4,7 +4,7 @@ import { withFormik } from 'formik';
 
 // this form is use for both purpose( create and update)
 // Our inner form component which receives our form's state and updater methods as props
-const InfoForm = ({
+const ValidationForm = ({
   values,
   handleChange,
   handleBlur,
@@ -14,51 +14,24 @@ const InfoForm = ({
   <form onSubmit={handleSubmit}>
     <div className="ui form">
       <div className="field">
-        <label htmlFor="itemName">
-          Field Name
-          <input
-            type="text"
-            name="name"
-            id="itemName"
-            placeholder="type field name here, eg: Title, Description, Featured Image, Is Active"
-            onChange={handleChange}
-            onBlur={handleBlur}
-            value={values.itemName}
-          />
-        </label>
-      </div>
-      <div className="field">
-        <label htmlFor="description">
-          Field Description
-          <input
-            type="text"
-            name="description"
-            placeholder="type field description here"
-            onChange={handleChange}
-            onBlur={handleBlur}
-            value={values.description}
-          />
-        </label>
-      </div>
-      <div className="field">
         <div className="ui checkbox">
-          <label htmlFor="isDisabled">
-            <input
-              type="checkbox"
-              name="isDisabled"
-              checked={values.isDisabled}
-              onChange={handleChange}
-              onBlur={handleBlur}
-            />
-            Field Disabled
-          </label>
+          <input
+            type="checkbox"
+            name="isRequired"
+            // checked={this.state.isRequired}
+            // onChange={e => this.setState({ isRequired: e.target.checked })}
+          />
+          <label>Field Required</label>
         </div>
       </div>
+
+      {/* {customValidationsFields} */}
+
       <div className="ui divider" />
       <button
         className="ui primary button"
         type="submit"
-        disabled={isSubmitting}
+        // onClick={this.handleSubmit}
       >
         Submit
       </button>
@@ -82,9 +55,9 @@ export default withFormik({
     // props.submit(values);
     setSubmitting(false);
   },
-})(InfoForm);
+})(ValidationForm);
 
-InfoForm.propTypes = {
+ValidationForm.propTypes = {
   values: PropTypes.shape({
     itemName: PropTypes.string,
     description: PropTypes.string,

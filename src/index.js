@@ -14,6 +14,7 @@ import Dashboard from './pages/Dashboard';
 import Login from './pages/Login';
 import AppUpdate from './pages/AppUpdate';
 import AppView from './pages/AppView';
+import Containers from './pages/Containers';
 import ContainerCreate from './pages/ContainerCreate';
 
 import './styles/main.css';
@@ -46,6 +47,7 @@ const App = () => (
           <PrivateRoute exact path="/dashboard" component={Dashboard} />
           <PrivateRoute exact path="/stack/manage/:id" component={AppUpdate} />
           <PrivateRoute exact path="/stack/:id" component={AppView} />
+          <Route exact path="/containers" component={Containers} />
           <Route exact path="/test" component={ContainerCreate} />
         </React.Fragment>
       </Router>
