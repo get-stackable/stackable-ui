@@ -10,62 +10,49 @@ import ValidationForm from './form/ValidationForm';
 import RelationForm from './form/RelationForm';
 
 class ContainerItemModal extends React.Component {
-  // TODO:
-  //  PropTypes = {
-  //       visible: PropTypes.bool.isRequired,
-  //       toggleModal: PropTypes.func.isRequired,
-  //       item: PropTypes.object.isRequired,
-  //       update: PropTypes.func.isRequired,
-  //       activeTab: PropTypes.string,
-  //       siblingContainers: PropTypes.array.isRequired,
-  //       allItems: PropTypes.array.isRequired,
-  //       container: PropTypes.object
-  //   };
-
   constructor(props) {
     super(props);
 
-    // this.state = this.updateState(props);
-    this.state = {
-      activeTab: '',
-      type: '',
-    };
+    this.state = this.updateState(props);
+    // this.state = {
+    //   activeTab: 'info',
+    //   type: 'info',
+    // };
   }
 
-  // componentDidMount() {
-  //   $('#container-item-edit-tab .item').tab();
-  // }
+  componentDidMount() {
+    $('#container-item-edit-tab .item').tab();
+  }
 
-  // componentWillReceiveProps(nextProps) {
-  //   this.setState(this.updateState(nextProps));
-  // }
-  // TODO:
-  //   updateState(props) {
-  //       return {
-  //           _id: props.item._id || Random.id(6),
-  //           name: props.item.name || '',
-  //           description: props.item.description || '',
-  //           type: props.item.type || 'text',
-  //           validations: props.item.validations || {},
-  //           relations: props.item.relations || {},
-  //           isRequired: props.item.isRequired || false,
-  //           isDisabled: props.item.isDisabled || false,
-  //           listing_order: props.item.listing_order || props.allItems.length + 1,
-  //           activeTab: props.activeTab || 'info'
-  //       }
-  //   }
+  componentWillReceiveProps(nextProps) {
+    this.setState(this.updateState(nextProps));
+  }
 
-  // componentDidUpdate() {
-  //   const self = this;
-  //   $('#container-item-modal')
-  //     .modal({
-  //       detachable: false,
-  //       onHidden() {
-  //         self.props.toggleModal();
-  //       },
-  //     })
-  //     .modal(this.props.visible ? 'show' : 'hide');
-  // }
+  componentDidUpdate() {
+    const self = this;
+    $('#container-item-modal')
+      .modal({
+        detachable: false,
+        onHidden() {
+          self.props.toggleModal();
+        },
+      })
+      .modal(this.props.visible ? 'show' : 'hide');
+  }
+  updateState(props) {
+    return {
+      // _id: props.item._id || 'Random.id(6)',
+      // name: props.item.name || '',
+      // description: props.item.description || '',
+      // type: props.item.type || 'text',
+      // validations: props.item.validations || {},
+      // relations: props.item.relations || {},
+      // isRequired: props.item.isRequired || false,
+      // isDisabled: props.item.isDisabled || false,
+      // listing_order: props.item.listing_order || props.allItems.length + 1,
+      activeTab: props.activeTab || 'info',
+    };
+  }
   // TODO:
   //   createSlug(name) {
   //       return s.camelize(s.slugify(name), true);
@@ -178,10 +165,15 @@ class ContainerItemModal extends React.Component {
       >
         <div className="header">
           <img src="/images/logo.png" alt="logo" />
-          {/* {this.state.name.length === 0 ? 'Create' : 'Update'}{' '} */}
+          {/* {this.state.name.length === 0 ? 'Create' : 'Update'} */}
           Create
           {upperFirst(this.state.type)} Field
-          {/* <i className="close icon" onClick={() => this.props.toggleModal()} /> */}
+          <a
+            onClick={() => this.props.toggleModal()}
+            style={{ color: '#ffff' }}
+          >
+            <i className="close icon" />
+          </a>
         </div>
         <div className="content">
           <div
@@ -255,3 +247,15 @@ class ContainerItemModal extends React.Component {
 }
 
 export default ContainerItemModal;
+
+// TODO:
+//  PropTypes = {
+//       visible: PropTypes.bool.isRequired,
+//       toggleModal: PropTypes.func.isRequired,
+//       item: PropTypes.object.isRequired,
+//       update: PropTypes.func.isRequired,
+//       activeTab: PropTypes.string,
+//       siblingContainers: PropTypes.array.isRequired,
+//       allItems: PropTypes.array.isRequired,
+//       container: PropTypes.object
+//   };

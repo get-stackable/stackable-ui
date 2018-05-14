@@ -48,12 +48,11 @@ class AppCard extends React.Component {
                     </div>
                     <div className="thirteen wide column">
                       <div className="content">
+                        {/* TODO: if container is empty redirect to stack/id else redirect to container/id */}
                         <a href={`stack/${app.id}`} className="header">
                           {app.name}
                         </a>
-                        <div className="meta">
-                          Public Key: {app.privateKey}{' '}
-                        </div>
+                        <div className="meta">Public Key: {app.privateKey}</div>
                       </div>
                       <div className="extra content">
                         <a

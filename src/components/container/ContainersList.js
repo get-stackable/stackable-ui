@@ -4,6 +4,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import gql from 'graphql-tag';
 import { Query } from 'react-apollo';
+import { lowerCase } from 'lodash';
 
 // import StackableApi from '../../utils/StackableApi';
 
@@ -47,7 +48,7 @@ class ContainersList extends React.Component {
                 <div className="card" key={container.id}>
                   <div className="content">
                     <div className="header">{container.name}</div>
-                    <div className="meta">Container ID: container.id</div>
+                    <div className="meta">Container ID: {container.id}</div>
                   </div>
                   <div className="extra content">
                     <div className="ui two buttons">
@@ -80,9 +81,7 @@ class ContainersList extends React.Component {
                   <a className="ui primary bottom attached button">
                     <i className="add icon" />
                     <span>
-                      manage
-                      {/* {pluralize(containerName.toLowerCase(), 1)}  */}
-                      item
+                      add manage {`${lowerCase(container.name)}`} items
                     </span>
                     {/* {container.isSingleItem ? (
                 <span>
