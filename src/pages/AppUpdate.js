@@ -93,7 +93,7 @@ class AppUpdate extends React.Component {
                 >
                   <div
                     className="content-wrapper"
-                    style={{ padding: '25px 35px !important' }}
+                    style={{ padding: '25px 35px' }}
                   >
                     <div
                       className="ui pointing secondary menu"

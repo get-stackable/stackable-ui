@@ -1,9 +1,8 @@
 /* global $:true */
 import React from 'react';
 // import PropTypes from 'prop-types';
-// import {isUndefined} from 'underscore';
 import classNames from 'classnames';
-import { upperFirst } from 'lodash';
+import { upperFirst, isUndefined } from 'lodash';
 
 import InfoForm from './form/InfoForm';
 import ValidationForm from './form/ValidationForm';
@@ -12,12 +11,7 @@ import RelationForm from './form/RelationForm';
 class ContainerItemModal extends React.Component {
   constructor(props) {
     super(props);
-
     this.state = this.updateState(props);
-    // this.state = {
-    //   activeTab: 'info',
-    //   type: 'info',
-    // };
   }
 
   componentDidMount() {
@@ -40,16 +34,19 @@ class ContainerItemModal extends React.Component {
       .modal(this.props.visible ? 'show' : 'hide');
   }
   updateState(props) {
+    if (isUndefined(props.item)) {
+      return {};
+    }
     return {
       // _id: props.item._id || 'Random.id(6)',
-      // name: props.item.name || '',
-      // description: props.item.description || '',
-      // type: props.item.type || 'text',
-      // validations: props.item.validations || {},
-      // relations: props.item.relations || {},
-      // isRequired: props.item.isRequired || false,
-      // isDisabled: props.item.isDisabled || false,
-      // listing_order: props.item.listing_order || props.allItems.length + 1,
+      name: props.item.name || '',
+      description: props.item.description || '',
+      type: props.item.type || 'text',
+      validations: props.item.validations || {},
+      relations: props.item.relations || {},
+      isRequired: props.item.isRequired || false,
+      isDisabled: props.item.isDisabled || false,
+      listingOrder: props.item.listingOrder || props.allItems.length + 1,
       activeTab: props.activeTab || 'info',
     };
   }
@@ -58,57 +55,74 @@ class ContainerItemModal extends React.Component {
   //       return s.camelize(s.slugify(name), true);
   //   }
 
-  //   handleSubmit = () => {
-  //       const {_id, name, description, type, validations, relations, isRequired, isDisabled, listing_order} = this.state;
-  //       const slug = this.createSlug(name);
+  handleSubmit = values => {
+    this.setState({
+      name: values.name,
+      description: values.description,
+    });
 
-  //       if (name.length === 0) {
-  //           FlashMessages.sendError('Please type in field name');
-  //           return;
-  //       }
+    // if (name.length === 0) {
+    //   alertify.error('Please type in field name');
+    //   return;
+    // }
 
-  //       if (type === 'relation') {
-  //           if (_.isUndefined(relations.relation_id)
-  //               || _.isUndefined(relations.relation_field)
-  //               || relations.relation_id.length === 0
-  //               || relations.relation_field.length === 0) {
-  //               FlashMessages.sendError('Please select relation first in order to continue.');
-  //               this.setState({
-  //                   activeTab: 'relation'
-  //               });
-  //               return
-  //           }
-  //       }
+    // if (type === 'relation') {
+    //   if (
+    //     _.isUndefined(relations.relation_id) ||
+    //     _.isUndefined(relations.relation_field) ||
+    //     relations.relation_id.length === 0 ||
+    //     relations.relation_field.length === 0
+    //   ) {
+    //     FlashMessages.sendError(
+    //       'Please select relation first in order to continue.',
+    //     );
+    //     this.setState({
+    //       activeTab: 'relation',
+    //     });
+    //     return;
+    //   }
+    // }
 
-  //       if (type === 'enom') {
-  //           if (_.isUndefined(validations.options) || validations.options.length === 0) {
-  //               FlashMessages.sendError('Please set options for select input.');
-  //               this.setState({
-  //                   activeTab: 'validation'
-  //               });
-  //               return
-  //           }
-  //       }
+    // if (type === 'enom') {
+    //   if (
+    //     _.isUndefined(validations.options) ||
+    //     validations.options.length === 0
+    //   ) {
+    //     FlashMessages.sendError('Please set options for select input.');
+    //     this.setState({
+    //       activeTab: 'validation',
+    //     });
+    //     return;
+    //   }
+    // }
 
-  //       // check if field already exists with same name
-  //       const exists = lodash.find(this.props.allItems, {name});
-  //       if (!_.isUndefined(exists) && exists._id !== _id) {
-  //           FlashMessages.sendError(`Field with same name "${name}" already exists`);
-  //           return;
-  //       }
+    // check if field already exists with same name
+    // const exists = lodash.find(this.props.allItems, { name });
+    // if (!_.isUndefined(exists) && exists._id !== _id) {
+    //   FlashMessages.sendError(`Field with same name "${name}" already exists`);
+    //   return;
+    // }
 
-  //       // check if field `name` is changed, then rename in all items related to this
-  //       if (!_.isUndefined(this.props.container) && name !== this.props.item.name) {
-  //           Meteor.call('container.field.rename', this.props.container._id, this.props.item.name, name, (err) => {
-  //               if (!err) {
-  //                   console.log('renamed all data for this field')
-  //               }
-  //           });
-  //       }
+    // check if field `name` is changed, then rename in all items related to this
+    // if (!_.isUndefined(this.props.container) && name !== this.props.item.name) {
+    //   Meteor.call(
+    //     'container.field.rename',
+    //     this.props.container._id,
+    //     this.props.item.name,
+    //     name,
+    //     err => {
+    //       if (!err) {
+    //         console.log('renamed all data for this field');
+    //       }
+    //     },
+    //   );
+    // }
 
-  //       this.props.update({_id, name, slug, description, type, validations, relations, isRequired, isDisabled, listing_order});
-  //       this.props.toggleModal();
-  //   };
+    this.props.update({
+      ...this.state,
+    });
+    this.props.toggleModal();
+  };
 
   //   renderRelationFields() {
   //       if (isUndefined(this.state.relations.relation_id)) {
@@ -218,7 +232,7 @@ class ContainerItemModal extends React.Component {
             })}
             data-tab="info"
           >
-            <InfoForm />
+            <InfoForm submit={values => this.handleSubmit(values)} />
           </div>
           <div
             className={classNames('ui tab', {

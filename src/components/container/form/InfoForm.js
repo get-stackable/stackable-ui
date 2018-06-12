@@ -1,11 +1,14 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { withFormik } from 'formik';
+import Yup from 'yup';
 
 // this form is use for both purpose( create and update)
 // Our inner form component which receives our form's state and updater methods as props
 const InfoForm = ({
   values,
+  errors,
+  touched,
   handleChange,
   handleBlur,
   handleSubmit,
@@ -14,17 +17,21 @@ const InfoForm = ({
   <form onSubmit={handleSubmit}>
     <div className="ui form">
       <div className="field">
-        <label htmlFor="itemName">
+        <label htmlFor="name">
           Field Name
           <input
             type="text"
             name="name"
-            id="itemName"
+            id="name"
             placeholder="type field name here, eg: Title, Description, Featured Image, Is Active"
             onChange={handleChange}
             onBlur={handleBlur}
-            value={values.itemName}
+            value={values.name}
           />
+          {touched.name &&
+            errors.name && (
+              <div className="ui pointing red basic label">{errors.name}</div>
+            )}
         </label>
       </div>
       <div className="field">
@@ -33,6 +40,7 @@ const InfoForm = ({
           <input
             type="text"
             name="description"
+            id="description"
             placeholder="type field description here"
             onChange={handleChange}
             onBlur={handleBlur}
@@ -46,6 +54,7 @@ const InfoForm = ({
             <input
               type="checkbox"
               name="isDisabled"
+              id="isDisabled"
               checked={values.isDisabled}
               onChange={handleChange}
               onBlur={handleBlur}
@@ -69,24 +78,29 @@ const InfoForm = ({
 // Wrap our form with the using withFormik HoC
 export default withFormik({
   // Transform outer props into form values
-  mapPropsToValues: props => ({
-    itemName: '',
+  mapPropsToValues: () => ({
+    name: '',
     description: '',
     isDisabled: false,
   }),
   // Add a custom validation function (this can be async too!)
-  validate: () => {},
+  validationSchema: Yup.object().shape({
+    name: Yup.string().required('Item name is required!'),
+    description: Yup.string(),
+    isDisabled: Yup.boolean(),
+  }),
+
   // Submission handler
   handleSubmit: (values, { props, setSubmitting }) => {
     console.log('submit', values);
-    // props.submit(values);
+    props.submit(values);
     setSubmitting(false);
   },
 })(InfoForm);
 
 InfoForm.propTypes = {
   values: PropTypes.shape({
-    itemName: PropTypes.string,
+    name: PropTypes.string,
     description: PropTypes.string,
     isDisabled: PropTypes.bool,
   }).isRequired,

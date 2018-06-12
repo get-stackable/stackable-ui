@@ -3,7 +3,7 @@ import classNames from 'classnames';
 import alertify from 'alertify.js';
 import gql from 'graphql-tag';
 import { Mutation } from 'react-apollo';
-import { isUndefined } from 'lodash';
+import { isUndefined, sortBy } from 'lodash';
 
 import BigTitleInput from './BigTitleInput';
 import ContainerItemModal from './ContainerItemModal';
@@ -51,17 +51,16 @@ const createContainerMutation = gql`
 class ContainerUpdateForm extends React.Component {
   constructor(props) {
     super(props);
-
     this.state = {
       name: !isUndefined(props.container) ? props.container.name : '',
-      // items: !_.isUndefined(props.container)
-      //   ? _.sortBy(props.container.items, 'listing_order')
-      //   : [],
-      // isSingleItem: !_.isUndefined(props.container)
+      items: !isUndefined(props.container)
+        ? sortBy(props.container.items, 'listing_order')
+        : [],
+      // isSingleItem: isUndefined(props.container)
       //   ? props.container.isSingleItem
       //   : false,
-      itemModalVisible: true,
-      activeItemInModal: {},
+      fieldModalVisible: true,
+      activeFieldInModal: {},
       activeModalTab: 'info',
     };
   }
@@ -123,30 +122,31 @@ class ContainerUpdateForm extends React.Component {
     // trackEvent('Creating Container Field');
 
     this.setState({
-      itemModalVisible: true,
-      activeItemInModal: item,
+      fieldModalVisible: true,
+      activeFieldInModal: item,
       activeModalTab: activeTab,
     });
   };
 
-  // updateItem(item) {
-  //   const items = this.state.items;
+  updateItem(item) {
+    // const items = this.state.items;
+    console.log('bzcxcvjz', item);
 
-  //   // find in array
-  //   const index = lodash.findIndex(items, { _id: item._id });
+    // // find in array
+    // const index = lodash.findIndex(items, { id: item.id });
 
-  //   if (index == '-1') {
-  //     // new item
-  //     items.push(item);
-  //   } else {
-  //     // update item
-  //     items[index] = item;
-  //   }
+    // if (index === '-1') {
+    //   // new item
+    //   items.push(item);
+    // } else {
+    //   // update item
+    //   items[index] = item;
+    // }
 
-  //   this.setState({ items });
+    // this.setState({ items });
 
-  //   this.handleSubmit();
-  // }
+    // this.handleSubmit();
+  }
 
   // deleteContainer() {
   //   const appId = this.props.container.appId;
@@ -276,11 +276,9 @@ class ContainerUpdateForm extends React.Component {
                 <a
                   className="item"
                   key={index.id}
-                  onClick={this.openItemModal.bind(
-                    this,
-                    { type: item.value },
-                    'info',
-                  )}
+                  onClick={() =>
+                    this.openItemModal({ type: item.value }, 'info')
+                  }
                 >
                   {item.title}
                 </a>
@@ -307,13 +305,13 @@ class ContainerUpdateForm extends React.Component {
           </div>
         </div>
         <ContainerItemModal
-          visible={this.state.itemModalVisible}
-          // item={this.state.activeItemInModal}
-          toggleModal={() => this.setState({ itemModalVisible: false })}
-          // update={item => this.updateItem(item)}
-          // activeTab={this.state.activeModalTab}
+          visible={this.state.fieldModalVisible}
+          item={this.state.activeFieldInModal}
+          toggleModal={() => this.setState({ fieldModalVisible: false })}
+          update={item => this.updateItem(item)}
+          activeTab={this.state.activeModalTab}
           // siblingContainers={this.data.siblingContainers}
-          // allItems={this.state.items}
+          allItems={this.state.items}
           // container={this.props.container}
         />
       </div>

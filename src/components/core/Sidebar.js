@@ -29,10 +29,7 @@ export default class Sidebar extends React.Component {
           Dashboard
         </a>
         {/* {(!_.isUndefined(this.data.activeApp) && !_.isUndefined(this.data.activeApp.id)) ? */}
-        <a
-          className="item"
-          href="{FlowRouter.path('containersList', {appId: this.data.activeApp.id})}"
-        >
+        <a className="item" href="/containers">
           <img
             src="/images/icon-container.png"
             className="icon"
