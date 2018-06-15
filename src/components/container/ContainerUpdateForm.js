@@ -3,63 +3,90 @@ import classNames from 'classnames';
 import alertify from 'alertify.js';
 import gql from 'graphql-tag';
 import { Mutation } from 'react-apollo';
-import { isUndefined, sortBy } from 'lodash';
+import { isUndefined, sortBy, findIndex } from 'lodash';
 
 import BigTitleInput from './BigTitleInput';
-import ContainerItemModal from './ContainerItemModal';
+import ContainerFieldModal from './ContainerFieldModal';
+import ContactFieldsPreview from './ContactFieldsPreview';
 
 const fieldTypes = [
   {
+    id: 1,
     title: 'Text Field',
     value: 'text',
   },
   {
+    id: 2,
     title: 'Text Editor',
     value: 'textArea',
   },
   {
+    id: 3,
     title: 'Number',
     value: 'number',
   },
   {
+    id: 4,
     title: 'Boolean',
     value: 'boolean',
   },
   {
+    id: 5,
     title: 'Image Upload',
     value: 'image',
   },
   {
+    id: 6,
     title: 'Enom (Select)',
     value: 'enom',
   },
   {
+    id: 7,
     title: 'Relations',
     value: 'relation',
   },
 ];
 
 const createContainerMutation = gql`
-  mutation createContainer($appId: ID!, $name: String!) {
-    createContainer(appId: $appId, input: { name: $name }) {
+  mutation createContainer(
+    $appId: ID!
+    $name: String! # $fieldName: String # $fieldDescription: String
+  ) {
+    createContainer(
+      appId: $appId
+      input: {
+        name: $name
+        # fields: { name: $fieldName, description: $fieldDescription }
+      }
+    ) {
       id
       name
     }
   }
 `;
 
+// const updateContainerMutation = gql`
+//   mutation updateContainer($id: ID!, $fields: ContainerInput) {
+//     updateContainer(id: $id, input: { fields: $fields }) {
+//       id
+//       name
+//       ...fields
+//     }
+//   }
+// `;
+
 class ContainerUpdateForm extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       name: !isUndefined(props.container) ? props.container.name : '',
-      items: !isUndefined(props.container)
-        ? sortBy(props.container.items, 'listing_order')
+      fields: !isUndefined(props.container)
+        ? sortBy(props.container.fields, 'listing_order')
         : [],
       // isSingleItem: isUndefined(props.container)
       //   ? props.container.isSingleItem
       //   : false,
-      fieldModalVisible: true,
+      fieldModalVisible: false,
       activeFieldInModal: {},
       activeModalTab: 'info',
     };
@@ -128,24 +155,26 @@ class ContainerUpdateForm extends React.Component {
     });
   };
 
-  updateItem(item) {
-    // const items = this.state.items;
-    console.log('bzcxcvjz', item);
+  updateItem(field) {
+    const { fields } = this.state;
+    console.log('field', field);
 
-    // // find in array
-    // const index = lodash.findIndex(items, { id: item.id });
+    // find in array
+    const index = findIndex(fields, { id: field.id });
 
-    // if (index === '-1') {
-    //   // new item
-    //   items.push(item);
-    // } else {
-    //   // update item
-    //   items[index] = item;
-    // }
+    if (index === -1) {
+      console.log('index', index);
+      // new item
+      fields.push(field);
+    } else {
+      // update item
+      fields[index] = field;
+    }
+    // fields.push(field);
+    this.setState({ fields });
+    console.log('fields', this.state.fields);
 
-    // this.setState({ items });
-
-    // this.handleSubmit();
+    this.handleSubmit();
   }
 
   // deleteContainer() {
@@ -194,23 +223,31 @@ class ContainerUpdateForm extends React.Component {
   //   );
   // }
 
-  handleSubmit(createApplication) {
-    // if (this.state.items.length === 0) {
-    //   alertify.log(
-    //     'Please create at least one field in order to save container.',
-    //   );
-    // }
+  handleSubmit(mutation) {
+    console.log('Final State', this.state);
+    if (this.state.fields.length === 0) {
+      alertify.log(
+        'Please create at least one field in order to save container.',
+      );
+    }
+    // mutation({
+    //   variables: {
+    //     appId: '5ae456acde474d490108aab8',
+    //     input: {
+    //       name: this.state.name,
+    //       // ...this.state.fields,
+    //     },
+    //   },
+    // });
 
-    createApplication({
-      variables: { appId: '5ae456acde474d490108aab8', name: this.state.name },
-    });
-
-    alertify.log(this.state.name);
+    // alertify.log(this.state.name);
     // submit with bit delay
     // Meteor.setTimeout(() => this.props.handleSubmit(this.state), 500);
   }
 
   render() {
+    // const { location } = this.props;
+
     return (
       <div className="ui grid full-height" style={{ marginLeft: '0' }}>
         <div className="two wide column side-sub-menu">
@@ -237,7 +274,7 @@ class ContainerUpdateForm extends React.Component {
               <div className="ten wide column">
                 <div className="ui form">
                   <Mutation mutation={createContainerMutation}>
-                    {createApplication => (
+                    {createContainer => (
                       <React.Fragment>
                         <BigTitleInput
                           label="type container name here"
@@ -246,20 +283,19 @@ class ContainerUpdateForm extends React.Component {
                           onChange={e =>
                             this.setState({ name: e.target.value })
                           }
-                          onBlur={() => this.handleSubmit(createApplication)}
                         />
+                        <div className="six wide right aligned column">
+                          <button
+                            className="ui right labeled icon green button"
+                            onClick={() => this.handleSubmit(createContainer)}
+                          >
+                            <i className="save icon" />
+                            Save
+                          </button>
+                        </div>
                       </React.Fragment>
                     )}
                   </Mutation>
-                  <div className="six wide right aligned column">
-                    <button
-                      className="ui right labeled icon green button"
-                      onClick={() => this.handleSubmit()}
-                    >
-                      <i className="save icon" />
-                      Save
-                    </button>
-                  </div>
                 </div>
               </div>
             </div>
@@ -267,15 +303,15 @@ class ContainerUpdateForm extends React.Component {
               <div className="ui horizontal divider">select input type</div>
               <div
                 className={classNames('ui inverted dimmer', {
-                  // active: this.state.name.length === 0,
+                  active: this.state.name.length === 0,
                 })}
               />
             </div>
             <div className="ui stackable tabs menu">
-              {fieldTypes.map((item, index) => (
+              {fieldTypes.map(item => (
                 <a
                   className="item"
-                  key={index.id}
+                  key={item.id}
                   onClick={() =>
                     this.openItemModal({ type: item.value }, 'info')
                   }
@@ -287,32 +323,30 @@ class ContainerUpdateForm extends React.Component {
             <div className="ui horizontal divider">setup container inputs</div>
             <div className="ui grid">
               <div className="eight wide column">
-                <table
+                {/* <table
                   className="ui basic celled table"
                   style={{ marginTop: '50px' }}
                 >
                   <tbody ref="containerItems" id="containerItems">
-                    {/* TODO: map container item  */}
+                    TODO: map container item
                     bsdhv
                   </tbody>
-                </table>
+                </table> */}
               </div>
               <div className="eight wide column">
-                bcsmdbm
-                {/* <ContactFieldsPreview items={this.state.items} /> */}
+                <ContactFieldsPreview items={this.state.fields} />
               </div>
             </div>
           </div>
         </div>
-        <ContainerItemModal
+        <ContainerFieldModal
           visible={this.state.fieldModalVisible}
           item={this.state.activeFieldInModal}
           toggleModal={() => this.setState({ fieldModalVisible: false })}
-          update={item => this.updateItem(item)}
+          update={field => this.updateItem(field)}
           activeTab={this.state.activeModalTab}
           // siblingContainers={this.data.siblingContainers}
-          allItems={this.state.items}
-          // container={this.props.container}
+          allItems={this.state.fields}
         />
       </div>
     );

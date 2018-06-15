@@ -1,7 +1,6 @@
 import React from 'react';
-import PropTypes from 'prop-types';
+// import PropTypes from 'prop-types';
 import superplaceholder from 'superplaceholder';
-import gql from 'graphql-tag';
 
 class BigTitleInput extends React.Component {
   componentDidMount() {
@@ -14,8 +13,7 @@ class BigTitleInput extends React.Component {
     });
   }
 
-  handleSubmit(createApplication) {}
-
+  // handleSubmit(createApplication) {}
   render() {
     return (
       <div className="inline fields">

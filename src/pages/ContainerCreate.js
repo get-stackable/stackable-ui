@@ -1,13 +1,13 @@
 import React from 'react';
 
 import Layout from '../components/core/Layout';
-import ContainerUpdateForm from '../components/container/ContainerUpdateForm';
+import ContainerUpdate from '../components/container/form/ContainerUpdate';
 
 class ContainerCreate extends React.Component {
   render() {
     return (
       <Layout>
-        <ContainerUpdateForm />
+        <ContainerUpdate location={this.props.location} />
       </Layout>
     );
   }

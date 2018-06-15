@@ -3,12 +3,16 @@ import React from 'react';
 // import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import { upperFirst, isUndefined } from 'lodash';
+import alertify from 'alertify.js';
 
-import InfoForm from './form/InfoForm';
-import ValidationForm from './form/ValidationForm';
+// import InfoForm from './form/InfoForm';
+// import ValidationForm from './form/ValidationForm';
+
 import RelationForm from './form/RelationForm';
+import TextFieldValidations from './form/TextFieldValidations';
+import EnomFieldValidations from './form/EnomFieldValidations';
 
-class ContainerItemModal extends React.Component {
+class ContainerFieldModal extends React.Component {
   constructor(props) {
     super(props);
     this.state = this.updateState(props);
@@ -37,8 +41,9 @@ class ContainerItemModal extends React.Component {
     if (isUndefined(props.item)) {
       return {};
     }
+
     return {
-      // _id: props.item._id || 'Random.id(6)',
+      id: props.item.id || '',
       name: props.item.name || '',
       description: props.item.description || '',
       type: props.item.type || 'text',
@@ -55,16 +60,24 @@ class ContainerItemModal extends React.Component {
   //       return s.camelize(s.slugify(name), true);
   //   }
 
-  handleSubmit = values => {
-    this.setState({
-      name: values.name,
-      description: values.description,
-    });
+  handleSubmit = () => {
+    const {
+      // id,
+      name,
+      // description,
+      // type,
+      // validations,
+      // relations,
+      // isRequired,
+      // isDisabled,
+      // listing_order,
+    } = this.state;
+    // console.log('handle submit button', values);
 
-    // if (name.length === 0) {
-    //   alertify.error('Please type in field name');
-    //   return;
-    // }
+    if (name.length === 0) {
+      alertify.error('Please type in field name');
+      return;
+    }
 
     // if (type === 'relation') {
     //   if (
@@ -124,52 +137,70 @@ class ContainerItemModal extends React.Component {
     this.props.toggleModal();
   };
 
-  //   renderRelationFields() {
-  //       if (isUndefined(this.state.relations.relation_id)) {
-  //           return;
-  //       }
-
-  //       const relation = Container.findOne(this.state.relations.relation_id);
-
-  //       return (
-  //         <div className="fields">
-  //           <label>Relation Field</label>
-  //           {relation.items.map((item) => (
-  //             <div className="field" key={item._id}>
-  //               <div className="ui radio checkbox">
-  //                 <input
-  //                   type="radio"
-  //                   name="relation_field"
-  //                   value={item.slug}
-  //                   checked={item.slug === this.state.relations.relation_field ? 'checked' : false}
-  //                   onChange={(e) => this.setState({relations: {relation_id: relation._id, relation_field: e.target.value}})}
-  //                 />
-  //                 <label>{item.name}</label>
-  //               </div>
-  //             </div>
-  //                   ))}
-  //         </div>
-  //       )
+  // renderRelationFields() {
+  //   if (isUndefined(this.state.relations.relation_id)) {
+  //     return;
   //   }
 
+  //   const relation = Container.findOne(this.state.relations.relation_id);
+
+  //   return (
+  //     <div className="fields">
+  //       <label>Relation Field</label>
+  //       {relation.items.map(item => (
+  //         <div className="field" key={item._id}>
+  //           <div className="ui radio checkbox">
+  //             <input
+  //               type="radio"
+  //               name="relation_field"
+  //               value={item.slug}
+  //               checked={
+  //                 item.slug === this.state.relations.relation_field
+  //                   ? 'checked'
+  //                   : false
+  //               }
+  //               onChange={e =>
+  //                 this.setState({
+  //                   relations: {
+  //                     relation_id: relation._id,
+  //                     relation_field: e.target.value,
+  //                   },
+  //                 })
+  //               }
+  //             />
+  //             <label>{item.name}</label>
+  //           </div>
+  //         </div>
+  //       ))}
+  //     </div>
+  //   );
+  // }
+
   render() {
-    // TODO:
-    //   let customValidationsFields = null;
+    let customValidationsFields = null;
 
-    //   if (this.state.type === 'text' || this.state.type === 'number' || this.state.type === 'textArea') {
-    //       customValidationsFields = (<TextFieldValidations
-    //         value={this.state.validations}
-    //         onChange={(validations) => this.setState({validations})}
-    //         showType={this.state.type === 'text'}
-    //       />);
-    //   }
+    if (
+      this.state.type === 'text' ||
+      this.state.type === 'number' ||
+      this.state.type === 'textArea'
+    ) {
+      customValidationsFields = (
+        <TextFieldValidations
+          value={this.state.validations}
+          onChange={validations => this.setState({ validations })}
+          showType={this.state.type === 'text'}
+        />
+      );
+    }
 
-    //   if (this.state.type === 'enom') {
-    //       customValidationsFields = (<EnomFieldValidations
-    //         value={this.state.validations}
-    //         onChange={(validations) => this.setState({validations})}
-    //       />);
-    //   }
+    if (this.state.type === 'enom') {
+      customValidationsFields = (
+        <EnomFieldValidations
+          value={this.state.validations}
+          onChange={validations => this.setState({ validations })}
+        />
+      );
+    }
 
     return (
       <div
@@ -212,7 +243,7 @@ class ContainerItemModal extends React.Component {
             >
               Validations
             </a>
-            {this.state.type === 'relation' ? (
+            {this.state.type === 'relation' && (
               <a
                 className={classNames('item', {
                   active: this.state.activeTab === 'relation',
@@ -222,8 +253,6 @@ class ContainerItemModal extends React.Component {
               >
                 Relations
               </a>
-            ) : (
-              ''
             )}
           </div>
           <div
@@ -232,7 +261,50 @@ class ContainerItemModal extends React.Component {
             })}
             data-tab="info"
           >
-            <InfoForm submit={values => this.handleSubmit(values)} />
+            <div className="ui form">
+              <div className="field">
+                <label>Field Name</label>
+                <input
+                  type="text"
+                  name="name"
+                  id="itemName"
+                  placeholder="type field name here, eg: Title, Description, Featured Image, Is Active"
+                  value={this.state.name}
+                  onChange={e => this.setState({ name: e.target.value })}
+                />
+              </div>
+              <div className="field">
+                <label>Field Description</label>
+                <input
+                  type="text"
+                  name="description"
+                  placeholder="type field description here"
+                  value={this.state.description}
+                  onChange={e => this.setState({ description: e.target.value })}
+                />
+              </div>
+              <div className="field">
+                <div className="ui checkbox">
+                  <input
+                    type="checkbox"
+                    name="isDisabled"
+                    checked={this.state.isDisabled}
+                    onChange={e =>
+                      this.setState({ isDisabled: e.target.checked })
+                    }
+                  />
+                  <label>Field Disabled</label>
+                </div>
+              </div>
+              <div className="ui divider" />
+              <button
+                className="ui primary button"
+                type="submit"
+                onClick={this.handleSubmit}
+              >
+                Submit
+              </button>
+            </div>
           </div>
           <div
             className={classNames('ui tab', {
@@ -240,9 +312,32 @@ class ContainerItemModal extends React.Component {
             })}
             data-tab="validation"
           >
-            <ValidationForm />
+            <div className="ui form">
+              <div className="field">
+                <div className="ui checkbox">
+                  <input
+                    type="checkbox"
+                    name="isRequired"
+                    checked={this.state.isRequired}
+                    onChange={e =>
+                      this.setState({ isRequired: e.target.checked })
+                    }
+                  />
+                  <label>Field Required</label>
+                </div>
+              </div>
+              {customValidationsFields}
+              <div className="ui divider" />
+              <button
+                className="ui primary button"
+                type="submit"
+                onClick={this.handleSubmit}
+              >
+                Submit
+              </button>
+            </div>
           </div>
-          {this.state.type === 'relation' ? (
+          {this.state.type === 'relation' && (
             <div
               className={classNames('ui tab', {
                 active: this.state.activeTab === 'relation',
@@ -251,8 +346,6 @@ class ContainerItemModal extends React.Component {
             >
               <RelationForm />
             </div>
-          ) : (
-            ''
           )}
         </div>
       </div>
@@ -260,7 +353,7 @@ class ContainerItemModal extends React.Component {
   }
 }
 
-export default ContainerItemModal;
+export default ContainerFieldModal;
 
 // TODO:
 //  PropTypes = {

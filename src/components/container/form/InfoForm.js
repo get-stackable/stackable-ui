@@ -13,6 +13,7 @@ const InfoForm = ({
   handleBlur,
   handleSubmit,
   isSubmitting,
+  handleReset,
 }) => (
   <form onSubmit={handleSubmit}>
     <div className="ui form">
@@ -25,7 +26,7 @@ const InfoForm = ({
             id="name"
             placeholder="type field name here, eg: Title, Description, Featured Image, Is Active"
             onChange={handleChange}
-            onBlur={handleBlur}
+            onBlur={handleSubmit}
             value={values.name}
           />
           {touched.name &&
@@ -50,17 +51,14 @@ const InfoForm = ({
       </div>
       <div className="field">
         <div className="ui checkbox">
-          <label htmlFor="isDisabled">
-            <input
-              type="checkbox"
-              name="isDisabled"
-              id="isDisabled"
-              checked={values.isDisabled}
-              onChange={handleChange}
-              onBlur={handleBlur}
-            />
-            Field Disabled
-          </label>
+          <input
+            type="checkbox"
+            name="isDisabled"
+            checked={values.isDisabled}
+            onChange={handleChange}
+            onBlur={handleBlur}
+          />
+          <label> Field Disabled</label>
         </div>
       </div>
       <div className="ui divider" />
@@ -89,10 +87,9 @@ export default withFormik({
     description: Yup.string(),
     isDisabled: Yup.boolean(),
   }),
-
   // Submission handler
   handleSubmit: (values, { props, setSubmitting }) => {
-    console.log('submit', values);
+    console.log('INFO FORM submit', values);
     props.submit(values);
     setSubmitting(false);
   },
@@ -103,6 +100,12 @@ InfoForm.propTypes = {
     name: PropTypes.string,
     description: PropTypes.string,
     isDisabled: PropTypes.bool,
+  }).isRequired,
+  errors: PropTypes.shape({
+    name: PropTypes.string,
+  }).isRequired,
+  touched: PropTypes.shape({
+    name: PropTypes.bool,
   }).isRequired,
   handleChange: PropTypes.func.isRequired,
   handleBlur: PropTypes.func.isRequired,

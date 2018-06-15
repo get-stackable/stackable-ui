@@ -1,7 +1,7 @@
 import React from 'react';
 // import PropTypes from 'prop-types';
 
-import { Link } from 'react-router-dom';
+// import { Link } from 'react-router-dom';
 import gql from 'graphql-tag';
 import { Query } from 'react-apollo';
 import { lowerCase } from 'lodash';
@@ -86,7 +86,7 @@ class ContainersList extends React.Component {
                     {/* {container.isSingleItem ? (
                 <span>
                   manage
-                  {pluralize(containerName.toLowerCase(), 1)} 
+                  {pluralize(containerName.toLowerCase(), 1)}
                   item
                 </span>
               ) : (
