@@ -1,7 +1,7 @@
 import React from 'react';
 
 import Layout from '../components/core/Layout';
-import ContainerUpdate from '../components/container/form/ContainerUpdate';
+import ContainerUpdate from '../components/container/ContainerUpdate';
 
 class ContainerCreate extends React.Component {
   render() {

@@ -43,8 +43,9 @@ class ContainerFieldModal extends React.Component {
     }
 
     return {
-      id: props.item.id || '',
+      id: props.item.id || Math.random(),
       name: props.item.name || '',
+
       description: props.item.description || '',
       type: props.item.type || 'text',
       validations: props.item.validations || {},

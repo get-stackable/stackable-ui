@@ -1,49 +1,48 @@
+/* global $:true */
 import React from 'react';
-import { humanize } from 'underscore.string'
+// import { humanize } from 'underscore.string';
 // import PropTypes from 'prop-types';
 
 class EnomInput extends React.Component {
-  
-//  TODO:  
-//   static defaultProps = {
-//       options: ''
-//   };
+  static defaultProps = {
+    options: '',
+  };
 
-//  PropTypes = {
-//       onChange: PropTypes.func.isRequired,
-//       options: PropTypes.string.isRequired
-//   };
+  //  PropTypes = {
+  //       onChange: PropTypes.func.isRequired,
+  //       options: PropTypes.string.isRequired
+  //   };
 
-//   constructor(props) {
-//       super(props);
+  constructor(props) {
+    super(props);
 
-//       this.state = {
-//           options: this.createStringToArray(props.options)
-//       };
-//   }
+    this.state = {
+      options: this.createStringToArray(props.options),
+    };
+  }
 
-//   componentDidMount() {
-//       // $('#' + this.props.name).dropdown();
-//   }
+  componentDidMount() {
+    $(`#${this.props.name}`).dropdown();
+  }
 
-//   createStringToArray(options) {
-//       const array = options.split(',');
-//       return array.map((item) => item.trim());
-//   }
+  createStringToArray(options) {
+    const array = options.split(',');
+    return array.map(item => item.trim());
+  }
 
   render() {
-      return (
-        <select
-          {...this.props}
-          className="ui fluid normal dropdown"
-          id={this.props.name}
-          onChange={this.props.onChange}
-        >
-          <option>-- select option --</option>
-          {this.state.options.map((item) => <option  value={item}>{humanize(item)}</option>)}
-        </select>
-      )
+    return (
+      <select
+        {...this.props}
+        className="ui fluid normal dropdown"
+        id={this.props.name}
+        onChange={this.props.onChange}
+      >
+        <option>-- select option --</option>
+        {this.state.options.map(item => <option value={item}>{item}</option>)}
+      </select>
+    );
   }
-};
+}
 
 export default EnomInput;
