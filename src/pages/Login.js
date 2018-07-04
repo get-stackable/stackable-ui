@@ -1,8 +1,7 @@
 import React from 'react';
 import gql from 'graphql-tag';
-import { Mutation } from 'react-apollo';
+import { Mutation, Query } from 'react-apollo';
 import Helmet from 'react-helmet';
-import { Query } from 'react-apollo';
 
 import Layout from '../components/core/Layout';
 import LoginForm from '../components/LoginForm';
@@ -18,18 +17,18 @@ const currentUserQuery = gql`
 `;
 
 const loginMutation = gql`
- mutation($email: String!, $password: String! ){
-  login(input:{ email:$email, password:$password }){
-    jwt
-    user {
-      id
-      email
-      profile{
-        firstName
-        lastName
+  mutation($email: String!, $password: String!) {
+    login(input: { email: $email, password: $password }) {
+      jwt
+      user {
+        id
+        email
+        profile {
+          firstName
+          lastName
+        }
       }
     }
-  }
   }
 `;
 
@@ -48,7 +47,11 @@ class Login extends React.Component {
     cache.writeData({
       data: {
         user: {
-          __typename: 'User', id: login.user.id, email: login.user.email, firstName: login.user.profile.firstName, lastName: login.user.profile.lastName,
+          __typename: 'User',
+          id: login.user.id,
+          email: login.user.email,
+          firstName: login.user.profile.firstName,
+          lastName: login.user.profile.lastName,
         },
       },
     });
@@ -71,7 +74,7 @@ class Login extends React.Component {
               {loading && <p>Loading...</p>}
               {error && <p>Error :( Please try again</p>}
             </div>
-    )}
+          )}
         </Mutation>
         <Query query={currentUserQuery}>
           {({ data }) => {

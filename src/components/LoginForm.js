@@ -34,7 +34,9 @@ const InnerForm = ({
         />
       </div>
 
-      <button className="ui green button" disabled={isSubmitting}>Submit</button>
+      <button className="ui green button" disabled={isSubmitting}>
+        Submit
+      </button>
     </div>
   </form>
 );
@@ -44,7 +46,7 @@ export default withFormik({
   // Transform outer props into form values
   mapPropsToValues: () => ({ email: '', password: '' }),
   // Add a custom validation function (this can be async too!)
-  validate: (values) => {
+  validate: values => {
     const errors = {};
     if (!values.email) {
       errors.email = 'Required';
@@ -56,13 +58,7 @@ export default withFormik({
     return errors;
   },
   // Submission handler
-  handleSubmit: (
-    values,
-    {
-      props,
-      setSubmitting,
-    },
-  ) => {
+  handleSubmit: (values, { props, setSubmitting }) => {
     // console.log('submit', values);
     props.submit(values);
     setSubmitting(false);
