@@ -47,7 +47,17 @@ const App = () => (
           <PrivateRoute exact path="/dashboard" component={Dashboard} />
           <PrivateRoute exact path="/stack/manage/:id" component={AppUpdate} />
           <PrivateRoute exact path="/stack/:id" component={AppView} />
-          <Route exact path="/containers" component={Containers} />
+          <Route exact path="/containers/:id" component={Containers} />
+          <Route
+            exact
+            path="/container/create/:id"
+            component={ContainerCreate}
+          />
+          <Route
+            exact
+            path="/container/update/:id"
+            component={ContainerCreate}
+          />
           <Route exact path="/test" component={ContainerCreate} />
         </React.Fragment>
       </Router>

@@ -1,7 +1,7 @@
 import React from 'react';
 // import PropTypes from 'prop-types';
 
-// import { Link } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import gql from 'graphql-tag';
 import { Query } from 'react-apollo';
 import { lowerCase } from 'lodash';
@@ -31,10 +31,7 @@ class ContainersList extends React.Component {
 
   render() {
     return (
-      <Query
-        query={containersQuery}
-        variables={{ appId: '5ae456acde474d490108aab8' }}
-      >
+      <Query query={containersQuery} variables={{ appId: this.props.id }}>
         {({ loading, error, data }) => {
           if (loading) return <p>Loading...</p>;
           if (error) return <p>Error :</p>;
@@ -65,17 +62,16 @@ class ContainersList extends React.Component {
                         <i className="share icon" />
                         API URL
                       </a>
-                      <a
-                        // to={{
-                        //   pathname: 'containerUpdate',
-                        //   state: { id: container.id },
-                        // }}
+                      <Link
+                        to={{
+                          pathname: `/container/update/${container.id}`,
+                        }}
                         className="ui basic red button"
                         style={{ fontSize: '0.77rem', padding: '10px 5px' }}
                       >
                         <i className="settings icon" />
                         manage container
-                      </a>
+                      </Link>
                     </div>
                   </div>
                   <a className="ui primary bottom attached button">

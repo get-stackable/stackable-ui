@@ -1,6 +1,7 @@
 import React from 'react';
 // import PropTypes from 'prop-types';
 import classNames from 'classnames';
+import { Link } from 'react-router-dom';
 
 import PageHeading from '../core/PageHeading';
 
@@ -18,6 +19,7 @@ class AppSteps extends React.Component {
   }
 
   render() {
+    const { id } = this.props;
     return (
       <div>
         <PageHeading>Well Done!</PageHeading>
@@ -38,9 +40,11 @@ class AppSteps extends React.Component {
                   </div>
                 </div>
                 <div className="extra">
-                  <button className="ui right floated green button">
-                    + create new container
-                  </button>
+                  <Link to={{ pathname: `/containers/${id}` }}>
+                    <button className="ui right floated green button">
+                      + create new container
+                    </button>
+                  </Link>
                 </div>
               </div>
               <div

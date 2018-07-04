@@ -21,6 +21,7 @@ class AppCard extends React.Component {
           if (loading) return <p>Loading...</p>;
           if (error) return <p>Error :</p>;
           const applications = data.allApplications;
+
           return (
             <React.Fragment>
               {applications.map(app => (
@@ -48,8 +49,8 @@ class AppCard extends React.Component {
                     </div>
                     <div className="thirteen wide column">
                       <div className="content">
-                        {/* TODO: if container is empty redirect to stack/id else redirect to container/id */}
-                        <a href={`stack/${app.id}`} className="header">
+                        {/* TODO: if container is empty redirect to stack/id else redirect to containers/id */}
+                        <a href={`containers/${app.id}`} className="header">
                           {app.name}
                         </a>
                         <div className="meta">Public Key: {app.privateKey}</div>

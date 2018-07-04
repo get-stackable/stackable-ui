@@ -47,6 +47,17 @@ const fieldTypes = [
 ];
 
 class ContainerUpdateForm extends React.Component {
+  static getDerivedStateFromProps(props, state) {
+    if (props.container !== state) {
+      return {
+        name: props.container.name,
+        fields: props.container.fields,
+        isSingleItem: props.container.isSingleItem,
+      };
+    }
+    return null;
+  }
+
   constructor(props) {
     super(props);
     this.state = {
@@ -54,7 +65,7 @@ class ContainerUpdateForm extends React.Component {
       fields: !isUndefined(props.container)
         ? sortBy(props.container.fields, 'listingOrder')
         : [],
-      isSingleItem: isUndefined(props.container)
+      isSingleItem: !isUndefined(props.container)
         ? props.container.isSingleItem
         : false,
       fieldModalVisible: false,
@@ -68,16 +79,6 @@ class ContainerUpdateForm extends React.Component {
     drake.on('dragend', el => {
       this.reOrderItems();
     });
-  }
-
-  componentWillReceiveProps(nextProps) {
-    if (isUndefined(nextProps.container)) {
-      this.setState({
-        name: nextProps.container.name,
-        fields: nextProps.container.fields,
-        isSingleItem: nextProps.container.isSingleItem,
-      });
-    }
   }
 
   reOrderItems() {
@@ -110,7 +111,7 @@ class ContainerUpdateForm extends React.Component {
 
   updateItem(field) {
     const { fields } = this.state;
-    // console.log('field', field);
+    console.log('field', field);
 
     // find in array
     const index = findIndex(fields, { id: field.id });

@@ -49,7 +49,7 @@ class AppView extends React.Component {
   render() {
     return (
       <Layout>
-        <AppSteps />
+        <AppSteps id={this.props.match.params.id} />
       </Layout>
     );
   }

@@ -1,57 +1,13 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 import Layout from '../components/core/Layout';
 import SearchContainersForm from '../components/container/SearchContainersForm';
 import ContainersList from '../components/container/ContainersList';
 
 class Containers extends React.Component {
-  // constructor(props) {
-  //   super(props);
-
-  //   this.state = {
-  //     query: null,
-  //   };
-  // }
-
-  // getMeteorData() {
-  //   const handle = Meteor.subscribe('containers.all', this.props.appId);
-
-  //   let find = {};
-  //   if (!_.isNull(this.state.query)) {
-  //     let queryRegex = '.*' + this.state.query + '.*';
-  //     find = {
-  //       $or: [{ name: { $regex: queryRegex, $options: 'i' } }],
-  //     };
-  //   }
-
-  //   return {
-  //     loading: !handle.ready(),
-  //     containers: Container.find(find, { sort: { createdAt: -1 } }).fetch(),
-  //     app: Application.findOne(this.props.appId),
-  //   };
-  // }
-
-  // componentDidMount() {
-  //   this.setActiveApp();
-  // }
-
-  // componentDidUpdate() {
-  //   this.setActiveApp();
-  // }
-
-  // setActiveApp() {
-  //   if (!_.isUndefined(this.data.app)) {
-  //     Session.set('active.app', {
-  //       id: this.data.app._id,
-  //       name: this.data.app.name,
-  //     });
-  //   }
-  // }
-
   render() {
-    // if (this.data.loading) {
-    //   return <Loading active={true} />;
-    // }
+    const { match } = this.props;
 
     return (
       <Layout>
@@ -62,7 +18,12 @@ class Containers extends React.Component {
                 {/* {this.data.app.name}'s */}
                 Containers
               </h3>
-              <a className="ui orange button item">+ create container</a>
+              <Link
+                to={{ pathname: `/container/create/${match.params.id}` }}
+                className="ui orange button item"
+              >
+                + create container
+              </Link>
               <div className="item" />
             </div>
           </div>
@@ -73,7 +34,7 @@ class Containers extends React.Component {
                   <SearchContainersForm />
                 </div>
                 <div className="sixteen wide column padding35">
-                  <ContainersList />
+                  <ContainersList id={match.params.id} />
                 </div>
               </div>
             </div>

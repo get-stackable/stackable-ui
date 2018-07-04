@@ -2,7 +2,7 @@
 import React from 'react';
 // import PropTypes from 'prop-types';
 import classNames from 'classnames';
-import { upperFirst, isUndefined } from 'lodash';
+import { upperFirst, isUndefined, kebabCase } from 'lodash';
 import alertify from 'alertify.js';
 
 // import InfoForm from './form/InfoForm';
@@ -45,7 +45,7 @@ class ContainerFieldModal extends React.Component {
     return {
       id: props.item.id || Math.random(),
       name: props.item.name || '',
-
+      slug: props.item.slug || '',
       description: props.item.description || '',
       type: props.item.type || 'text',
       validations: props.item.validations || {},
@@ -134,6 +134,7 @@ class ContainerFieldModal extends React.Component {
 
     this.props.update({
       ...this.state,
+      slug: kebabCase(name),
     });
     this.props.toggleModal();
   };
