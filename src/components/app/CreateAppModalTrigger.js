@@ -1,5 +1,5 @@
+/* global $:true */
 import React from 'react';
-
 
 class CreateAppModalTrigger extends React.Component {
   constructor(props) {
@@ -12,16 +12,14 @@ class CreateAppModalTrigger extends React.Component {
     this.loadModal(nextProps);
   }
 
-  // loadModal(props) {
-  //   $('#app-create-modal')
-  //     .modal({
-  //       detachable: false,
-  //       onHidden() {
-  //         Session.set('app.create.modal', false);
-  //       },
-  //     })
-  //     .modal(props.modalVisible ? 'show' : 'hide');
-  // }
+  loadModal(props) {
+    $('#app-create-modal')
+      .modal({
+        detachable: false,
+        onHidden() {},
+      })
+      .modal(props.modelVisible === true ? 'show' : 'hide');
+  }
 
   render() {
     return <div />;

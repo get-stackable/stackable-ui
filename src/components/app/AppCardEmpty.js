@@ -1,8 +1,15 @@
 import React from 'react';
+import { ApolloConsumer } from 'react-apollo';
 // import PropTypes from 'prop-types';
 
 class AppCardEmpty extends React.Component {
-  // TODO: showCreateModal
+  showCreateModal(client) {
+    client.writeData({
+      data: {
+        stack: { __typename: 'Stack', modelVisible: true },
+      },
+    });
+  }
 
   render() {
     return (
@@ -13,13 +20,17 @@ class AppCardEmpty extends React.Component {
             <br />
             empty :(
           </div>
-          <a
-            className="meta"
-            // onClick={this.showCreateModal}
-            style={{ textDecoration: 'underline' }}
-          >
-            + create new stack
-          </a>
+          <ApolloConsumer>
+            {client => (
+              <a
+                className="meta"
+                style={{ textDecoration: 'underline' }}
+                onClick={() => this.showCreateModal(client)}
+              >
+                + create new stack
+              </a>
+            )}
+          </ApolloConsumer>
         </div>
       </div>
     );

@@ -1,6 +1,5 @@
 import React from 'react';
 import gql from 'graphql-tag';
-import alertify from 'alertify.js';
 import { Mutation } from 'react-apollo';
 
 import AppForm from './form/AppForm';
@@ -17,7 +16,7 @@ class AppStepTwoModel extends React.Component {
   render() {
     return (
       <Mutation mutation={createAppMutation}>
-        {(createApplication, { loading, error, data }) => (
+        {createApplication => (
           <React.Fragment>
             <AppForm
               type="create"

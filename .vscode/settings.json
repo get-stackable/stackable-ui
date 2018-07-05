@@ -5,7 +5,7 @@
     "git.enableSmartCommit": true,
     "workbench.iconTheme": "vscode-icons",
     "editor.tabSize": 2,
-    "window.zoomLevel": 1,
+    "window.zoomLevel": 0,
     "window.restoreWindows": "all",
     "window.newWindowDimensions": "inherit",
     "editor.lineHeight": 25,

@@ -5,6 +5,16 @@ import { Query, Mutation } from 'react-apollo';
 import { ContainerFragment } from '../../utils/fragments';
 import ContainerUpdateForm from './ContainerUpdateForm';
 
+// Local Query
+const stackQuery = gql`
+  {
+    stack @client {
+      appId
+    }
+  }
+`;
+
+// Conatiner Query
 const containerQuery = gql`
   ${ContainerFragment}
   query container($id: ID!) {
@@ -14,14 +24,7 @@ const containerQuery = gql`
   }
 `;
 
-const stackQuery = gql`
-  {
-    stack @client {
-      appId
-    }
-  }
-`;
-
+// Create Container Mutation
 const createContainerMutation = gql`
   ${ContainerFragment}
   mutation createContainer(
@@ -35,29 +38,28 @@ const createContainerMutation = gql`
   }
 `;
 
+// Update Conatiner Mutation
 const updateContainerMutation = gql`
+  ${ContainerFragment}
   mutation updateContainer(
     $id: ID!
     $name: String
     $fields: [ContainerFieldInput]
   ) {
     updateContainer(id: $id, input: { name: $name, fields: $fields }) {
-      id
-      name
-      fields {
-        name
-      }
+      ...ContainerFragment
     }
   }
 `;
 
+// Testing Local Query
+
 const Stack = () => (
   <Query query={stackQuery}>
-    {({ data, client }) => (
+    {data => (
       <div>
-        {console.log('appid')}
-        <p>{data && data.stack && `🐑 Counter: ${data.stack.appId}`}</p>
-        {/* <button onClick={() => handleIncrement(data, client)}>Increment</button> */}
+        {console.log('jckdgfsgfi', data)}
+        <p>{data && data.stack && `🐑 App Id: ${data.stack.appId}`}</p>
       </div>
     )}
   </Query>
@@ -65,7 +67,6 @@ const Stack = () => (
 
 const ContainerMutation = ({ data, id }) => {
   if (data == null) {
-    console.log('create Mutation');
     return (
       <Mutation
         mutation={createContainerMutation}
@@ -74,7 +75,6 @@ const ContainerMutation = ({ data, id }) => {
         {createContainer => (
           <ContainerUpdateForm
             mutation={input => {
-              console.log('results', ...input);
               createContainer({
                 variables: {
                   appId: id,
@@ -87,14 +87,12 @@ const ContainerMutation = ({ data, id }) => {
       </Mutation>
     );
   }
-  console.log('Update Mutation');
   return (
     <Mutation mutation={updateContainerMutation}>
       {updateContainer => (
         <ContainerUpdateForm
           container={data.container}
           mutation={input => {
-            console.log('results', input);
             updateContainer({
               variables: {
                 id,
@@ -111,7 +109,6 @@ const ContainerMutation = ({ data, id }) => {
 class ContainerUpdate extends React.Component {
   render() {
     const { url, id } = this.props;
-
     return (
       <React.Fragment>
         <Stack />

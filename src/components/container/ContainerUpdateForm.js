@@ -227,16 +227,16 @@ class ContainerUpdateForm extends React.Component {
                     value={this.state.name}
                     onChange={e => this.setState({ name: e.target.value })}
                   />
-                  <div className="six wide right aligned column">
-                    <button
-                      className="ui right labeled icon green button"
-                      onClick={() => this.handleSubmit()}
-                    >
-                      <i className="save icon" />
-                      Save
-                    </button>
-                  </div>
                 </div>
+              </div>
+              <div className="six wide column">
+                <button
+                  className="ui right floated labeled icon green button"
+                  onClick={() => this.handleSubmit()}
+                >
+                  <i className="save icon" />
+                  Save
+                </button>
               </div>
             </div>
             <div style={{ position: 'relative' }}>

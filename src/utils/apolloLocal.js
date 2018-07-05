@@ -17,6 +17,7 @@ const stateLink = withClientState({
       appId: 'ghdfcyffy',
       containerId: null,
       itemId: null,
+      modelVisible: false,
     },
     user: {
       __typename: 'User',
