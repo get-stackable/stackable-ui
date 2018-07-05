@@ -5,7 +5,7 @@ import gql from 'graphql-tag';
 import { withFormik } from 'formik';
 import Yup from 'yup';
 
-const ContactForm = (props) => {
+const ContactForm = props => {
   const {
     values,
     touched,
@@ -29,7 +29,8 @@ const ContactForm = (props) => {
             onChange={handleChange}
             onBlur={handleBlur}
           />
-          {errors.name && touched.name && <p className="help is-danger">{errors.name}</p>}
+          {errors.name &&
+            touched.name && <p className="help is-danger">{errors.name}</p>}
         </div>
       </div>
       <div className="field">
@@ -43,7 +44,8 @@ const ContactForm = (props) => {
             onChange={handleChange}
             onBlur={handleBlur}
           />
-          {errors.email && touched.email && <p className="help is-danger">{errors.email}</p>}
+          {errors.email &&
+            touched.email && <p className="help is-danger">{errors.email}</p>}
         </div>
       </div>
       <div className="field">
@@ -57,12 +59,21 @@ const ContactForm = (props) => {
             onChange={handleChange}
             onBlur={handleBlur}
           />
-          {errors.message && touched.message && <p className="help is-danger">{errors.message}</p>}
+          {errors.message &&
+            touched.message && (
+              <p className="help is-danger">{errors.message}</p>
+            )}
         </div>
       </div>
       <div className="field">
         <div className="control">
-          <button type="submit" className="button is-link" disabled={isSubmitting}>Submit</button>
+          <button
+            type="submit"
+            className="button is-link"
+            disabled={isSubmitting}
+          >
+            Submit
+          </button>
         </div>
       </div>
     </form>
@@ -115,15 +126,15 @@ export default compose( // eslint-disable-line
   graphql(addContactMutation, {
     name: 'addContact',
     props: ({ addContact }) => ({
-      addContact: (contactInput) => {
+      addContact: contactInput => {
         addContact({
           variables: contactInput,
         })
-          .then((result) => {
+          .then(result => {
             console.log('result', result);
             alert('Contact form sent successfully');
           })
-          .catch((error) => {
+          .catch(error => {
             console.log('error', error);
             alert(error);
           });
