@@ -2,54 +2,35 @@ import React from 'react';
 import gql from 'graphql-tag';
 import { Query, Mutation } from 'react-apollo';
 
+import { ContainerFragment } from '../../utils/fragments';
 import ContainerUpdateForm from './ContainerUpdateForm';
 
 const containerQuery = gql`
+  ${ContainerFragment}
   query container($id: ID!) {
     container(id: $id) {
-      name
-      fields {
-        id
-        name
-        slug
-        description
-        type
-        isRequired
-        isDisabled
-        validation {
-          between
-          min
-          max
-        }
-      }
+      ...ContainerFragment
+    }
+  }
+`;
+
+const stackQuery = gql`
+  {
+    stack @client {
+      appId
     }
   }
 `;
 
 const createContainerMutation = gql`
+  ${ContainerFragment}
   mutation createContainer(
     $appId: ID!
-    $name: String # $fieldName: String # $fieldDescription: String # $slug: String # $type: String # $isRequired: Boolean # $isDisabled: Boolean # $min: Int # $max: Int # $between: Int
+    $name: String
+    $fields: [ContainerFieldInput]
   ) {
-    createContainer(
-      appId: $appId
-      input: {
-        name: $name
-        # fields: [
-        #   {
-        #     name: $fieldName
-        #     slug: $slug
-        #     description: $fieldDescription
-        #         type: $type
-        #         isRequired: $isRequired
-        #         isDisabled: $isDisabled
-        #         validation: { max: $max, min: $min, between: $between }
-        #   }
-        # ]
-      }
-    ) {
-      id
-      name
+    createContainer(appId: $appId, input: { name: $name, fields: $fields }) {
+      ...ContainerFragment
     }
   }
 `;
@@ -58,14 +39,29 @@ const updateContainerMutation = gql`
   mutation updateContainer(
     $id: ID!
     $name: String
-    $fields: [ContainerFieldInput] # $fieldName: String # $fieldDescription: String # $slug: String # $type: String # $isRequired: Boolean # $isDisabled: Boolean # $min: Int # $max: Int # $between: Int
+    $fields: [ContainerFieldInput]
   ) {
     updateContainer(id: $id, input: { name: $name, fields: $fields }) {
       id
       name
+      fields {
+        name
+      }
     }
   }
 `;
+
+const Stack = () => (
+  <Query query={stackQuery}>
+    {({ data, client }) => (
+      <div>
+        {console.log('appid')}
+        <p>{data && data.stack && `🐑 Counter: ${data.stack.appId}`}</p>
+        {/* <button onClick={() => handleIncrement(data, client)}>Increment</button> */}
+      </div>
+    )}
+  </Query>
+);
 
 const ContainerMutation = ({ data, id }) => {
   if (data == null) {
@@ -82,7 +78,7 @@ const ContainerMutation = ({ data, id }) => {
               createContainer({
                 variables: {
                   appId: id,
-                  name: input.name,
+                  ...input,
                 },
               });
             }}
@@ -102,8 +98,7 @@ const ContainerMutation = ({ data, id }) => {
             updateContainer({
               variables: {
                 id,
-                name: 'boomrang',
-                fields: [{ name: 'hello' }],
+                ...input,
               },
             });
           }}
@@ -119,6 +114,7 @@ class ContainerUpdate extends React.Component {
 
     return (
       <React.Fragment>
+        <Stack />
         {url === `/container/update/${id}` ? (
           <Query query={containerQuery} variables={{ id }}>
             {({ loading, error, data }) => {

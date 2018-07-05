@@ -6,8 +6,8 @@ import classNames from 'classnames';
 import Layout from '../components/core/Layout';
 import PageHeading from '../components/core/PageHeading';
 import AppCardEmpty from '../components/app/AppCardEmpty';
-// import CreateAppModal from '../components/app/CreateAppModal';
-import AppCard from '../components/app/AppCard';
+import CreateAppModal from '../components/app/CreateAppModal';
+import AppCardList from '../components/app/AppCardList';
 
 class Dashboard extends React.Component {
   render() {
@@ -20,18 +20,15 @@ class Dashboard extends React.Component {
             <h3>My Stacks</h3>
             <div
               className={classNames('ui cards', {
-                'centered aligned': 'this.data.apps.length === 0',
+                '': 'this.data.apps.length === 0',
               })}
             >
-              {/* {this.data.apps.map((app) => (
-                  <AppCard key={app._id} app={app} />
-                              ))}
-                <AppCardEmpty /> */}
-              <AppCard />
+              <AppCardList />
               <AppCardEmpty />
             </div>
           </div>
         </div>
+        <CreateAppModal />
       </Layout>
     );
   }

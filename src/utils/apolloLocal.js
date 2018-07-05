@@ -12,6 +12,12 @@ const stateLink = withClientState({
       __typename: 'Counter',
       value: 1,
     },
+    stack: {
+      __typename: 'Stack',
+      appId: 'ghdfcyffy',
+      containerId: null,
+      itemId: null,
+    },
     user: {
       __typename: 'User',
       id: null,

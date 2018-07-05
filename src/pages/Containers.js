@@ -8,7 +8,6 @@ import ContainersList from '../components/container/ContainersList';
 class Containers extends React.Component {
   render() {
     const { match } = this.props;
-
     return (
       <Layout>
         <div className="ui grid full-height" style={{ marginLeft: '0' }}>

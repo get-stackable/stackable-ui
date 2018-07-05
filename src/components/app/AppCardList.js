@@ -13,7 +13,7 @@ const applicationsQuery = gql`
   }
 `;
 
-class AppCard extends React.Component {
+class AppCardList extends React.Component {
   render() {
     return (
       <Query query={applicationsQuery}>
@@ -80,4 +80,4 @@ class AppCard extends React.Component {
   }
 }
 
-export default AppCard;
+export default AppCardList;

@@ -1,8 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
-
-import config from '../../utils/config'
+import config from '../../utils/config';
 import SearchForm from './SearchForm';
 
 class Header extends React.Component {
@@ -15,24 +14,27 @@ class Header extends React.Component {
   //     };
   // }
 
-  showCreateModal ()  {
+  showCreateModal() {
     // Session.set('app.create.modal', true);
-  };
-
-  showSearch() {
-      if (this.data.currentRoute === 'containersList' || this.data.currentRoute === 'itemsList') {
-          return false;
-      }
-
-      return true;
   }
 
-  logout () {
-      // AccountsTemplates.logout();
-      // Meteor.setTimeout(() => {
-      //     FlowRouter.go('login');
-      // }, 500);
-  };
+  showSearch() {
+    if (
+      this.data.currentRoute === 'containersList' ||
+      this.data.currentRoute === 'itemsList'
+    ) {
+      return false;
+    }
+
+    return true;
+  }
+
+  logout() {
+    // AccountsTemplates.logout();
+    // Meteor.setTimeout(() => {
+    //     FlowRouter.go('login');
+    // }, 500);
+  }
 
   // renderApps() {
   //     if (this.data.apps.length === 0) {
@@ -53,41 +55,42 @@ class Header extends React.Component {
   // }
 
   render() {
-      return (
-        <div className="ui fixed inverted top menu">
-          <div className="ui fluid container">
-            <Link to="/dashboard" className="header item">
-              <img className="logo" src="/images/logo.png" alt="stackable logo" />
-              {config.siteName}
-              <div className="sub header">{config.siteDescription}</div>
-            </Link>
-           
-            <div className="item">
-              <SearchForm />
-            </div>
-            <div className="item">
-              <p className="active-site" />
-            </div>
-            <div className="right item">
-              <a onClick={() => this.logout()} >
-                <i className="sign out icon" />
-                          logout
+    return (
+      <div className="ui fixed inverted top menu">
+        <div className="ui fluid container">
+          <Link to="/dashboard" className="header item">
+            <img className="logo" src="/images/logo.png" alt="stackable logo" />
+            {config.siteName}
+            <div className="sub header">{config.siteDescription}</div>
+          </Link>
+
+          <div className="item">
+            <SearchForm />
+          </div>
+          <div className="item">
+            <p className="active-site" />
+          </div>
+          <div className="right item">
+            <a onClick={() => this.logout()}>
+              <i className="sign out icon" />
+              logout
+            </a>
+          </div>
+          <div
+            className="ui simple dropdown right item"
+            style={{ marginLeft: '30px !important' }}
+          >
+            Switch Stacks <i className="dropdown icon" />
+            <div className="menu">
+              <a className="item" onClick={this.showCreateModal}>
+                <i className="plus icon" /> new stack
               </a>
-            </div>
-            <div className="ui simple dropdown right item" style={{'marginLeft': '30px !important'}}>
-                      Switch Stacks <i className="dropdown icon" />
-              <div className="menu">
-                
-                <a className="item" onClick={this.showCreateModal} >
-                  <i className="plus icon" /> new stack
-                </a>
-              </div>
             </div>
           </div>
         </div>
-      )
+      </div>
+    );
   }
-};
+}
 
 export default Header;
-
