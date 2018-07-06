@@ -20,12 +20,12 @@ const stackQuery = gql`
 
 class Dashboard extends React.Component {
   render() {
+    const { history } = this.props;
     return (
       <Layout>
         <Query query={stackQuery}>
           {({ data, client }) => (
             <React.Fragment>
-              {console.log('local', data, client)}
               <PageHeading>Dashboard</PageHeading>
               {/* <UserStats user={this.data.user} /> */}
               <div className="ui grid padding35">
@@ -41,7 +41,7 @@ class Dashboard extends React.Component {
                   </div>
                 </div>
               </div>
-              <CreateAppModal data={data} />
+              <CreateAppModal data={data} history={history} />
             </React.Fragment>
           )}
         </Query>

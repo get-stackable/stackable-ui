@@ -1,6 +1,13 @@
 import gql from 'graphql-tag';
 
 // Application Fragments
+export const AppFragment = gql`
+  fragment AppFragment on Application {
+    id
+    name
+    privateKey
+  }
+`;
 
 // Container Fragments
 

@@ -5,15 +5,6 @@ import { Query, Mutation } from 'react-apollo';
 import { ContainerFragment } from '../../utils/fragments';
 import ContainerUpdateForm from './ContainerUpdateForm';
 
-// Local Query
-const stackQuery = gql`
-  {
-    stack @client {
-      appId
-    }
-  }
-`;
-
 // Conatiner Query
 const containerQuery = gql`
   ${ContainerFragment}
@@ -51,19 +42,6 @@ const updateContainerMutation = gql`
     }
   }
 `;
-
-// Testing Local Query
-
-const Stack = () => (
-  <Query query={stackQuery}>
-    {data => (
-      <div>
-        {console.log('jckdgfsgfi', data)}
-        <p>{data && data.stack && `🐑 App Id: ${data.stack.appId}`}</p>
-      </div>
-    )}
-  </Query>
-);
 
 const ContainerMutation = ({ data, id }) => {
   if (data == null) {
@@ -111,7 +89,6 @@ class ContainerUpdate extends React.Component {
     const { url, id } = this.props;
     return (
       <React.Fragment>
-        <Stack />
         {url === `/container/update/${id}` ? (
           <Query query={containerQuery} variables={{ id }}>
             {({ loading, error, data }) => {

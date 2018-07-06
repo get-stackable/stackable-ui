@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { withFormik } from 'formik';
 import { isUndefined } from 'lodash';
+import { ApolloConsumer } from 'react-apollo';
 
 // this form is use for both purpose( create and update)
 // Our inner form component which receives our form's state and updater methods as props
@@ -44,15 +45,26 @@ const AppForm = ({
         {/* {touched.description &&
           errors.description && <div>{errors.description}</div>} */}
       </div>
-      <button
-        className="ui primary button"
-        type="submit"
-        disabled={isSubmitting}
-      >
-        {type === 'create' && ' Create!'}
-        {type === 'update' && ' Update!'}
-        {type === 'clone' && ' Clone!'}
-      </button>
+      <ApolloConsumer>
+        {client => (
+          <button
+            className="ui primary button"
+            type="submit"
+            disabled={isSubmitting}
+            onClick={() => {
+              client.writeData({
+                data: {
+                  stack: { __typename: 'Stack', modelVisible: false },
+                },
+              });
+            }}
+          >
+            {type === 'create' && ' Create!'}
+            {type === 'update' && ' Update!'}
+            {type === 'clone' && ' Clone!'}
+          </button>
+        )}
+      </ApolloConsumer>
     </div>
   </form>
 );
