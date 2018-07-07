@@ -7,7 +7,6 @@ import apolloClient from './utils/apolloClient';
 import registerServiceWorker from './utils/registerServiceWorker';
 import './styles/main.scss';
 
-// import Home from './pages/Home';
 import Dashboard from './pages/Dashboard';
 import Login from './pages/Login';
 import AppUpdate from './pages/AppUpdate';

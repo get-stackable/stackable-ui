@@ -21,6 +21,7 @@ const stackQuery = gql`
 class Dashboard extends React.Component {
   render() {
     const { history } = this.props;
+
     return (
       <Layout>
         <Query query={stackQuery}>
