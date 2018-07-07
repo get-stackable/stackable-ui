@@ -1,3 +1,4 @@
+/* global $:true */
 import React from 'react';
 import PropTypes from 'prop-types';
 import gql from 'graphql-tag';
@@ -19,16 +20,17 @@ const cloneApplicationMutation = gql`
 `;
 
 class AppCloneModal extends React.Component {
-  // componentDidUpdate() {
-  //     const self = this;
-  //     $('#app-clone-modal')
-  //         .modal({
-  //             detachable: false,
-  //             onHidden(){
-  //                 self.props.toggleModal()
-  //             }
-  //         })
-  //         .modal(this.props.visible ? 'show' : 'hide');
+  componentDidUpdate() {
+    const self = this;
+    $('#app-clone-modal')
+      .modal({
+        detachable: false,
+        onHidden() {
+          self.props.toggleModal();
+        },
+      })
+      .modal(this.props.visibleCloneModel ? 'show' : 'hide');
+  }
 
   render() {
     const { appId } = this.props;
@@ -37,11 +39,21 @@ class AppCloneModal extends React.Component {
         <div className="header">
           <img src="/images/logo.png" alt="logo" />
           Clone stack
-          <i className="close icon" />
+          <i
+            className="close icon"
+            style={{ cursor: 'pointer' }}
+            onClick={() => this.props.toggleModal()}
+          />
         </div>
         <div className="content">
-          <Mutation mutation={cloneApplicationMutation}>
-            {(cloneApplication, { data, loading, error }) => (
+          <Mutation
+            mutation={cloneApplicationMutation}
+            onCompleted={() => {
+              this.props.history.push('/dashboard');
+              alertify.success('Cloning Sucessfully');
+            }}
+          >
+            {cloneApplication => (
               <React.Fragment>
                 <AppForm
                   type="clone"
@@ -54,9 +66,6 @@ class AppCloneModal extends React.Component {
                     });
                   }}
                 />
-                {loading && <p>Loading...</p>}
-                {error && `${alertify.error(error.message)}`}
-                {data && `${alertify.success('Cloning Sucessfully')}`}
               </React.Fragment>
             )}
           </Mutation>

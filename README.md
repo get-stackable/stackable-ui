@@ -2,6 +2,8 @@
 
 > Dashboard for stackable.
 
+Join us on [Slack](http://slack.stackable.space/)
+
 ## Requirements
 ```bash
 - [Node](https://nodejs.org) 4.x or better

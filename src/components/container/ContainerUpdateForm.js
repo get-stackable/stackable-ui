@@ -1,8 +1,9 @@
 import React from 'react';
 import classNames from 'classnames';
 import alertify from 'alertify.js';
-import { isUndefined, sortBy, findIndex, startCase } from 'lodash';
+import { isUndefined, sortBy, findIndex, startCase, omit } from 'lodash';
 import dragula from 'dragula';
+import { Link } from 'react-router-dom';
 
 import BigTitleInput from './BigTitleInput';
 import ContainerFieldModal from './ContainerFieldModal';
@@ -176,12 +177,18 @@ class ContainerUpdateForm extends React.Component {
   }
 
   handleSubmit() {
-    if (this.state.fields.length === 0) {
+    const { name, fields: data, isSingleItem } = this.state;
+    if (data.length === 0) {
       alertify.log(
         'Please create at least one field in order to save container.',
       );
+    } else {
+      const fields = data.map(item =>
+        omit(item, ['id', 'activeTab', 'relations']),
+      );
+
+      this.props.mutation({ name, fields, isSingleItem });
     }
-    this.props.mutation({ ...this.state });
 
     // alertify.log(this.state.name);
     // submit with bit delay
@@ -195,9 +202,9 @@ class ContainerUpdateForm extends React.Component {
           <div className="ui left vertical menu">
             <h3 className="ui header item">Containers</h3>
             <a className="ui orange button item">Containers Tools</a>
-            <a className="ui button item" href="/containers">
+            <Link className="ui button item" to={{ pathname: `/containers/` }}>
               View Containers
-            </a>
+            </Link>
             <a
               className="ui button item"
               // onClick={() => this.deleteContainer()}
@@ -220,16 +227,16 @@ class ContainerUpdateForm extends React.Component {
                     value={this.state.name}
                     onChange={e => this.setState({ name: e.target.value })}
                   />
-                  <div className="six wide right aligned column">
-                    <button
-                      className="ui right labeled icon green button"
-                      onClick={() => this.handleSubmit()}
-                    >
-                      <i className="save icon" />
-                      Save
-                    </button>
-                  </div>
                 </div>
+              </div>
+              <div className="six wide column">
+                <button
+                  className="ui right floated labeled icon green button"
+                  onClick={() => this.handleSubmit()}
+                >
+                  <i className="save icon" />
+                  Save
+                </button>
               </div>
             </div>
             <div style={{ position: 'relative' }}>

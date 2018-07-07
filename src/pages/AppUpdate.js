@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import gql from 'graphql-tag';
-// import alertify from 'alertify.js';
+import alertify from 'alertify.js';
 import { Mutation, Query } from 'react-apollo';
 import classNames from 'classnames';
 
@@ -38,8 +38,11 @@ const applicationQuery = gql`
 `;
 
 const UpdateApplication = ({ app }) => (
-  <Mutation mutation={updateApplicationMutation}>
-    {(updateApplication, { loading, error }) => (
+  <Mutation
+    mutation={updateApplicationMutation}
+    onCompleted={() => alertify.success('App Updated Succesfully')}
+  >
+    {updateApplication => (
       <React.Fragment>
         <AppForm
           type="update"
@@ -57,15 +60,24 @@ const UpdateApplication = ({ app }) => (
     )}
   </Mutation>
 );
+
 class AppUpdate extends React.Component {
   constructor() {
     super();
-    this.state = { activeTab: 'app-info' };
+    this.state = {
+      activeTab: 'app-info',
+      visibleModel: false,
+      visibleCloneModel: false,
+    };
+    this.toggleModal = this.toggleModal.bind(this);
   }
 
+  toggleModal() {
+    this.setState({ visibleModel: false, visibleCloneModel: false });
+  }
   render() {
     const { activeTab } = this.state;
-    const { match } = this.props;
+    const { match, history } = this.props;
 
     return (
       <Layout>
@@ -80,8 +92,18 @@ class AppUpdate extends React.Component {
                   <div className="ui left vertical menu">
                     <h3 className="ui header item">Edit Stack</h3>
                     <a className="ui orange button item">Stack Tools</a>
-                    <a className="ui button item">Clone Stack</a>
-                    <a className="ui button item">Delete Stack</a>
+                    <a
+                      className="ui button item"
+                      onClick={() => this.setState({ visibleCloneModel: true })}
+                    >
+                      Clone Stack
+                    </a>
+                    <a
+                      className="ui button item"
+                      onClick={() => this.setState({ visibleModel: true })}
+                    >
+                      Delete Stack
+                    </a>
                     <div className="item" style={{ textAlign: 'center' }}>
                       <small>With great power comes great responsibility</small>
                     </div>
@@ -176,8 +198,20 @@ class AppUpdate extends React.Component {
                         <p>Comming soon!</p>
                       </div>
                     </div>
-                    <AppCloneModal appId={match.params.id} />
-                    <AppDeleteModal appId={match.params.id} />
+                    <AppCloneModal
+                      appId={match.params.id}
+                      app={data.application}
+                      visibleCloneModel={this.state.visibleCloneModel}
+                      toggleModal={this.toggleModal}
+                      history={history}
+                    />
+                    <AppDeleteModal
+                      appId={match.params.id}
+                      app={data.application}
+                      visibleModel={this.state.visibleModel}
+                      toggleModal={this.toggleModal}
+                      history={history}
+                    />
                   </div>
                 </div>
               </div>

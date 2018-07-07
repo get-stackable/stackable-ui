@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-// import alertify from 'alertify.js';
+import alertify from 'alertify.js';
 import gql from 'graphql-tag';
 import { Mutation, Query } from 'react-apollo';
 import { isEmpty } from 'lodash';
@@ -40,7 +40,7 @@ const AddUsers = ({ appId }) => (
   <Mutation mutation={addUserApplicationMutation}>
     {(addUserApplication, { loading, error }) => {
       if (loading) return 'Loading...';
-      if (error) return `Error! ${error.message}`;
+      if (error) return alertify.error(error.message);
       return (
         <AppUpdateUserForm
           submit={input => {
@@ -58,7 +58,7 @@ const RemoveUser = ({ appId, userId }) => (
   <Mutation mutation={removeUserApplicationMutation}>
     {(removeUserApplication, { loading, error }) => {
       if (loading) return 'Loading...';
-      if (error) return `Error! ${error.message}`;
+      if (error) return alertify.error(error.message);
       return (
         <a
           className="mini negative ui button"

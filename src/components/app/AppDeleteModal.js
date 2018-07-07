@@ -1,3 +1,4 @@
+/* global $:true */
 import React from 'react';
 import PropTypes from 'prop-types';
 import gql from 'graphql-tag';
@@ -15,26 +16,30 @@ const deleteApplicationMutation = gql`
 `;
 
 class AppDeleteModal extends React.Component {
-  // componentDidUpdate() {
-  // const self = this;
-  // $('#app-delete-modal')
-  //     .modal({
-  //         detachable: false,
-  //         onHidden(){
-  //             self.props.toggleModal()
-  //         }
-  //     })
-  //     .modal(this.props.visible ? 'show' : 'hide');
-  // }
+  componentDidUpdate() {
+    const self = this;
+    $('#app-delete-modal')
+      .modal({
+        detachable: false,
+        onHidden() {
+          self.props.toggleModal();
+        },
+      })
+      .modal(this.props.visibleModel ? 'show' : 'hide');
+  }
 
   render() {
-    const { appId } = this.props;
+    const { appId, app } = this.props;
     return (
       <div className="ui modal" id="app-delete-modal">
         <div className="header">
           <img src="/images/logo.png" alt="logo" />
           Delete stack
-          <i className="close icon" />
+          <i
+            className="close icon"
+            style={{ cursor: 'pointer' }}
+            onClick={() => this.props.toggleModal()}
+          />
         </div>
         <div className="content">
           <div className="ui segment">
@@ -43,22 +48,29 @@ class AppDeleteModal extends React.Component {
               items!
             </p>
           </div>
-          <Mutation mutation={deleteApplicationMutation}>
+          <Mutation
+            mutation={deleteApplicationMutation}
+            onCompleted={() => {
+              this.props.history.push('/dashboard');
+              alertify.success('Cloning Sucessfully');
+            }}
+          >
             {(deleteApplication, { data, loading, error }) => (
               <React.Fragment>
                 <AppDeleteForm
                   type="clone"
                   submit={input => {
-                    deleteApplication({
-                      variables: {
-                        id: appId,
-                      },
-                    });
+                    if (app.name === input.name) {
+                      deleteApplication({
+                        variables: {
+                          id: appId,
+                        },
+                      });
+                    } else {
+                      alertify.error('Please Check Application Name');
+                    }
                   }}
                 />
-                {loading && <p>Loading...</p>}
-                {error && <p> `${alertify.error(error.message)}`}</p>}
-                {data && <p>`${alertify.success('Sucessfully Deleted')}` </p>}
               </React.Fragment>
             )}
           </Mutation>

@@ -20,8 +20,8 @@ class AppStepOneModel extends React.Component {
           <div className="column" />
           <div className="bottom aligned column">
             <button
-              className="ui secondary button pull-right"
-              onClick={this.goToStepTwo}
+              className="ui secondary button right floated"
+              onClick={this.props.goToStepTwo}
             >
               CREATE EMPTY STACK
             </button>

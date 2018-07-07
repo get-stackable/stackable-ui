@@ -16,14 +16,14 @@ class Layout extends React.Component {
     };
   }
 
-  componentDidMount() {
-    //   Session.setDefault('active.app', {});
-    //   Session.setDefault('app.modal', false);
-    //   Session.setDefault('app.create.modal', false);
-    // window.addEventListener('resize', this.handleResize);
-    // this.checkDesktop();
-    //   Smooch.init({ appToken: '101mfmxkapg9rc28mi907efeh' });
-  }
+  // componentDidMount() {
+  //     Session.setDefault('active.app', {});
+  //     Session.setDefault('app.modal', false);
+  //     Session.setDefault('app.create.modal', false);
+  //   window.addEventListener('resize', this.handleResize);
+  //   this.checkDesktop();
+  //     Smooch.init({ appToken: '101mfmxkapg9rc28mi907efeh' });
+  // }
 
   // checkDesktop() {
   //   if (window.innerWidth < 1200) {

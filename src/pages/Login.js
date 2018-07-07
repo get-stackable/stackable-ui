@@ -70,7 +70,7 @@ class Login extends React.Component {
           {(login, { data, loading, error }) => (
             <div>
               <LoginForm submit={input => login({ variables: input })} />
-              {data && <p>Car created successfully!{console.log(data)}</p>}
+              {data && <p>Login successfully!{console.log(data)}</p>}
               {loading && <p>Loading...</p>}
               {error && <p>Error :( Please try again</p>}
             </div>
