@@ -5,11 +5,15 @@ import ContainerUpdate from '../components/container/ContainerUpdate';
 
 class ContainerCreate extends React.Component {
   render() {
-    const { location, match } = this.props;
+    const { location, match, history } = this.props;
 
     return (
       <Layout>
-        <ContainerUpdate url={location.pathname} id={match.params.id} />
+        <ContainerUpdate
+          url={location.pathname}
+          ids={match.params}
+          history={history}
+        />
       </Layout>
     );
   }

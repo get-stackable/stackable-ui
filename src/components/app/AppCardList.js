@@ -2,6 +2,7 @@ import React from 'react';
 // import PropTypes from 'prop-types';
 import gql from 'graphql-tag';
 import { Query } from 'react-apollo';
+import { Link } from 'react-router-dom';
 
 const applicationsQuery = gql`
   {
@@ -12,6 +13,38 @@ const applicationsQuery = gql`
     }
   }
 `;
+
+const allContainersQuery = gql`
+  query allContainers($appId: ID!) {
+    allContainers(appId: $appId) {
+      id
+    }
+  }
+`;
+
+const AppName = ({ app }) => (
+  <Query query={allContainersQuery} variables={{ appId: app.id }}>
+    {({ loading, error, data }) => {
+      if (loading) return 'Loading...';
+      if (error) return `Error! ${error.message}`;
+      console.log(data.allContainers.length);
+      const containersLength = data.allContainers.length;
+      return (
+        <Link
+          to={{
+            pathname:
+              containersLength === 0
+                ? `stack/${app.id}`
+                : `stack/${app.id}/containers`,
+          }}
+          className="header"
+        >
+          {app.name}
+        </Link>
+      );
+    }}
+  </Query>
+);
 
 class AppCardList extends React.Component {
   render() {
@@ -50,14 +83,12 @@ class AppCardList extends React.Component {
                     <div className="thirteen wide column">
                       <div className="content">
                         {/* TODO: if container is empty redirect to stack/id else redirect to containers/id */}
-                        <a href={`containers/${app.id}`} className="header">
-                          {app.name}
-                        </a>
+                        <AppName app={app} />
                         <div className="meta">Public Key: {app.privateKey}</div>
                       </div>
                       <div className="extra content">
                         <a
-                          href={`stack/manage/${app.id}`}
+                          href={`stack/${app.id}/manage`}
                           className="tiny ui basic button"
                         >
                           <i className="icon setting" />

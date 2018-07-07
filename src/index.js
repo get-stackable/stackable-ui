@@ -42,6 +42,8 @@ const App = () => (
   <ApolloProvider client={apolloClient}>
     <Router>
       <React.Fragment>
+        {/* TODO: loggedIn redirect dashboard else login */}
+        <Route exact path="/" render={() => <Redirect to="/dashboard" />} />
         <Route exact path="/login" component={Login} />
         <PrivateRoute exact path="/dashboard" component={Dashboard} />
         <PrivateRoute exact path="/stack/:id" component={AppView} />
@@ -53,12 +55,12 @@ const App = () => (
         />
         <PrivateRoute
           exact
-          path="/stack/:id/container/create"
+          path="/stack/:appId/container/create"
           component={ContainerCreate}
         />
         <PrivateRoute
           exact
-          path="/container/:id/update"
+          path="/stack/:appId/container/:id/update"
           component={ContainerCreate}
         />
         <Route exact path="/test" component={ContainerCreate} />

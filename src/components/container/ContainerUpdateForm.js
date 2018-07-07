@@ -196,13 +196,18 @@ class ContainerUpdateForm extends React.Component {
   }
 
   render() {
+    const { appId } = this.props;
+
     return (
       <div className="ui grid full-height" style={{ marginLeft: '0' }}>
         <div className="two wide column side-sub-menu">
           <div className="ui left vertical menu">
             <h3 className="ui header item">Containers</h3>
             <a className="ui orange button item">Containers Tools</a>
-            <Link className="ui button item" to={{ pathname: `/containers/` }}>
+            <Link
+              className="ui button item"
+              to={{ pathname: `/stack/${appId}/containers` }}
+            >
               View Containers
             </Link>
             <a

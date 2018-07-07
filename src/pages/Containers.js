@@ -18,7 +18,7 @@ class Containers extends React.Component {
                 Containers
               </h3>
               <Link
-                to={{ pathname: `/container/create/${match.params.id}` }}
+                to={{ pathname: `/stack/${match.params.id}/container/create` }}
                 className="ui orange button item"
               >
                 + create container

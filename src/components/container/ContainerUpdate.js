@@ -1,5 +1,6 @@
 import React from 'react';
 import gql from 'graphql-tag';
+import alertify from 'alertify.js';
 import { Query, Mutation } from 'react-apollo';
 
 import { ContainerFragment } from '../../utils/fragments';
@@ -43,19 +44,27 @@ const updateContainerMutation = gql`
   }
 `;
 
-const ContainerMutation = ({ data, id }) => {
+const ContainerMutation = ({ data, id, appId, history }) => {
   if (data == null) {
     return (
       <Mutation
         mutation={createContainerMutation}
-        // onCompleted={() => <Redirect to={{ pathname: `containers/${id}` }} />}
+        onError={error => {
+          alertify.error(error.message);
+        }}
+        onCompleted={item => {
+          history.push(
+            `/stack/${appId}/container/${item.createContainer.id}/update`,
+          );
+        }}
       >
         {createContainer => (
           <ContainerUpdateForm
+            appId={appId}
             mutation={input => {
               createContainer({
                 variables: {
-                  appId: id,
+                  appId,
                   ...input,
                 },
               });
@@ -66,11 +75,21 @@ const ContainerMutation = ({ data, id }) => {
     );
   }
   return (
-    <Mutation mutation={updateContainerMutation}>
+    <Mutation
+      mutation={updateContainerMutation}
+      onError={error => {
+        alertify.error(error.message);
+      }}
+      onCompleted={() => {
+        alertify.success('added field Updated Suceesfully');
+      }}
+    >
       {updateContainer => (
         <ContainerUpdateForm
+          appId={appId}
           container={data.container}
           mutation={input => {
+            console.log('final Result', input);
             updateContainer({
               variables: {
                 id,
@@ -86,19 +105,22 @@ const ContainerMutation = ({ data, id }) => {
 
 class ContainerUpdate extends React.Component {
   render() {
-    const { url, id } = this.props;
+    const { url, ids, history } = this.props;
+
     return (
       <React.Fragment>
-        {url === `/container/update/${id}` ? (
-          <Query query={containerQuery} variables={{ id }}>
+        {url === `/stack/${ids.appId}/container/${ids.id}/update` ? (
+          <Query query={containerQuery} variables={{ id: ids.id }}>
             {({ loading, error, data }) => {
               if (loading) return 'Loading...';
               if (error) return `Error! ${error.message}`;
-              return <ContainerMutation data={data} id={id} />;
+              return (
+                <ContainerMutation data={data} id={ids.id} appId={ids.appId} />
+              );
             }}
           </Query>
         ) : (
-          <ContainerMutation id={id} />
+          <ContainerMutation appId={ids.appId} history={history} />
         )}
       </React.Fragment>
     );

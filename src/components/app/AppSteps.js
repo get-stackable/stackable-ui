@@ -40,7 +40,7 @@ class AppSteps extends React.Component {
                   </div>
                 </div>
                 <div className="extra">
-                  <Link to={{ pathname: `/containers/${id}` }}>
+                  <Link to={{ pathname: `/stack/${id}/container/create` }}>
                     <button className="ui right floated green button">
                       + create new container
                     </button>

@@ -30,8 +30,9 @@ class ContainersList extends React.Component {
   //   }
 
   render() {
+    const { id } = this.props;
     return (
-      <Query query={containersQuery} variables={{ appId: this.props.id }}>
+      <Query query={containersQuery} variables={{ appId: id }}>
         {({ loading, error, data }) => {
           if (loading) return <p>Loading...</p>;
           if (error) return <p>Error :</p>;
@@ -64,7 +65,9 @@ class ContainersList extends React.Component {
                       </a>
                       <Link
                         to={{
-                          pathname: `/container/update/${container.id}`,
+                          pathname: `/stack/${id}/container/${
+                            container.id
+                          }/update`,
                         }}
                         className="ui basic red button"
                         style={{ fontSize: '0.77rem', padding: '10px 5px' }}

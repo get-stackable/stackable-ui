@@ -13,6 +13,7 @@ export const AppFragment = gql`
 
 export const ContainerFragment = gql`
   fragment ContainerFragment on Container {
+    id
     name
     fields {
       id
