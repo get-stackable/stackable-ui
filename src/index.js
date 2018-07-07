@@ -2,9 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { BrowserRouter as Router, Route, Redirect } from 'react-router-dom';
 import { ApolloProvider } from 'react-apollo';
-import { ThemeProvider } from 'styled-components';
 
-import theme from './utils/theme';
 import apolloClient from './utils/apolloClient';
 import registerServiceWorker from './utils/registerServiceWorker';
 import './styles/main.scss';
@@ -38,30 +36,35 @@ const PrivateRoute = ({ component: Component, ...rest }) => (
   />
 );
 
+// TODO:
+PrivateRoute.propTypes = {};
+
 const App = () => (
   <ApolloProvider client={apolloClient}>
-    <ThemeProvider theme={theme}>
-      <Router>
-        <React.Fragment>
-          <Route exact path="/login" component={Login} />
-          <PrivateRoute exact path="/dashboard" component={Dashboard} />
-          <PrivateRoute exact path="/stack/manage/:id" component={AppUpdate} />
-          <PrivateRoute exact path="/stack/:id" component={AppView} />
-          <Route exact path="/containers/:id" component={Containers} />
-          <Route
-            exact
-            path="/container/create/:id"
-            component={ContainerCreate}
-          />
-          <Route
-            exact
-            path="/container/update/:id"
-            component={ContainerCreate}
-          />
-          <Route exact path="/test" component={ContainerCreate} />
-        </React.Fragment>
-      </Router>
-    </ThemeProvider>
+    <Router>
+      <React.Fragment>
+        <Route exact path="/login" component={Login} />
+        <PrivateRoute exact path="/dashboard" component={Dashboard} />
+        <PrivateRoute exact path="/stack/:id" component={AppView} />
+        <PrivateRoute exact path="/stack/:id/manage" component={AppUpdate} />
+        <PrivateRoute
+          exact
+          path="/stack/:id/containers"
+          component={Containers}
+        />
+        <PrivateRoute
+          exact
+          path="/stack/:id/container/create"
+          component={ContainerCreate}
+        />
+        <PrivateRoute
+          exact
+          path="/container/:id/update"
+          component={ContainerCreate}
+        />
+        <Route exact path="/test" component={ContainerCreate} />
+      </React.Fragment>
+    </Router>
   </ApolloProvider>
 );
 
