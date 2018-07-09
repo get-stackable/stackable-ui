@@ -27,7 +27,7 @@ const AppName = ({ app }) => (
     {({ loading, error, data }) => {
       if (loading) return 'Loading...';
       if (error) return `Error! ${error.message}`;
-      console.log(data.allContainers.length);
+
       const containersLength = data.allContainers.length;
       return (
         <Link

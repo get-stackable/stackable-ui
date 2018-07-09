@@ -1,8 +1,20 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import gql from 'graphql-tag';
+import { Query } from 'react-apollo';
 
 import config from '../../utils/config';
 import SearchForm from './SearchForm';
+
+const applicationsQuery = gql`
+  {
+    allApplications {
+      id
+      name
+      privateKey
+    }
+  }
+`;
 
 class Header extends React.Component {
   // getMeteorData() {
@@ -76,17 +88,38 @@ class Header extends React.Component {
               logout
             </a>
           </div>
-          <div
-            className="ui simple dropdown right item"
-            style={{ marginLeft: '30px !important' }}
-          >
-            Switch Stacks <i className="dropdown icon" />
-            <div className="menu">
-              <a className="item" onClick={this.showCreateModal}>
-                <i className="plus icon" /> new stack
-              </a>
-            </div>
-          </div>
+          <Query query={applicationsQuery}>
+            {({ loading, error, data }) => {
+              if (loading) return 'Loading...';
+              if (error) return `Error! ${error.message}`;
+              const applications = data.allApplications;
+              console.log('header', data);
+              return (
+                <div
+                  className="ui simple dropdown right item"
+                  style={{ marginLeft: '30px !important' }}
+                >
+                  Switch Stacks <i className="dropdown icon" />
+                  <div className="menu">
+                    {applications.map(app => (
+                      <a
+                        className="item"
+                        // TODO: onClick url and Show model
+                        key={app.id}
+                      >
+                        <i className="caret right icon" />
+                        {app.name}
+                      </a>
+                    ))}
+                    <a className="item" onClick={this.showCreateModal}>
+                      <i className="plus icon" /> new stack
+                      {/*   TODO: onClick url and Show model */}
+                    </a>
+                  </div>
+                </div>
+              );
+            }}
+          </Query>
         </div>
       </div>
     );
