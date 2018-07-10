@@ -8,7 +8,7 @@ class ContainerCreate extends React.Component {
     const { location, match, history } = this.props;
 
     return (
-      <Layout>
+      <Layout url={location.pathname} appId={match.params.appId}>
         <ContainerUpdate
           url={location.pathname}
           ids={match.params}

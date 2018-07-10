@@ -93,7 +93,6 @@ class Header extends React.Component {
               if (loading) return 'Loading...';
               if (error) return `Error! ${error.message}`;
               const applications = data.allApplications;
-              console.log('header', data);
               return (
                 <div
                   className="ui simple dropdown right item"

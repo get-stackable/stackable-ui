@@ -7,9 +7,9 @@ import ContainersList from '../components/container/ContainersList';
 
 class Containers extends React.Component {
   render() {
-    const { match } = this.props;
+    const { location, match } = this.props;
     return (
-      <Layout>
+      <Layout url={location.pathname}>
         <div className="ui grid full-height" style={{ marginLeft: '0' }}>
           <div className="two wide column side-sub-menu">
             <div className="ui left vertical menu">

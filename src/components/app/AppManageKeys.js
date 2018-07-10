@@ -22,10 +22,14 @@ const generateKeyApplicationMutation = gql`
   }
 `;
 
-const ResetKey = ({ appId }) => (
-  <Mutation mutation={generateKeyApplicationMutation}>
+const ResetKey = ({ appId, query }) => (
+  <Mutation
+    mutation={generateKeyApplicationMutation}
+    refetchQueries={() => [{ query, variables: { id: appId } }]}
+  >
     {(generateKeyApplication, { loading, error }) => {
-      if (loading) return 'Loading...';
+      if (loading)
+        return <a className="mini negative ui loading button">Reset Keys</a>;
       if (error) return `Error! ${error.message}`;
       return (
         <a
@@ -43,7 +47,7 @@ const ResetKey = ({ appId }) => (
 
 class AppManageKeys extends React.Component {
   render() {
-    const { app } = this.props;
+    const { app, query } = this.props;
     const appId = app.id;
     return (
       <div className="ui form">
@@ -59,7 +63,7 @@ class AppManageKeys extends React.Component {
             <input type="text" value={app.privateKey} readOnly />
           </label>
         </div>
-        <ResetKey appId={appId} />
+        <ResetKey appId={appId} query={query} />
         <div className="ui divider" />
         <Mutation mutation={updateApplicationMutation}>
           {(updateApplication, { loading, error }) => {
@@ -92,8 +96,10 @@ AppManageKeys.propTypes = {
     privateKey: PropTypes.string,
     publicKey: PropTypes.string,
   }).isRequired,
+  query: PropTypes.object.isRequired,
 };
 
 ResetKey.propTypes = {
   appId: PropTypes.string.isRequired,
+  query: PropTypes.object.isRequired,
 };

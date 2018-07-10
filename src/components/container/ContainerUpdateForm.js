@@ -112,8 +112,6 @@ class ContainerUpdateForm extends React.Component {
 
   updateItem(field) {
     const { fields } = this.state;
-    console.log('field', field);
-
     // find in array
     const index = findIndex(fields, { id: field.id });
 
@@ -124,6 +122,7 @@ class ContainerUpdateForm extends React.Component {
       // update item
       fields[index] = field;
     }
+
     // fields.push(field);
     this.setState({ fields });
 
@@ -184,7 +183,13 @@ class ContainerUpdateForm extends React.Component {
       );
     } else {
       const fields = data.map(item =>
-        omit(item, ['id', 'activeTab', 'relations']),
+        omit(item, [
+          'id',
+          'activeTab',
+          'relations',
+          // 'validations',
+          '__typename',
+        ]),
       );
 
       this.props.mutation({ name, fields, isSingleItem });

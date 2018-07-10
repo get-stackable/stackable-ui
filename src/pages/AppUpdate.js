@@ -77,10 +77,10 @@ class AppUpdate extends React.Component {
   }
   render() {
     const { activeTab } = this.state;
-    const { match, history } = this.props;
+    const { location, match, history } = this.props;
 
     return (
-      <Layout>
+      <Layout url={location.pathname} appId={match.params.id}>
         <Query query={applicationQuery} variables={{ id: match.params.id }}>
           {({ loading, error, data }) => {
             if (loading) return <p>Loading...</p>;
@@ -186,7 +186,10 @@ class AppUpdate extends React.Component {
                       })}
                       data-tab="app-keys"
                     >
-                      <AppManageKeys app={data.application} />
+                      <AppManageKeys
+                        app={data.application}
+                        query={applicationQuery}
+                      />
                     </div>
                     <div
                       className={classNames('ui tab ', {

@@ -47,9 +47,10 @@ class AppView extends React.Component {
   // }
 
   render() {
+    const { location, match } = this.props;
     return (
-      <Layout>
-        <AppSteps id={this.props.match.params.id} />
+      <Layout url={location.pathname} appId={match.params.id}>
+        <AppSteps id={match.params.id} />
       </Layout>
     );
   }

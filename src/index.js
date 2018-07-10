@@ -9,6 +9,7 @@ import './styles/main.scss';
 
 import Dashboard from './pages/Dashboard';
 import Login from './pages/Login';
+import Register from './pages/Register';
 import AppUpdate from './pages/AppUpdate';
 import AppView from './pages/AppView';
 import Containers from './pages/Containers';
@@ -45,6 +46,7 @@ const App = () => (
         {/* TODO: loggedIn redirect dashboard else login */}
         <Route exact path="/" render={() => <Redirect to="/dashboard" />} />
         <Route exact path="/login" component={Login} />
+        <Route exact path="/register" component={Register} />
         <PrivateRoute exact path="/dashboard" component={Dashboard} />
         <PrivateRoute exact path="/stack/:id" component={AppView} />
         <PrivateRoute exact path="/stack/:id/manage" component={AppUpdate} />

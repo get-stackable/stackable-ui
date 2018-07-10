@@ -10,33 +10,48 @@ const InnerForm = ({
   handleBlur,
   handleSubmit,
   isSubmitting,
+  loading,
 }) => (
-  <form onSubmit={handleSubmit}>
-    <div className="ui form">
-      <div className="field">
-        <label>Email</label>
+  <form onSubmit={handleSubmit} className="ui large form">
+    <div className="ui segment" style={{ padding: '1rem 5rem' }}>
+      <div className="at-input required field">
+        <label style={{ float: 'left' }}>Email</label>
         <input
           type="email"
           name="email"
+          placeholder="Email"
           onChange={handleChange}
           onBlur={handleBlur}
           value={values.email}
         />
       </div>
       <div className="field">
-        <label>Password</label>
+        <label style={{ float: 'left' }}>Password</label>
         <input
           type="password"
           name="password"
+          placeholder="Password"
           onChange={handleChange}
           onBlur={handleBlur}
           value={values.password}
         />
       </div>
-
-      <button className="ui green button" disabled={isSubmitting}>
-        Submit
-      </button>
+      <div className="ui grid">
+        <div className="eight wide column">
+          <a href="#" className="at-link at-signup">
+            Reset password
+          </a>
+        </div>
+        <div className=" eight wide column">
+          <button
+            className={`at-btn ui ${loading &&
+              'loading'} right floated large orange button`}
+            disabled={isSubmitting}
+          >
+            Submit
+          </button>
+        </div>
+      </div>
     </div>
   </form>
 );

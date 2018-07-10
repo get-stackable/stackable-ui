@@ -38,7 +38,7 @@ class Layout extends React.Component {
   // }
 
   render() {
-    const { children, type } = this.props;
+    const { children, type, url, appId } = this.props;
 
     if (type === 'slim') {
       return (
@@ -61,7 +61,7 @@ class Layout extends React.Component {
                 'two wide': !this.state.isDesktop,
               })}
             >
-              <Sidebar />
+              <Sidebar url={url} appId={appId} />
             </div>
             <div
               className={classNames('column main-right-container', {
@@ -80,11 +80,14 @@ class Layout extends React.Component {
 
 Layout.defaultProps = {
   type: 'full',
+  appId: '',
 };
 
 Layout.propTypes = {
   children: PropTypes.object.isRequired,
   type: PropTypes.string,
+  appId: PropTypes.string,
+  url: PropTypes.string.isRequired,
 };
 
 export default Layout;

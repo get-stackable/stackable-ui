@@ -2,7 +2,7 @@
 import React from 'react';
 // import PropTypes from 'prop-types';
 import classNames from 'classnames';
-import { upperFirst, isUndefined, kebabCase } from 'lodash';
+import { upperFirst, isUndefined, camelCase, omit } from 'lodash';
 import alertify from 'alertify.js';
 
 // import InfoForm from './form/InfoForm';
@@ -48,7 +48,7 @@ class ContainerFieldModal extends React.Component {
       slug: props.item.slug || '',
       description: props.item.description || '',
       type: props.item.type || 'text',
-      validations: props.item.validations || {},
+      validations: omit(props.item.validations, ['__typename']) || {},
       relations: props.item.relations || {},
       isRequired: props.item.isRequired || false,
       isDisabled: props.item.isDisabled || false,
@@ -67,13 +67,13 @@ class ContainerFieldModal extends React.Component {
       name,
       // description,
       // type,
-      // validations,
+      validations,
       // relations,
       // isRequired,
       // isDisabled,
       // listing_order,
     } = this.state;
-    // console.log('handle submit button', values);
+    console.log('handle submit button', validations);
 
     if (name.length === 0) {
       alertify.error('Please type in field name');
@@ -134,7 +134,7 @@ class ContainerFieldModal extends React.Component {
 
     this.props.update({
       ...this.state,
-      slug: kebabCase(name),
+      slug: camelCase(name),
     });
     this.props.toggleModal();
   };

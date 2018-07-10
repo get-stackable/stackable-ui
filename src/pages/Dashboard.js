@@ -20,10 +20,10 @@ const stackQuery = gql`
 
 class Dashboard extends React.Component {
   render() {
-    const { history } = this.props;
+    const { location, history } = this.props;
 
     return (
-      <Layout>
+      <Layout url={location.pathname}>
         <Query query={stackQuery}>
           {({ data, client }) => (
             <React.Fragment>
