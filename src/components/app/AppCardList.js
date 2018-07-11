@@ -25,7 +25,7 @@ const allContainersQuery = gql`
 const AppName = ({ app }) => (
   <Query query={allContainersQuery} variables={{ appId: app.id }}>
     {({ loading, error, data }) => {
-      if (loading) return 'Loading...';
+      if (loading) return <div className="ui active loader" />;
       if (error) return `Error! ${error.message}`;
 
       const containersLength = data.allContainers.length;
@@ -46,19 +46,39 @@ const AppName = ({ app }) => (
   </Query>
 );
 
+const CardLoading = () => (
+  <div className="card">
+    <div className="content" style={{ textAlign: 'center' }}>
+      <div className="header" style={{ margin: '10px 0' }}>
+        <div className="ui active loader" />
+      </div>
+    </div>
+  </div>
+);
+
+const CardError = ({ error }) => (
+  <div className="card">
+    <div className="content" style={{ textAlign: 'center' }}>
+      <div className="header" style={{ margin: '10px 0' }}>
+        <div className="ui error message">{error.message}</div>
+      </div>
+    </div>
+  </div>
+);
+
 class AppCardList extends React.Component {
   render() {
     return (
       <Query query={applicationsQuery}>
         {({ loading, error, data }) => {
-          if (loading) return <p>Loading...</p>;
-          if (error) return <p>Error :</p>;
+          if (loading) return <CardLoading />;
+          if (error) return <CardError error={error} />;
           const applications = data.allApplications;
 
           return (
             <React.Fragment>
               {applications.map(app => (
-                <div className="app card" key={app.id}>
+                <div className="app  card" key={app.id}>
                   <div className="ui grid">
                     <div className="three wide column">
                       <div className="ui list">

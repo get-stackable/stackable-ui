@@ -2,7 +2,7 @@
 import React from 'react';
 // import PropTypes from 'prop-types';
 import classNames from 'classnames';
-import { upperFirst, isUndefined, camelCase, omit } from 'lodash';
+import { upperFirst, isUndefined, camelCase, omit, find } from 'lodash';
 import alertify from 'alertify.js';
 
 // import InfoForm from './form/InfoForm';
@@ -52,7 +52,7 @@ class ContainerFieldModal extends React.Component {
       relations: props.item.relations || {},
       isRequired: props.item.isRequired || false,
       isDisabled: props.item.isDisabled || false,
-      listingOrder: props.item.listingOrder || props.allItems.length + 1,
+      // listingOrder: props.item.listingOrder || props.allItems.length + 1,
       activeTab: props.activeTab || 'info',
     };
   }
@@ -63,17 +63,16 @@ class ContainerFieldModal extends React.Component {
 
   handleSubmit = () => {
     const {
-      // id,
+      id,
       name,
       // description,
-      // type,
+      type,
       validations,
       // relations,
       // isRequired,
       // isDisabled,
       // listing_order,
     } = this.state;
-    console.log('handle submit button', validations);
 
     if (name.length === 0) {
       alertify.error('Please type in field name');
@@ -97,23 +96,24 @@ class ContainerFieldModal extends React.Component {
     //   }
     // }
 
-    // if (type === 'enom') {
-    //   if (
-    //     _.isUndefined(validations.options) ||
-    //     validations.options.length === 0
-    //   ) {
-    //     FlashMessages.sendError('Please set options for select input.');
-    //     this.setState({
-    //       activeTab: 'validation',
-    //     });
-    //     return;
-    //   }
-    // }
+    if (type === 'enom') {
+      if (
+        isUndefined(validations.options) ||
+        validations.options.length === 0
+      ) {
+        alertify.error('Please set options for select input.');
+        this.setState({
+          activeTab: 'validation',
+        });
+        return;
+      }
+    }
 
     // check if field already exists with same name
-    // const exists = lodash.find(this.props.allItems, { name });
-    // if (!_.isUndefined(exists) && exists._id !== _id) {
-    //   FlashMessages.sendError(`Field with same name "${name}" already exists`);
+    // const exists = find(this.props.fields, { name });
+    // console.log('jdsnjndfjf', exists);
+    // if (isUndefined(exists) && exists.name !== name) {
+    //   alertify.error(`Field with same name "${name}" already exists`);
     //   return;
     // }
 
@@ -180,6 +180,7 @@ class ContainerFieldModal extends React.Component {
 
   render() {
     let customValidationsFields = null;
+    console.log('vaikdj', this.state.validations);
 
     if (
       this.state.type === 'text' ||

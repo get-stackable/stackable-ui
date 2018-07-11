@@ -9,7 +9,7 @@ class Containers extends React.Component {
   render() {
     const { location, match } = this.props;
     return (
-      <Layout url={location.pathname}>
+      <Layout url={location.pathname} appId={match.params.id}>
         <div className="ui grid full-height" style={{ marginLeft: '0' }}>
           <div className="two wide column side-sub-menu">
             <div className="ui left vertical menu">

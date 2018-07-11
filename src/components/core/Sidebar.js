@@ -18,7 +18,7 @@ export default class Sidebar extends React.Component {
     switch (url) {
       case '/dashboard':
         return '';
-      case '/setting':
+      case '/settings':
         return '';
       case `/stack/${appId}`:
         return '';
@@ -48,7 +48,7 @@ export default class Sidebar extends React.Component {
                   <img src="/images/icon-items.png" className="icon" style={{'width': '30px', 'height': '32px'}} />
                   Items
               </a> */}
-        <a className="item" href="{FlowRouter.path('settings')}">
+        <Link className="item" to={{ pathname: '/settings' }}>
           <img
             src="/images/icon-settings.png"
             className="icon"
@@ -56,7 +56,7 @@ export default class Sidebar extends React.Component {
             alt="setting-icon"
           />
           Settings
-        </a>
+        </Link>
         {/* <AppsModal goTo={this.state.goTo} /> */}
       </div>
     );

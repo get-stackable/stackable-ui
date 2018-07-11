@@ -91,8 +91,7 @@ class Header extends React.Component {
           <Query query={applicationsQuery}>
             {({ loading, error, data }) => {
               if (loading) return 'Loading...';
-              if (error) return `Error! ${error.message}`;
-              const applications = data.allApplications;
+
               return (
                 <div
                   className="ui simple dropdown right item"
@@ -100,16 +99,24 @@ class Header extends React.Component {
                 >
                   Switch Stacks <i className="dropdown icon" />
                   <div className="menu">
-                    {applications.map(app => (
-                      <a
-                        className="item"
-                        // TODO: onClick url and Show model
-                        key={app.id}
-                      >
-                        <i className="caret right icon" />
-                        {app.name}
-                      </a>
-                    ))}
+                    {error ? (
+                      <div className="ui error message">
+                        <div className="header">{error.message}</div>
+                      </div>
+                    ) : (
+                      <React.Fragment>
+                        {data.allApplications.map(app => (
+                          <a
+                            className="item"
+                            // TODO: onClick url and Show model
+                            key={app.id}
+                          >
+                            <i className="caret right icon" />
+                            {app.name}
+                          </a>
+                        ))}
+                      </React.Fragment>
+                    )}
                     <a className="item" onClick={this.showCreateModal}>
                       <i className="plus icon" /> new stack
                       {/*   TODO: onClick url and Show model */}

@@ -1,5 +1,4 @@
 import React from 'react';
-import classNames from 'classnames';
 import alertify from 'alertify.js';
 import { isUndefined, sortBy, findIndex, startCase, omit } from 'lodash';
 import dragula from 'dragula';
@@ -32,7 +31,7 @@ const fieldTypes = [
   },
   {
     id: 5,
-    title: 'Image Upload',
+    title: 'Media Upload',
     value: 'image',
   },
   {
@@ -44,6 +43,11 @@ const fieldTypes = [
     id: 7,
     title: 'Relations',
     value: 'relation',
+  },
+  {
+    id: 8,
+    title: 'Date & Time',
+    value: 'dateAndTime',
   },
 ];
 
@@ -80,6 +84,7 @@ class ContainerUpdateForm extends React.Component {
     drake.on('dragend', el => {
       this.reOrderItems();
     });
+    // $('.segment').dimmer('show');
   }
 
   reOrderItems() {
@@ -157,21 +162,8 @@ class ContainerUpdateForm extends React.Component {
         items.splice(index, 1);
         this.setState({ fields: items });
         this.handleSubmit();
-
-        // Meteor.call(
-        //   'container.field.archive',
-        //   this.props.container._id,
-        //   item.name,
-        //   err => {
-        //     if (!err) {
-        //       console.log('archived all data for this field');
-        //     }
-        //   },
-        // );
       },
-      () => {
-        // cancel
-      },
+      () => {},
     );
   }
 
@@ -187,10 +179,11 @@ class ContainerUpdateForm extends React.Component {
           'id',
           'activeTab',
           'relations',
-          // 'validations',
+          'validations.__typename',
           '__typename',
         ]),
       );
+      console.log('fields', fields);
 
       this.props.mutation({ name, fields, isSingleItem });
     }
@@ -202,6 +195,7 @@ class ContainerUpdateForm extends React.Component {
 
   render() {
     const { appId } = this.props;
+    const { name } = this.state;
 
     return (
       <div className="ui grid full-height" style={{ marginLeft: '0' }}>
@@ -250,121 +244,123 @@ class ContainerUpdateForm extends React.Component {
               </div>
             </div>
             <div style={{ position: 'relative' }}>
-              <div className="ui horizontal divider">select input type</div>
               <div
-                className={classNames('ui inverted dimmer', {
-                  active: this.state.name.length === 0,
-                })}
+                className={`ui inverted dimmer ${name.length === 0 &&
+                  'active'}`}
               />
-            </div>
-            <div className="ui stackable tabs menu">
-              {fieldTypes.map(item => (
-                <a
-                  className="item"
-                  key={item.id}
-                  onClick={() =>
-                    this.openItemModal({ type: item.value }, 'info')
-                  }
-                >
-                  {item.title}
-                </a>
-              ))}
-            </div>
-            <div className="ui horizontal divider">setup container inputs</div>
-            <div className="ui grid">
-              <div className="eight wide column">
-                <div className="eight wide column">
-                  <table
-                    className="ui basic celled table"
-                    style={{ marginTop: '50px' }}
+              <div className="ui horizontal divider">select input type</div>
+              <div className="ui stackable tabs menu">
+                {fieldTypes.map(item => (
+                  <a
+                    className="item"
+                    key={item.id}
+                    onClick={() =>
+                      this.openItemModal({ type: item.value }, 'info')
+                    }
                   >
-                    <tbody id="containerItems">
-                      {this.state.fields.map((field, index) => (
-                        <tr key={field.id} data-id={field.id}>
-                          <td width="4%">
-                            <i
-                              className="minus icon"
-                              onClick={() => this.removeItem(field, index)}
-                            />
-                          </td>
-                          <td width="46%">
-                            {field.name}
-                            <span
-                              style={{
-                                float: 'right',
-                                color: 'rgba(0,0,0,.4)',
-                              }}
-                            >
-                              {startCase(field.type)}
-                            </span>
-                          </td>
-                          <td width="25%" style={{ textAlign: 'center' }}>
-                            {field.type !== 'relation' ? (
+                    {item.title}
+                  </a>
+                ))}
+              </div>
+              <div className="ui horizontal divider">
+                setup container inputs
+              </div>
+              <div className="ui grid">
+                <div className="eight wide column">
+                  <div className="eight wide column">
+                    <table
+                      className="ui basic celled table"
+                      style={{ marginTop: '50px' }}
+                    >
+                      <tbody id="containerItems">
+                        {this.state.fields.map((field, index) => (
+                          <tr key={field.id} data-id={field.id}>
+                            <td width="4%">
+                              <i
+                                className="minus icon"
+                                onClick={() => this.removeItem(field, index)}
+                              />
+                            </td>
+                            <td width="46%">
+                              {field.name}
+                              <span
+                                style={{
+                                  float: 'right',
+                                  color: 'rgba(0,0,0,.4)',
+                                }}
+                              >
+                                {startCase(field.type)}
+                              </span>
+                            </td>
+                            <td width="25%" style={{ textAlign: 'center' }}>
+                              {field.type !== 'relation' ? (
+                                <a
+                                  className="underline"
+                                  onClick={() =>
+                                    this.openItemModal(field, 'validation')
+                                  }
+                                >
+                                  validations
+                                </a>
+                              ) : (
+                                <a
+                                  className="underline"
+                                  onClick={() =>
+                                    this.openItemModal(field, 'relation')
+                                  }
+                                >
+                                  relations
+                                </a>
+                              )}
+                            </td>
+                            <td width="25%" style={{ textAlign: 'center' }}>
                               <a
                                 className="underline"
                                 onClick={() =>
-                                  this.openItemModal(field, 'validation')
+                                  this.openItemModal(field, 'info')
                                 }
                               >
-                                {' '}
-                                validations
+                                configure
                               </a>
-                            ) : (
-                              <a
-                                className="underline"
-                                onClick={() =>
-                                  this.openItemModal(field, 'relation')
-                                }
-                              >
-                                relations
-                              </a>
-                            )}
-                          </td>
-                          <td width="25%" style={{ textAlign: 'center' }}>
-                            <a
-                              className="underline"
-                              onClick={() => this.openItemModal(field, 'info')}
-                            >
-                              configure
-                            </a>
-                          </td>
-                        </tr>
-                      ))}
-                    </tbody>
-                  </table>
-                  <div className="ui piled segment">
-                    You can drag and drop fields above to re-order them.
-                  </div>
-                  <div className="ui piled segment">
-                    <div className="ui toggle checkbox">
-                      <input
-                        name="isSingleItem"
-                        type="checkbox"
-                        value={this.state.isSingleItem}
-                        onChange={e =>
-                          this.setState({ isSingleItem: e.target.checked })
-                        }
-                        onBlur={() => this.handleSubmit()}
-                        checked={this.state.isSingleItem}
-                      />
-                      <label>Is single item container?</label>
+                            </td>
+                          </tr>
+                        ))}
+                      </tbody>
+                    </table>
+                    <div className="ui piled segment">
+                      You can drag and drop fields above to re-order them.
+                    </div>
+                    <div className="ui piled segment">
+                      <div className="ui toggle checkbox">
+                        <input
+                          name="isSingleItem"
+                          type="checkbox"
+                          value={this.state.isSingleItem}
+                          onChange={e =>
+                            this.setState({ isSingleItem: e.target.checked })
+                          }
+                          onBlur={() => this.handleSubmit()}
+                          checked={this.state.isSingleItem}
+                        />
+                        <label>Is single item container?</label>
+                      </div>
+                    </div>
+                    <div
+                      className="ui basic segment"
+                      style={{ marginTop: '100px' }}
+                    >
+                      <p>
+                        Container describe your data.{' '}
+                        <span style={{ color: '#51BCA8' }}>
+                          Select a field type and get ready to rock!
+                        </span>
+                      </p>
                     </div>
                   </div>
-                  <div
-                    className="ui basic segment"
-                    style={{ marginTop: '100px' }}
-                  >
-                    <p>
-                      Container describe your data.{' '}
-                      <span style={{ color: '#51BCA8' }}>
-                        Select a field type and get ready to rock!
-                      </span>
-                    </p>
-                  </div>
                 </div>
-              </div>
-              <div className="eight wide column">
-                <ContactFieldsPreview items={this.state.fields} />
+                <div className="eight wide column">
+                  <ContactFieldsPreview items={this.state.fields} />
+                </div>
               </div>
             </div>
           </div>
@@ -376,7 +372,7 @@ class ContainerUpdateForm extends React.Component {
           update={field => this.updateItem(field)}
           activeTab={this.state.activeModalTab}
           // siblingContainers={this.data.siblingContainers}
-          allItems={this.state.fields}
+          fields={this.state.fields}
         />
       </div>
     );

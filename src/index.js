@@ -14,6 +14,7 @@ import AppUpdate from './pages/AppUpdate';
 import AppView from './pages/AppView';
 import Containers from './pages/Containers';
 import ContainerCreate from './pages/ContainerCreate';
+import Settings from './pages/Settings';
 
 import './styles/main.css';
 
@@ -65,6 +66,7 @@ const App = () => (
           path="/stack/:appId/container/:id/update"
           component={ContainerCreate}
         />
+        <PrivateRoute exact path="/settings" component={Settings} />
         <Route exact path="/test" component={ContainerCreate} />
       </React.Fragment>
     </Router>

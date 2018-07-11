@@ -15,6 +15,7 @@ export const ContainerFragment = gql`
   fragment ContainerFragment on Container {
     id
     name
+    isSingleItem
     fields {
       id
       name
