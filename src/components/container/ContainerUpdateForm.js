@@ -1,55 +1,56 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
+import gql from 'graphql-tag';
+import { Mutation } from 'react-apollo';
 import alertify from 'alertify.js';
 import { isUndefined, sortBy, findIndex, startCase, omit } from 'lodash';
 import dragula from 'dragula';
-import { Link } from 'react-router-dom';
 
 import BigTitleInput from './BigTitleInput';
 import ContainerFieldModal from './ContainerFieldModal';
 import ContactFieldsPreview from './ContactFieldsPreview';
+import { fieldTypes } from '../../utils/containerFieldType';
 
-const fieldTypes = [
-  {
-    id: 1,
-    title: 'Text Field',
-    value: 'text',
-  },
-  {
-    id: 2,
-    title: 'Text Editor',
-    value: 'textArea',
-  },
-  {
-    id: 3,
-    title: 'Number',
-    value: 'number',
-  },
-  {
-    id: 4,
-    title: 'Boolean',
-    value: 'boolean',
-  },
-  {
-    id: 5,
-    title: 'Media Upload',
-    value: 'image',
-  },
-  {
-    id: 6,
-    title: 'Enom (Select)',
-    value: 'enom',
-  },
-  {
-    id: 7,
-    title: 'Relations',
-    value: 'relation',
-  },
-  {
-    id: 8,
-    title: 'Date & Time',
-    value: 'dateAndTime',
-  },
-];
+// Delete Conatiner Mutation
+const deleteContainerMutation = gql`
+  mutation deleteContainer($id: ID!) {
+    deleteContainer(id: $id) {
+      id
+    }
+  }
+`;
+
+const DeleteContainerMutation = ({ id, appId, fields, name, history }) => (
+  <Mutation
+    mutation={deleteContainerMutation}
+    onCompleted={() => {
+      alertify.success(`Deleted ${name} sucessfully`);
+      setTimeout(() => {
+        history.push(`/stack/${appId}/containers`);
+      }, 1000);
+    }}
+    onError={error => alertify.error(error.message)}
+  >
+    {deleteContainer => (
+      <a
+        className="ui button item"
+        onClick={() => {
+          alertify.confirm(
+            `Do you want to delete this container? All related ${
+              fields.length
+            } items will be also deleted!`,
+            () => {
+              deleteContainer({ variables: { id } });
+            },
+            () => {},
+          );
+        }}
+      >
+        Delete Container
+      </a>
+    )}
+  </Mutation>
+);
 
 class ContainerUpdateForm extends React.Component {
   static getDerivedStateFromProps(props, state) {
@@ -81,10 +82,9 @@ class ContainerUpdateForm extends React.Component {
 
   componentDidMount() {
     const drake = dragula([document.getElementById('containerItems')]);
-    drake.on('dragend', el => {
+    drake.on('dragend', () => {
       this.reOrderItems();
     });
-    // $('.segment').dimmer('show');
   }
 
   reOrderItems() {
@@ -130,40 +130,21 @@ class ContainerUpdateForm extends React.Component {
 
     // fields.push(field);
     this.setState({ fields });
-
     this.handleSubmit();
-  }
-
-  deleteContainer() {
-    // const appId = this.props.container.appId;
-    alertify.confirm(
-      'Do you want to delete this container?',
-      `All related ${this.state.items.length} items will be also deleted!`,
-      // () => {
-      //   Meteor.call('container.delete', this.props.container._id, err => {
-      //     if (!err) {
-      //       FlashMessages.sendSuccess('Container deleted successfully!');
-      //       FlowRouter.go('containersList', { appId });
-      //     }
-      //   });
-      // },
-      () => {
-        // cancel
-      },
-    );
   }
 
   removeItem(item, index) {
     alertify.confirm(
-      'Do you want to remove this field?',
-      'All related data for this field in items will be also deleted!',
+      'Do you want to remove this field? All related data for this field in items will be also deleted!',
       () => {
         const items = this.state.fields;
         items.splice(index, 1);
         this.setState({ fields: items });
         this.handleSubmit();
       },
-      () => {},
+      () => {
+        // user clicked "cancel"
+      },
     );
   }
 
@@ -183,8 +164,6 @@ class ContainerUpdateForm extends React.Component {
           '__typename',
         ]),
       );
-      console.log('fields', fields);
-
       this.props.mutation({ name, fields, isSingleItem });
     }
 
@@ -194,8 +173,9 @@ class ContainerUpdateForm extends React.Component {
   }
 
   render() {
-    const { appId } = this.props;
-    const { name } = this.state;
+    const { appId, id, history, url } = this.props;
+    const { name, fields } = this.state;
+    console.log(url);
 
     return (
       <div className="ui grid full-height" style={{ marginLeft: '0' }}>
@@ -209,12 +189,15 @@ class ContainerUpdateForm extends React.Component {
             >
               View Containers
             </Link>
-            <a
-              className="ui button item"
-              // onClick={() => this.deleteContainer()}
-            >
-              Delete Container
-            </a>
+            {url === `/stack/${appId}/container/${id}/update` && (
+              <DeleteContainerMutation
+                id={id}
+                appId={appId}
+                name={name}
+                fields={fields}
+                history={history}
+              />
+            )}
             <div className="item" style={{ textAlign: 'center' }}>
               <small>With great power comes great responsibility</small>
             </div>

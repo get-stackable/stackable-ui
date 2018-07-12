@@ -1,7 +1,7 @@
 import React from 'react';
 import gql from 'graphql-tag';
-import alertify from 'alertify.js';
 import { Query, Mutation } from 'react-apollo';
+import alertify from 'alertify.js';
 
 import { ContainerFragment } from '../../utils/fragments';
 import ContainerUpdateForm from './ContainerUpdateForm';
@@ -44,7 +44,7 @@ const updateContainerMutation = gql`
   }
 `;
 
-const ContainerMutation = ({ data, id, appId, history }) => {
+const ContainerMutation = ({ data, id, appId, history, url }) => {
   if (data == null) {
     return (
       <Mutation
@@ -53,14 +53,20 @@ const ContainerMutation = ({ data, id, appId, history }) => {
           alertify.error(error.message);
         }}
         onCompleted={item => {
-          history.push(
-            `/stack/${appId}/container/${item.createContainer.id}/update`,
+          alertify.success(
+            `${item.createContainer.name} container created sucessfully`,
           );
+          setTimeout(() => {
+            history.push(
+              `/stack/${appId}/container/${item.createContainer.id}/update`,
+            );
+          }, 1000);
         }}
       >
         {createContainer => (
           <ContainerUpdateForm
             appId={appId}
+            url={url}
             mutation={input => {
               createContainer({
                 variables: {
@@ -87,9 +93,11 @@ const ContainerMutation = ({ data, id, appId, history }) => {
       {updateContainer => (
         <ContainerUpdateForm
           appId={appId}
+          id={id}
+          history={history}
+          url={url}
           container={data.container}
           mutation={input => {
-            console.log('final Result', input);
             updateContainer({
               variables: {
                 id,
@@ -114,14 +122,19 @@ class ContainerUpdate extends React.Component {
             {({ loading, error, data }) => {
               if (loading) return 'Loading...';
               if (error) return `Error! ${error.message}`;
-              console.log('data', data);
               return (
-                <ContainerMutation data={data} id={ids.id} appId={ids.appId} />
+                <ContainerMutation
+                  data={data}
+                  id={ids.id}
+                  appId={ids.appId}
+                  url={url}
+                  history={history}
+                />
               );
             }}
           </Query>
         ) : (
-          <ContainerMutation appId={ids.appId} history={history} />
+          <ContainerMutation appId={ids.appId} history={history} url={url} />
         )}
       </React.Fragment>
     );

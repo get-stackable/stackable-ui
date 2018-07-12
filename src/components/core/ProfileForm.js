@@ -14,11 +14,11 @@ const InnerForm = ({
   <div className="ui form">
     <div className="field">
       <label>First Name</label>
-      <input type="text" name="first_name" placeholder="First Name" />
+      <input type="text" name="firstName" placeholder="First Name" />
     </div>
     <div className="field">
       <label>Last Name</label>
-      <input type="text" name="last_name" placeholder="First Name" />
+      <input type="text" name="lastName" placeholder="First Name" />
     </div>
     <div className="field">
       <label>Location</label>

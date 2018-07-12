@@ -24,11 +24,9 @@ class ContactFieldsPreview extends React.Component {
         >
           {schema.name}
         </label>
-        {schema.type === 'text' && (
-          <TextInput value="" onChange={() => console.log('on change...')} />
-        )}
+        {schema.type === 'text' && <TextInput />}
         {schema.type === 'number' && (
-          <NumberInput value="" onChange={() => console.log('on change...')} />
+          <NumberInput onChange={() => console.log('on change...')} />
         )}
         {/* {schema.type === 'textArea' && (
           <MarkdownEditor
@@ -41,21 +39,18 @@ class ContactFieldsPreview extends React.Component {
         {schema.type === 'boolean' && (
           <BooleanInput
             name="test-boolean"
-            value=""
             onChange={() => console.log('on change...')}
           />
         )}
         {schema.type === 'json' && (
           <JsonInput
             name="test-json"
-            value=""
             onChange={() => console.log('on change...')}
           />
         )}
         {schema.type === 'enom' && (
           <EnomInput
             name="test-enom"
-            value=""
             onChange={() => console.log('on change...')}
           />
         )}
@@ -65,7 +60,6 @@ class ContactFieldsPreview extends React.Component {
         {schema.type === 'relation' && (
           <RelationInput
             relations={schema.relations}
-            value=""
             onChange={() => console.log('on change...')}
           />
         )}
