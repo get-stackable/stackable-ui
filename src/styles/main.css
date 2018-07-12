@@ -135,6 +135,9 @@ h3 {
 .ui.divider {
   color: #939aa2; }
 
+.alertify-logs.left, .alertify-logs:not(.right) {
+  z-index: 1000; }
+
 .menu.top .item {
   padding: 0.3em 0.4em;
   color: #939aa2; }

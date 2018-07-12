@@ -39,7 +39,11 @@ class EnomInput extends React.Component {
         onChange={this.props.onChange}
       >
         <option>-- select option --</option>
-        {this.state.options.map(item => <option value={item}>{item}</option>)}
+        {this.state.options.map((item, index) => (
+          <option value={item} key={index}>
+            {item}
+          </option>
+        ))}
       </select>
     );
   }

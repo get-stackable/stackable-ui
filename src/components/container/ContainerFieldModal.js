@@ -74,6 +74,8 @@ class ContainerFieldModal extends React.Component {
       // listing_order,
     } = this.state;
 
+    const { fields } = this.props;
+
     if (name.length === 0) {
       alertify.error('Please type in field name');
       return;
@@ -110,12 +112,11 @@ class ContainerFieldModal extends React.Component {
     }
 
     // check if field already exists with same name
-    // const exists = find(this.props.fields, { name });
-    // console.log('jdsnjndfjf', exists);
-    // if (isUndefined(exists) && exists.name !== name) {
-    //   alertify.error(`Field with same name "${name}" already exists`);
-    //   return;
-    // }
+    const exists = find(fields, { name });
+    if (isUndefined(exists) ? '' : exists.id !== id) {
+      alertify.error(`Field with same name "${name}" already exists`);
+      return;
+    }
 
     // check if field `name` is changed, then rename in all items related to this
     // if (!_.isUndefined(this.props.container) && name !== this.props.item.name) {
@@ -180,8 +181,6 @@ class ContainerFieldModal extends React.Component {
 
   render() {
     let customValidationsFields = null;
-    console.log('vaikdj', this.state.validations);
-
     if (
       this.state.type === 'text' ||
       this.state.type === 'number' ||
@@ -213,8 +212,7 @@ class ContainerFieldModal extends React.Component {
       >
         <div className="header">
           <img src="/images/logo.png" alt="logo" />
-          {/* {this.state.name.length === 0 ? 'Create' : 'Update'} */}
-          Create
+          {this.state.name.length === 0 ? 'Create' : 'Update'}
           {upperFirst(this.state.type)} Field
           <a
             onClick={() => this.props.toggleModal()}

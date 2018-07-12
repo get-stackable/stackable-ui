@@ -195,3 +195,6 @@ h3 {
 .ui.divider {
   color: $font-grey;
 }
+.alertify-logs.left, .alertify-logs:not(.right){
+  z-index: 1000;
+}
