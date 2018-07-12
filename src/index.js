@@ -10,11 +10,12 @@ import './styles/main.scss';
 import Dashboard from './pages/Dashboard';
 import Login from './pages/Login';
 import Register from './pages/Register';
+import Settings from './pages/Settings';
 import AppUpdate from './pages/AppUpdate';
 import AppView from './pages/AppView';
 import Containers from './pages/Containers';
 import ContainerCreate from './pages/ContainerCreate';
-import Settings from './pages/Settings';
+import ItemCreate from './pages/ItemCreate';
 
 import './styles/main.css';
 
@@ -49,6 +50,7 @@ const App = () => (
         <Route exact path="/login" component={Login} />
         <Route exact path="/register" component={Register} />
         <PrivateRoute exact path="/dashboard" component={Dashboard} />
+        <PrivateRoute exact path="/settings" component={Settings} />
         <PrivateRoute exact path="/stack/:id" component={AppView} />
         <PrivateRoute exact path="/stack/:id/manage" component={AppUpdate} />
         <PrivateRoute
@@ -66,7 +68,7 @@ const App = () => (
           path="/stack/:appId/container/:id/update"
           component={ContainerCreate}
         />
-        <PrivateRoute exact path="/settings" component={Settings} />
+        <PrivateRoute exact path="/item/create" component={ItemCreate} />
         <Route exact path="/test" component={ContainerCreate} />
       </React.Fragment>
     </Router>
