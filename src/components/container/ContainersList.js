@@ -77,7 +77,12 @@ class ContainersList extends React.Component {
                       </Link>
                     </div>
                   </div>
-                  <a className="ui primary bottom attached button">
+                  <Link
+                    className="ui primary bottom attached button"
+                    to={{
+                      pathname: `/stack/${id}/container/${container.id}/items`,
+                    }}
+                  >
                     <i className="add icon" />
                     <span>
                       add manage {`${lowerCase(container.name)}`} items
@@ -95,7 +100,7 @@ class ContainersList extends React.Component {
                   items
                 </span>
               )} */}
-                  </a>
+                  </Link>
                 </div>
               ))}
             </div>
