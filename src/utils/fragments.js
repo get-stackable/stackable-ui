@@ -24,6 +24,7 @@ export const ContainerFragment = gql`
       type
       isRequired
       isDisabled
+      listingOrder
       validations {
         between
         min
