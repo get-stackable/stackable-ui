@@ -7,9 +7,9 @@ import ItemList from '../components/items/ItemList';
 
 class ItemCreate extends React.Component {
   render() {
-    const { match } = this.props;
+    const { match, location } = this.props;
     return (
-      <Layout>
+      <Layout url={location.pathname}>
         <div
           className="ui grid full-height item-edit"
           style={{ marginLeft: '0' }}
