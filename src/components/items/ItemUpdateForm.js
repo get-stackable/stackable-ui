@@ -1,26 +1,54 @@
 import React from 'react';
-import gql from 'graphql-tag';
-import { Query } from 'react-apollo';
+import { isUndefined, sortBy } from 'lodash';
 
-import { ContainerFragment } from '../../utils/fragments';
-
-import ItemForm from './ItemForm';
-
-// Conatiner Query
-const containerQuery = gql`
-  ${ContainerFragment}
-  query container($id: ID!) {
-    container(id: $id) {
-      ...ContainerFragment
-    }
-  }
-`;
+import ItemFields from './ItemFields';
 
 class ItemUpdateForm extends React.Component {
-  doSubmit(items) {
-    console.log('vchvcjhds', items);
+  constructor(props) {
+    super(props);
+    this.state = this.initState(props);
+    this.handleChange = this.handleChange.bind(this);
   }
+
+  componentWillReceiveProps(nextProps) {
+    this.setState(this.initState(nextProps));
+  }
+
+  handleChange(inputName, e) {
+    const change = {};
+    change[inputName] = !isUndefined(e.target) ? e.target.value : e;
+    this.setState(change);
+  }
+
+  // onChange = (inputName, e) => {
+  //   const change = {};
+  //   change[inputName] = !isUndefined(e.target) ? e.target.value : e;
+  //   this.setState(change);
+  // };
+
+  initState(props) {
+    // if (this.props.isContainerView) {
+    //   return {};
+    // }
+
+    const stateData = {};
+    const containerItems = sortBy(props.container.fields, 'listing_order');
+    containerItems.map(schema => {
+      if (isUndefined(props.item)) {
+        stateData[schema.slug] = '';
+      }
+      // stateData[schema.slug] = props.item.data[schema.slug];
+    });
+    return stateData;
+  }
+
+  doSubmit = () => {
+    console.log(this.state);
+    this.props.mutation(this.state);
+  };
+
   render() {
+    const { container, item } = this.props;
     return (
       <div
         className="eleven wide column"
@@ -57,25 +85,11 @@ class ItemUpdateForm extends React.Component {
             </div>
             <div className="ui divider" />
             <div className="ui form item">
-              <Query
-                query={containerQuery}
-                variables={{ id: '5b473c31a744af1c9859089f' }}
-              >
-                {({ loading, error, data }) => {
-                  if (loading) return 'loading....';
-                  if (error) return 'error';
-                  console.log('data', data);
-
-                  return (
-                    <React.Fragment>
-                      <ItemForm
-                        container={data.container}
-                        submit={this.doSubmit}
-                      />
-                    </React.Fragment>
-                  );
-                }}
-              </Query>
+              <ItemFields
+                container={container}
+                items={this.state}
+                handleChange={this.handleChange}
+              />
               <div className="ui error message" />
             </div>
           </div>

@@ -1,6 +1,7 @@
 import React from 'react';
 import gql from 'graphql-tag';
 import { Query } from 'react-apollo';
+import { Link } from 'react-router-dom';
 
 const itemsQuery = gql`
   query($containerId: ID!, $appId: ID!) {
@@ -11,7 +12,7 @@ const itemsQuery = gql`
   }
 `;
 
-const AllItems = ({ items, itemId }) => {
+const AllItems = ({ items, itemId, appId, containerId }) => {
   if (items.length === 0) {
     return (
       <div className="item">
@@ -21,16 +22,21 @@ const AllItems = ({ items, itemId }) => {
   }
 
   return items.map(item => (
-    <div className={`item ${itemId === item.id && 'active'}`}>
+    <div className={`item ${itemId === item.id && 'active'}`} key={item.id}>
       <div className="right floated content">
         {/* <div className="ui button">Add</div> */}
       </div>
       <div className="content">
-        <a
+        <Link
           className="header"
-          // onClick={() => FlowRouter.go('itemUpdate', { id: item.getId() })}
-        />
-        <div className="description">created {item.relDate()}</div>
+          to={{
+            pathname: `/stack/${appId}/container/${containerId}/item/${
+              item.id
+            }/update`,
+          }}
+        >
+          <div className="description">created </div>
+        </Link>
       </div>
     </div>
   ));
@@ -59,7 +65,14 @@ const ItemList = ({ itemId, containerId, appId }) => (
           if (loading) return 'loading..';
           if (error) return 'error..';
           console.log('items', data);
-          return <AllItems items={data.allItems} itemId={itemId} />;
+          return (
+            <AllItems
+              items={data.allItems}
+              itemId={itemId}
+              appId={appId}
+              containerId={containerId}
+            />
+          );
         }}
       </Query>
     </div>

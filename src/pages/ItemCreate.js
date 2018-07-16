@@ -1,7 +1,7 @@
 import React from 'react';
 
 import Layout from '../components/core/Layout';
-import ItemUpdateForm from '../components/items/ItemUpdateForm';
+import ItemUpdate from '../components/items/ItemUpdate';
 import ContainerList from '../components/items/ContainerList';
 import ItemList from '../components/items/ItemList';
 
@@ -38,7 +38,7 @@ class ItemCreate extends React.Component {
             appId={match.params.appId}
             containerId={match.params.containerId}
           />
-          <ItemUpdateForm />
+          <ItemUpdate ids={match.params} url={location.pathname} />
         </div>
       </Layout>
     );

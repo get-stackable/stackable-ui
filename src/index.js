@@ -70,7 +70,12 @@ const App = () => (
         />
         <PrivateRoute
           exact
-          path="/stack/:appId/container/:containerId/items"
+          path="/stack/:appId/container/:containerId/item/create"
+          component={ItemCreate}
+        />
+        <PrivateRoute
+          exact
+          path="/stack/:appId/container/:containerId/item/:id/update"
           component={ItemCreate}
         />
         <Route exact path="/test" component={ContainerCreate} />
