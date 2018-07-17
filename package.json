@@ -11,6 +11,7 @@
     "watch-css": "npm run build-css && node-sass-chokidar src/ -o src/ --watch --recursive"
   },
   "dependencies": {
+    "add": "^2.0.6",
     "alertify.js": "^1.0.12",
     "apollo-cache-inmemory": "^1.1.12",
     "apollo-cache-persist": "^0.1.1",
@@ -27,6 +28,7 @@
     "graphql-tag": "^2.8.0",
     "lodash": "^4.17.10",
     "medium-editor": "^5.23.3",
+    "moment": "^2.22.2",
     "node-sass-chokidar": "^1.2.2",
     "prop-types": "^15.6.1",
     "react": "^16.2.0",
@@ -36,6 +38,7 @@
     "react-router-dom": "^4.2.2",
     "react-scripts": "1.1.1",
     "superplaceholder": "^0.1.2",
+    "yarn": "^1.7.0",
     "yup": "^0.24.1"
   },
   "devDependencies": {

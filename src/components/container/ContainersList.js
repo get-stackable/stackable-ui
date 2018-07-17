@@ -80,7 +80,9 @@ class ContainersList extends React.Component {
                   <Link
                     className="ui primary bottom attached button"
                     to={{
-                      pathname: `/stack/${id}/container/${container.id}/items`,
+                      pathname: `/stack/${id}/container/${
+                        container.id
+                      }/item/create`,
                     }}
                   >
                     <i className="add icon" />

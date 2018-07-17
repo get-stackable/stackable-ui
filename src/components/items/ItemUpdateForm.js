@@ -1,7 +1,52 @@
 import React from 'react';
+import gql from 'graphql-tag';
+import { Mutation } from 'react-apollo';
 import { isUndefined, sortBy } from 'lodash';
+import alertify from 'alertify.js';
 
 import ItemFields from './ItemFields';
+
+// Item Delete Mutation
+const deleteItemMutation = gql`
+  mutation deleteItem($id: ID!) {
+    deleteItem(id: $id) {
+      id
+    }
+  }
+`;
+
+const DeleteMutation = ({ ids, history }) => (
+  <Mutation
+    mutation={deleteItemMutation}
+    onError={error => alertify.error(error.message)}
+    onCompleted={() => {
+      alertify.success('deleted sucessfully');
+      setTimeout(() => {
+        history.push(
+          `/stack/${ids.appId}/container/${ids.containerId}/item/create`,
+        );
+      }, 1000);
+    }}
+  >
+    {deleteItem => (
+      <a
+        className="small ui negative right labeled icon button"
+        onClick={() => {
+          alertify.confirm(
+            `Do you want to delete this Item? All related fields will be also deleted!`,
+            () => {
+              deleteItem({ variables: { id: ids.id } });
+            },
+            () => {},
+          );
+        }}
+      >
+        <i className="trash outline icon" />
+        Delete
+      </a>
+    )}
+  </Mutation>
+);
 
 class ItemUpdateForm extends React.Component {
   constructor(props) {
@@ -20,35 +65,25 @@ class ItemUpdateForm extends React.Component {
     this.setState(change);
   }
 
-  // onChange = (inputName, e) => {
-  //   const change = {};
-  //   change[inputName] = !isUndefined(e.target) ? e.target.value : e;
-  //   this.setState(change);
-  // };
-
   initState(props) {
-    // if (this.props.isContainerView) {
-    //   return {};
-    // }
-
     const stateData = {};
     const containerItems = sortBy(props.container.fields, 'listing_order');
     containerItems.map(schema => {
-      if (isUndefined(props.item)) {
+      if (isUndefined(props.item) || props.item === null) {
         stateData[schema.slug] = '';
+      } else {
+        stateData[schema.slug] = props.item.data[schema.slug];
       }
-      // stateData[schema.slug] = props.item.data[schema.slug];
     });
     return stateData;
   }
 
   doSubmit = () => {
-    console.log(this.state);
     this.props.mutation(this.state);
   };
 
   render() {
-    const { container, item } = this.props;
+    const { ids, container, item, history } = this.props;
     return (
       <div
         className="eleven wide column"
@@ -58,7 +93,10 @@ class ItemUpdateForm extends React.Component {
         // })}
         style={{ paddingLeft: '0' }}
       >
-        <div className="content-wrapper" style={{ padding: '25px 35px' }}>
+        <div
+          className="content-wrapper"
+          style={{ padding: '25px 35px', height: '100%' }}
+        >
           <div>
             <div className="ui grid">
               <div className="ten wide column">
@@ -74,13 +112,9 @@ class ItemUpdateForm extends React.Component {
                   <i className="save icon" />
                   Save
                 </button>
-                <a
-                  className="small ui negative right labeled icon button"
-                  onClick={() => this.deleteItem()}
-                >
-                  <i className="trash outline icon" />
-                  Delete
-                </a>
+                {!isUndefined(item) && (
+                  <DeleteMutation ids={ids} history={history} />
+                )}
               </div>
             </div>
             <div className="ui divider" />

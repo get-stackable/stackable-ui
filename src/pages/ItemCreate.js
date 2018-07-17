@@ -7,9 +7,9 @@ import ItemList from '../components/items/ItemList';
 
 class ItemCreate extends React.Component {
   render() {
-    const { match, location } = this.props;
+    const { match, location, history } = this.props;
     return (
-      <Layout url={location.pathname}>
+      <Layout url={location.pathname} appId={match.params.id}>
         <div
           className="ui grid full-height item-edit"
           style={{ marginLeft: '0' }}
@@ -31,14 +31,21 @@ class ItemCreate extends React.Component {
               {/* {titleize(this.props.app.name)} */} Stack Name
             </button>
             <div className="ui link list" style={{ marginTop: '30px' }}>
-              <ContainerList containerId={match.params.containerId} />
+              <ContainerList
+                appId={match.params.appId}
+                containerId={match.params.containerId}
+              />
             </div>
           </div>
           <ItemList
             appId={match.params.appId}
             containerId={match.params.containerId}
           />
-          <ItemUpdate ids={match.params} url={location.pathname} />
+          <ItemUpdate
+            ids={match.params}
+            url={location.pathname}
+            history={history}
+          />
         </div>
       </Layout>
     );

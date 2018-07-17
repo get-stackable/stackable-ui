@@ -2,12 +2,15 @@ import React from 'react';
 import gql from 'graphql-tag';
 import { Query } from 'react-apollo';
 import { Link } from 'react-router-dom';
+import { capitalize } from 'lodash';
+import moment from 'moment';
 
 const itemsQuery = gql`
   query($containerId: ID!, $appId: ID!) {
     allItems(containerId: $containerId, appId: $appId) {
       id
       data
+      publishedAt
     }
   }
 `;
@@ -35,7 +38,13 @@ const AllItems = ({ items, itemId, appId, containerId }) => {
             }/update`,
           }}
         >
-          <div className="description">created </div>
+          {capitalize(item.data[Object.keys(item.data)[0]])}
+          <div className="description">
+            created{' '}
+            {moment()
+              .startOf(`${item.publishedAt}`)
+              .fromNow()}
+          </div>
         </Link>
       </div>
     </div>
@@ -44,18 +53,14 @@ const AllItems = ({ items, itemId, appId, containerId }) => {
 
 const ItemList = ({ itemId, containerId, appId }) => (
   <div className="three wide column items-list">
-    {console.log(containerId, appId)}
-    <a
+    <Link
       className="ui primary tiny right floated labeled icon button"
       style={{ marginRight: '10px' }}
-      // href={FlowRouter.path('itemCreate', {
-      //   containerId: this.props.container._id,
-      // })}
+      to={{ pathname: `/stack/${appId}/container/${containerId}/item/create` }}
     >
       <i className="plus icon" />
-      create
-      {/* {pluralize(this.props.container.name.toLowerCase(), 1)} */}
-    </a>
+      create new item
+    </Link>
     <div
       className="ui middle aligned divided link list"
       style={{ marginTop: '40px' }}
@@ -64,7 +69,6 @@ const ItemList = ({ itemId, containerId, appId }) => (
         {({ loading, error, data }) => {
           if (loading) return 'loading..';
           if (error) return 'error..';
-          console.log('items', data);
           return (
             <AllItems
               items={data.allItems}
