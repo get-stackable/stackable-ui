@@ -16,6 +16,7 @@ import AppView from './pages/AppView';
 import Containers from './pages/Containers';
 import ContainerCreate from './pages/ContainerCreate';
 import ItemCreate from './pages/ItemCreate';
+import Test from './pages/test';
 
 import './styles/main.css';
 
@@ -78,7 +79,7 @@ const App = () => (
           path="/stack/:appId/container/:containerId/item/:id/update"
           component={ItemCreate}
         />
-        <Route exact path="/test" component={ContainerCreate} />
+        {/* <Route exact path="/test" component={Test} /> */}
       </React.Fragment>
     </Router>
   </ApolloProvider>

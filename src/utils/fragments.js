@@ -29,6 +29,7 @@ export const ContainerFragment = gql`
         between
         min
         max
+        options
       }
     }
   }

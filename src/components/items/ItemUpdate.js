@@ -130,14 +130,15 @@ const ItemMutation = ({ container, item, ids, history }) => {
           container={container}
           history={history}
           ids={ids}
-          mutation={input =>
+          mutation={input => {
+            console.log('final Item Mutation', input);
             updateItem({
               variables: {
                 id: ids.id,
                 input,
               },
-            })
-          }
+            });
+          }}
         />
       )}
     </Mutation>

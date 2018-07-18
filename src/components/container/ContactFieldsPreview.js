@@ -10,6 +10,7 @@ import JsonInput from '../items/fields/JsonInput';
 import EnomInput from '../items/fields/EnomInput';
 import FileInput from '../items/fields/FileInput';
 import RelationInput from '../items/fields/RelationInput';
+import DateAndTime from '../items/fields/DateAndTime';
 
 class ContactFieldsPreview extends React.Component {
   loadPreviewFields() {
@@ -63,6 +64,7 @@ class ContactFieldsPreview extends React.Component {
             onChange={() => console.log('on change...')}
           />
         )}
+        {schema.type === 'dateAndTime' && <DateAndTime />}
         <p className="field-description">{schema.description}</p>
       </div>
     ));
