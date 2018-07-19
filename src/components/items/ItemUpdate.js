@@ -19,21 +19,21 @@ const containerQuery = gql`
 `;
 
 // Conatiner Query
-const itemQuery = gql`
-  query item($id: ID!) {
-    item(id: $id) {
-      id
-      data
-    }
-  }
-`;
-
 const itemsQuery = gql`
   query($containerId: ID!, $appId: ID!) {
     allItems(containerId: $containerId, appId: $appId) {
       id
       data
       publishedAt
+    }
+  }
+`;
+
+const itemQuery = gql`
+  query item($id: ID!) {
+    item(id: $id) {
+      id
+      data
     }
   }
 `;
@@ -55,32 +55,6 @@ const updateItemMutation = gql`
     }
   }
 `;
-
-const ItemQuery = ({ container, ids, url, history }) => (
-  <React.Fragment>
-    {url ===
-    `/stack/${ids.appId}/container/${ids.containerId}/item/${ids.id}/update` ? (
-      <Query query={itemQuery} variables={{ id: ids.id }}>
-        {({ loading, error, data }) => {
-          if (loading) return 'loadin...';
-          if (error) return 'erro...';
-          return (
-            <ItemMutation
-              container={container}
-              item={data.item}
-              ids={ids}
-              history={history}
-            />
-          );
-        }}
-      </Query>
-    ) : (
-      <React.Fragment>
-        <ItemMutation container={container} ids={ids} />
-      </React.Fragment>
-    )}
-  </React.Fragment>
-);
 
 const ItemMutation = ({ container, item, ids, history }) => {
   const onItemUpdate = (cache, { data: { createApplication } }) => {
@@ -145,6 +119,45 @@ const ItemMutation = ({ container, item, ids, history }) => {
   );
 };
 
+const ItemQuery = ({ container, ids, url, history }) => (
+  <React.Fragment>
+    {url ===
+    `/stack/${ids.appId}/container/${ids.containerId}/item/${ids.id}/update` ? (
+      <Query query={itemQuery} variables={{ id: ids.id }}>
+        {({ loading, error, data }) => {
+          if (loading) return 'loadin...';
+          if (error) return 'erro...';
+          return (
+            <ItemMutation
+              container={container}
+              item={data.item}
+              ids={ids}
+              history={history}
+            />
+          );
+        }}
+      </Query>
+    ) : (
+      <React.Fragment>
+        <ItemMutation container={container} ids={ids} />
+      </React.Fragment>
+    )}
+  </React.Fragment>
+);
+// class ItemsQuery extends React.Component {
+//   render() {
+//     const { appId, containerId } = this.props;
+//     return (
+//       <Query query={itemsQuery} variables={{ appId, containerId }}>
+//         {({ loading, error, data }) => {
+//           if (loading) return 'loading';
+//           if (error) return 'erro';
+//           return <React.Fragment>{this.props.children(data)}</React.Fragment>;
+//         }}
+//       </Query>
+//     );
+//   }
+// }
 const ItemUpdate = ({ ids, url, history }) => (
   <Query query={containerQuery} variables={{ id: ids.containerId }}>
     {({ loading, error, data }) => {
@@ -158,6 +171,9 @@ const ItemUpdate = ({ ids, url, history }) => (
             url={url}
             history={history}
           />
+          {/* <ItemsQuery containerId={ids.containerId} appId={ids.appId}>
+            {results => console.log('result', results)}
+          </ItemsQuery> */}
         </React.Fragment>
       );
     }}

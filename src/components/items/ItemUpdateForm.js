@@ -1,3 +1,4 @@
+/* global $:true */
 import React from 'react';
 import gql from 'graphql-tag';
 import { Mutation } from 'react-apollo';
@@ -55,14 +56,81 @@ class ItemUpdateForm extends React.Component {
     this.handleChange = this.handleChange.bind(this);
   }
 
+  componentDidMount() {
+    // init validations
+    this.initValidations(this.props);
+  }
+
   componentWillReceiveProps(nextProps) {
     this.setState(this.initState(nextProps));
+  }
+
+  componentDidUpdate() {
+    // init validations
+    this.initValidations(this.props);
   }
 
   handleChange(inputName, e) {
     const change = {};
     change[inputName] = !isUndefined(e.target) ? e.target.value : e;
     this.setState(change);
+  }
+
+  initValidations(props) {
+    if (props.isContainerView) {
+      return false;
+    }
+
+    const fields = {};
+    props.container.fields.map(item => {
+      const rules = [];
+
+      if (item.isRequired) {
+        rules.push({
+          type: 'empty',
+          prompt: `Please enter ${item.name}`,
+        });
+      }
+      if (!isUndefined(item.validations.min)) {
+        const min = parseInt(item.validations.min);
+        if (min > 0) {
+          rules.push({
+            type: `minLength[${min}]`,
+            prompt: `Please enter at least ${min} characters ${item.name}`,
+          });
+        }
+      }
+      if (!isUndefined(item.validations.max)) {
+        const max = parseInt(item.validations.max);
+        if (max > 0) {
+          rules.push({
+            type: `maxLength[${max}]`,
+            prompt: `Please enter at most ${max} characters ${item.name}`,
+          });
+        }
+      }
+      if (item.type === 'text' && !isUndefined(item.validations.type)) {
+        if (item.validations.type === 'email') {
+          rules.push({
+            type: 'email',
+            prompt: `Please enter a valid e-mail in ${item.name}`,
+          });
+        } else if (item.validations.type === 'url') {
+          rules.push({
+            type: 'url',
+            prompt: `Please enter a valid url in ${item.name}`,
+          });
+        }
+      }
+      fields[item.slug] = {
+        identifier: item.slug,
+        rules,
+      };
+    });
+
+    $('.ui.form.item').form({
+      fields,
+    });
   }
 
   initState(props) {
@@ -79,7 +147,12 @@ class ItemUpdateForm extends React.Component {
   }
 
   doSubmit = () => {
-    this.props.mutation(this.state);
+    const form = $('.ui.form.item');
+    form.form('submit');
+
+    if (form.form('is valid')) {
+      this.props.mutation(this.state);
+    }
   };
 
   render() {
@@ -124,7 +197,7 @@ class ItemUpdateForm extends React.Component {
                 items={this.state}
                 handleChange={this.handleChange}
               />
-              <div className="ui error message" />
+              <div className="ui error message active" />
             </div>
           </div>
         </div>

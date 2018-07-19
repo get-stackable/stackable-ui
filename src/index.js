@@ -79,7 +79,7 @@ const App = () => (
           path="/stack/:appId/container/:containerId/item/:id/update"
           component={ItemCreate}
         />
-        {/* <Route exact path="/test" component={Test} /> */}
+        <Route exact path="/test" component={Test} />
       </React.Fragment>
     </Router>
   </ApolloProvider>
