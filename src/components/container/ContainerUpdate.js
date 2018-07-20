@@ -15,6 +15,15 @@ const containerQuery = gql`
     }
   }
 `;
+// Containers query
+const containersQuery = gql`
+  query($appId: ID!) {
+    allContainers(appId: $appId) {
+      id
+      name
+    }
+  }
+`;
 
 // Create Container Mutation
 const createContainerMutation = gql`
@@ -52,6 +61,12 @@ const ContainerMutation = ({ data, id, appId, history, url }) => {
         onError={error => {
           alertify.error(error.message);
         }}
+        refetchQueries={() => [
+          {
+            query: containersQuery,
+            variables: { appId },
+          },
+        ]}
         onCompleted={item => {
           alertify.success(
             `${item.createContainer.name} container created sucessfully`,

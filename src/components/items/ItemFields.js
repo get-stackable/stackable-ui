@@ -43,7 +43,7 @@ const ItemFields = ({ container, handleChange, items }) => (
           <DateAndTime
             name={schema.slug}
             value={items[schema.slug]}
-            onChange={e => handleChange(schema.slug, e)}
+            onChange={e => handleChange(schema.slug, e.value)}
           />
         )}
         <p className="field-description"> {schema.description}</p>

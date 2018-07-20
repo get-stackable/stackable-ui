@@ -1,21 +1,9 @@
 import React from 'react';
-import gql from 'graphql-tag';
-import { Query } from 'react-apollo';
 
 import Layout from '../components/core/Layout';
 import ItemUpdate from '../components/items/ItemUpdate';
 import ContainerList from '../components/items/ContainerList';
 import ItemList from '../components/items/ItemList';
-
-const itemsQuery = gql`
-  query($containerId: ID!, $appId: ID!) {
-    allItems(containerId: $containerId, appId: $appId) {
-      id
-      data
-      publishedAt
-    }
-  }
-`;
 
 class ItemCreate extends React.Component {
   render() {
@@ -49,35 +37,19 @@ class ItemCreate extends React.Component {
               />
             </div>
           </div>
-          <Query
-            query={itemsQuery}
-            variables={{
-              containerId: match.params.containerId,
-              appId: match.params.appId,
-            }}
-          >
-            {({ loading, error, data }) => {
-              if (loading) return 'loadin';
-              if (error) return 'error';
-              const items = data.allItems;
-              return (
-                <React.Fragment>
-                  <ItemList
-                    appId={match.params.appId}
-                    containerId={match.params.containerId}
-                    items={items}
-                  />
-                  <ItemUpdate
-                    ids={match.params}
-                    url={location.pathname}
-                    history={history}
-                    allItems={data.allItems}
-                    itemsQuery={itemsQuery}
-                  />
-                </React.Fragment>
-              );
-            }}
-          </Query>
+
+          <React.Fragment>
+            <ItemList
+              appId={match.params.appId}
+              containerId={match.params.containerId}
+              itemId={match.params.id}
+            />
+            <ItemUpdate
+              ids={match.params}
+              url={location.pathname}
+              history={history}
+            />
+          </React.Fragment>
         </div>
       </Layout>
     );

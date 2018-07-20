@@ -18,9 +18,9 @@ const containerQuery = gql`
   }
 `;
 
-// Conatiner Query
+// Items Query
 const itemsQuery = gql`
-  query($containerId: ID!, $appId: ID!) {
+  query itemsQuery($containerId: ID!, $appId: ID!) {
     allItems(containerId: $containerId, appId: $appId) {
       id
       data
@@ -34,6 +34,7 @@ const itemQuery = gql`
     item(id: $id) {
       id
       data
+      publishedAt
     }
   }
 `;
@@ -43,6 +44,8 @@ const createItemMutation = gql`
   mutation createItem($containerId: ID!, $appId: ID!, $input: JSON!) {
     createItem(containerId: $containerId, appId: $appId, input: $input) {
       id
+      data
+      publishedAt
     }
   }
 `;
@@ -52,25 +55,33 @@ const updateItemMutation = gql`
   mutation updateItem($id: ID!, $input: JSON!) {
     updateItem(id: $id, input: $input) {
       id
+      data
+      publishedAt
     }
   }
 `;
 
 const ItemMutation = ({ container, item, ids, history }) => {
-  const onItemUpdate = (cache, { data: { createApplication } }) => {
-    const { allItems } = cache.readQuery({ query: itemsQuery });
-    cache.writeQuery({
-      query: itemsQuery,
-      data: { allItems: allItems.concat([createApplication]) },
-    });
-  };
-
   if (item === null || isUndefined(item)) {
     return (
       <Mutation
         mutation={createItemMutation}
-        update={onItemUpdate}
-        onCompleted={() => alertify.success('item added sucessfully')}
+        onCompleted={e => {
+          alertify.success('deleted sucessfully');
+          setTimeout(() => {
+            history.push(
+              `/stack/${ids.appId}/container/${ids.containerId}/item/${
+                e.createItem.id
+              }/update`,
+            );
+          }, 1000);
+        }}
+        refetchQueries={() => [
+          {
+            query: itemsQuery,
+            variables: { containerId: ids.containerId, appId: ids.appId },
+          },
+        ]}
         onError={error => alertify.error(error.message)}
       >
         {createItem => (
@@ -97,6 +108,7 @@ const ItemMutation = ({ container, item, ids, history }) => {
       mutation={updateItemMutation}
       onCompleted={() => alertify.success('item updated sucessfully')}
       onError={error => alertify.error(error.message)}
+      refetchQueries={() => [{ query: itemQuery, variables: { id: ids.id } }]}
     >
       {updateItem => (
         <ItemUpdateForm
@@ -105,7 +117,6 @@ const ItemMutation = ({ container, item, ids, history }) => {
           history={history}
           ids={ids}
           mutation={input => {
-            console.log('final Item Mutation', input);
             updateItem({
               variables: {
                 id: ids.id,
@@ -139,45 +150,31 @@ const ItemQuery = ({ container, ids, url, history }) => (
       </Query>
     ) : (
       <React.Fragment>
-        <ItemMutation container={container} ids={ids} />
+        <ItemMutation container={container} ids={ids} history={history} />
       </React.Fragment>
     )}
   </React.Fragment>
 );
-// class ItemsQuery extends React.Component {
-//   render() {
-//     const { appId, containerId } = this.props;
-//     return (
-//       <Query query={itemsQuery} variables={{ appId, containerId }}>
-//         {({ loading, error, data }) => {
-//           if (loading) return 'loading';
-//           if (error) return 'erro';
-//           return <React.Fragment>{this.props.children(data)}</React.Fragment>;
-//         }}
-//       </Query>
-//     );
-//   }
-// }
-const ItemUpdate = ({ ids, url, history }) => (
-  <Query query={containerQuery} variables={{ id: ids.containerId }}>
-    {({ loading, error, data }) => {
-      if (loading) return 'loading....';
-      if (error) return 'error';
-      return (
-        <React.Fragment>
-          <ItemQuery
-            container={data.container}
-            ids={ids}
-            url={url}
-            history={history}
-          />
-          {/* <ItemsQuery containerId={ids.containerId} appId={ids.appId}>
-            {results => console.log('result', results)}
-          </ItemsQuery> */}
-        </React.Fragment>
-      );
-    }}
-  </Query>
-);
+class ItemUpdate extends React.Component {
+  render() {
+    const { ids, url, history } = this.props;
+    return (
+      <Query query={containerQuery} variables={{ id: ids.containerId }}>
+        {({ loading, error, data }) => {
+          if (loading) return 'loading....';
+          if (error) return 'error';
+          return (
+            <ItemQuery
+              container={data.container}
+              ids={ids}
+              url={url}
+              history={history}
+            />
+          );
+        }}
+      </Query>
+    );
+  }
+}
 
 export default ItemUpdate;

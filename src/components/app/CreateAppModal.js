@@ -105,15 +105,12 @@ class CreateAppModal extends React.Component {
           </ApolloConsumer>
         </div>
         <div className="content">
-          {/* <Loading active={this.state.isLoading} /> */}
           {this.state.step === 1 && (
             <AppStepOneModel goToStepTwo={this.goToStepTwo} />
           )}
           {this.state.step === 2 && (
             <AppStepTwoModel history={this.props.history} />
           )}
-          {/* <AppStepOneModel /> */}
-          {/* <AppStepTwoModel /> */}
         </div>
         <CreateAppModalTrigger
           modelVisible={data && data.stack && data.stack.modelVisible}

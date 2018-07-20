@@ -6,7 +6,7 @@ import { capitalize } from 'lodash';
 import moment from 'moment';
 
 const itemsQuery = gql`
-  query($containerId: ID!, $appId: ID!) {
+  query itemsQuery($containerId: ID!, $appId: ID!) {
     allItems(containerId: $containerId, appId: $appId) {
       id
       data
@@ -25,7 +25,7 @@ const AllItems = ({ items, itemId, appId, containerId }) => {
   }
 
   return items.map(item => (
-    <div className={`item ${itemId === item.id && 'active'}`} key={item.id}>
+    <div className={`item ${itemId === item.id ? 'active' : ''}`} key={item.id}>
       <div className="right floated content">
         {/* <div className="ui button">Add</div> */}
       </div>
@@ -40,7 +40,7 @@ const AllItems = ({ items, itemId, appId, containerId }) => {
         >
           {capitalize(item.data[Object.keys(item.data)[0]])}
           <div className="description">
-            created{' '}
+            created {/* TODO: need to fix */}
             {moment()
               .startOf(`${item.publishedAt}`)
               .fromNow()}

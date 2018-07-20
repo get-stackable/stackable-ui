@@ -26,7 +26,6 @@ class AppStepTwoModel extends React.Component {
   render() {
     const onAppUpdate = (cache, { data: { createApplication } }) => {
       const { allApplications } = cache.readQuery({ query: applicationsQuery });
-      console.log(allApplications);
       cache.writeQuery({
         query: applicationsQuery,
         data: { allApplications: allApplications.concat([createApplication]) },
