@@ -23,7 +23,7 @@ class Dashboard extends React.Component {
     const { location, history } = this.props;
 
     return (
-      <Layout url={location.pathname}>
+      <Layout url={location.pathname} history={history}>
         <Query query={stackQuery}>
           {({ data, client }) => (
             <React.Fragment>

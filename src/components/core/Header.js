@@ -42,10 +42,8 @@ class Header extends React.Component {
   }
 
   logout() {
-    // AccountsTemplates.logout();
-    // Meteor.setTimeout(() => {
-    //     FlowRouter.go('login');
-    // }, 500);
+    localStorage.clear();
+    this.props.history.push('/login');
   }
 
   // renderApps() {

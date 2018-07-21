@@ -38,7 +38,7 @@ class Layout extends React.Component {
   // }
 
   render() {
-    const { children, type, url, appId } = this.props;
+    const { children, type, url, appId, history } = this.props;
 
     if (type === 'slim') {
       return (
@@ -52,7 +52,7 @@ class Layout extends React.Component {
     return (
       <div className="full-height">
         <Helmet title={config.siteName} />
-        <Header />
+        <Header history={history} />
         <div className="main container">
           <div className="ui grid full-height">
             <div
