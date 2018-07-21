@@ -25,7 +25,7 @@ class Dashboard extends React.Component {
     return (
       <Layout url={location.pathname} history={history}>
         <Query query={stackQuery}>
-          {({ data, client }) => (
+          {({ data }) => (
             <React.Fragment>
               <PageHeading>Dashboard</PageHeading>
               {/* <UserStats user={this.data.user} /> */}

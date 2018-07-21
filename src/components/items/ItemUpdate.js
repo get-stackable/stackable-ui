@@ -93,7 +93,6 @@ const ItemMutation = ({ container, item, ids, history }) => {
                 variables: {
                   appId: ids.appId,
                   containerId: ids.containerId,
-
                   input,
                 },
               })
@@ -136,8 +135,8 @@ const ItemQuery = ({ container, ids, url, history }) => (
     `/stack/${ids.appId}/container/${ids.containerId}/item/${ids.id}/update` ? (
       <Query query={itemQuery} variables={{ id: ids.id }}>
         {({ loading, error, data }) => {
-          if (loading) return 'loadin...';
-          if (error) return 'erro...';
+          if (loading) return "'loadin...'";
+          if (error) return alert(error);
           return (
             <ItemMutation
               container={container}
