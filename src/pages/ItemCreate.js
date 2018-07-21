@@ -9,7 +9,11 @@ class ItemCreate extends React.Component {
   render() {
     const { match, location, history } = this.props;
     return (
-      <Layout url={location.pathname} appId={match.params.appId}>
+      <Layout
+        url={location.pathname}
+        appId={match.params.appId}
+        history={history}
+      >
         <div
           className="ui grid full-height item-edit"
           style={{ marginLeft: '0' }}

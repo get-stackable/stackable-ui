@@ -80,7 +80,7 @@ class AppUpdate extends React.Component {
     const { location, match, history } = this.props;
 
     return (
-      <Layout url={location.pathname} appId={match.params.id}>
+      <Layout url={location.pathname} appId={match.params.id} history={history}>
         <Query query={applicationQuery} variables={{ id: match.params.id }}>
           {({ loading, error, data }) => {
             if (loading) return <p>Loading...</p>;

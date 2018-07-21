@@ -13,9 +13,9 @@ class Settings extends React.Component {
     // if (this.data.loading) {
     //   return <Loading active />;
     // }
-    const { location } = this.props;
+    const { location, history } = this.props;
     return (
-      <Layout url={location.pathname}>
+      <Layout url={location.pathname} history={history}>
         <div className="ui grid full-height" style={{ marginLeft: '0' }}>
           <div className="two wide column side-sub-menu">
             <div className="ui left vertical menu">
