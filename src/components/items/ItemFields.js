@@ -1,9 +1,11 @@
 import React from 'react';
 
 import TextInput from './fields/TextInput';
+import NumberInput from './fields/NumberInput';
 import BooleanInput from './fields/BooleanInput';
 import EnomInput from './fields/EnomInput';
 import DateAndTime from './fields//DateAndTime';
+import FileInput from './fields/FileInput';
 
 const ItemFields = ({ container, handleChange, items }) => (
   <React.Fragment>
@@ -17,6 +19,13 @@ const ItemFields = ({ container, handleChange, items }) => (
         </label>
         {schema.type === 'text' && (
           <TextInput
+            name={schema.slug}
+            value={items[schema.slug]}
+            onChange={e => handleChange(schema.slug, e)}
+          />
+        )}
+        {schema.type === 'number' && (
+          <NumberInput
             name={schema.slug}
             value={items[schema.slug]}
             onChange={e => handleChange(schema.slug, e)}
@@ -38,6 +47,13 @@ const ItemFields = ({ container, handleChange, items }) => (
             options={schema.validations.options}
             onChange={e => handleChange(schema.slug, e)}
           />
+        )}
+        {schema.type === 'image' && (
+          <FileInput
+            name={schema.slug}
+            value={items[schema.slug]}
+            onChange={e => handleChange(schema.slug, e)}
+        />
         )}
         {schema.type === 'dateAndTime' && (
           <DateAndTime
