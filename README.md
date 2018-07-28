@@ -1,6 +1,6 @@
 # Stackable.space
 
-> Dashboard for stackable.
+> Dashboard for stackable.space
 
 Join us on [Slack](http://slack.stackable.space/)
 
